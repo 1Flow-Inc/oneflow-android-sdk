@@ -7,3 +7,11 @@ s	java:S116"WRename this field "display_mode" to match the regular expression
 o	java:S116"NRename this field "_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(í—ø¨ýÿÿÿÿ8¡¨Þ¾¬1
 y	java:S116 "XRename this field "primary_color" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡èæ—ûÿÿÿÿ8¢¨Þ¾¬1
 t	java:S116""XRename this field "corner_radius" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(²àõå8¢¨Þ¾¬1
+j	java:S100$"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(âþèƒ8ªßã…­1
+i	java:S100("NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¼“¥8«ßã…­1
+j	java:S1004"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡˜¨–8«ßã…­1
+o	java:S1008"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©þÿÿÿÿ8¬ßã…­1
+o	java:S100<"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æÁÁÂþÿÿÿÿ8¬ßã…­1
+j	java:S100@"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ê„ÅÊ8¬ßã…­1
+o	java:S100D"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯»Äÿÿÿÿÿ8­ßã…­1
+j	java:S100H"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ºÅÆ¶8­ßã…­1

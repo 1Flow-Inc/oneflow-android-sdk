@@ -216,7 +216,7 @@ public class CustomFrag extends Fragment {
 
             //closed survey logic for storage.
             OFOneFlowSHP ofs = OFOneFlowSHP.getInstance(getActivity());
-            List<String> closedSurveyList = ofs.getClosedSurveyList();
+            ArrayList<String> closedSurveyList = ofs.getClosedSurveyList();
             OFHelper.v(tag, "OneFlow close button clicked [" + surveyResponseChildren + "]");
 
             surveyClosingStatus = "skipped";

@@ -1,3 +1,9 @@
 
+
+java:S1319""pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(°„—‹8úŞã…­1
+†
+java:S1319&"iThe type of "dataLogic" should be an interface such as "List" rather than the implementation "ArrayList".(§»£Ÿ8úŞã…­1
 r	java:S117."QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©şÿÿÿÿ8õ´Ü¾¬1
 o	java:S116"NRename this field "_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(í—ø¨ıÿÿÿÿ8ø´Ü¾¬1
+j	java:S100*"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡˜¨–8‚ßã…­1
+o	java:S100."NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©şÿÿÿÿ8‚ßã…­1

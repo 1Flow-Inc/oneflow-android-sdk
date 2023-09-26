@@ -1,3 +1,9 @@
 
+’
+java:S1319["pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(õ¨ÉÔýÿÿÿÿ8ßàã…­1
+‰
+java:S1319_"gThe type of "buttons" should be an interface such as "List" rather than the implementation "ArrayList".(–¶¬ïþÿÿÿÿ8ßàã…­1
 r	java:S117O"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©þÿÿÿÿ8àûÝ¾¬1
 o	java:S116 "NRename this field "_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(í—ø¨ýÿÿÿÿ8åûÝ¾¬1
+j	java:S100K"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡˜¨–8çàã…­1
+o	java:S100O"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©þÿÿÿÿ8çàã…­1

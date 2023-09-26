@@ -37,7 +37,7 @@ public class OFRecordEventsTabToAPI implements Serializable {
     private String _id;
 
     @SerializedName("parameters")
-    private transient HashMap<String,Object> dataMap;
+    private HashMap<String,Object> dataMap;
 
     @SerializedName("time")
     private Long time;

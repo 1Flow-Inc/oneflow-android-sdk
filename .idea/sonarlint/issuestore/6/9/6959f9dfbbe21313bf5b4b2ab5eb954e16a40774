@@ -45,6 +45,12 @@ s
 java:S1104|"QMake stars a static final constant or non-public and provide accessors if needed.(×ªÑòùÿÿÿÿ8²ìËá¬1
 p
 java:S1104…"RMake emojis a static final constant or non-public and provide accessors if needed.(§±åÇ8²ìËá¬1
+F
+java:S5411­"(Use a primitive boolean expression here.(ÜÌ€á8üğã…­1
+F
+java:S5411ê"(Use a primitive boolean expression here.(ÜÌ€á8üğã…­1
+F
+java:S5411„"(Use a primitive boolean expression here.(ÜÌ€á8üğã…­1
 M
 java:S1659"*Declare "colorAlpha50" on a separate line.(›ø¹¤úÿÿÿÿ8ÔìËá¬1
 v

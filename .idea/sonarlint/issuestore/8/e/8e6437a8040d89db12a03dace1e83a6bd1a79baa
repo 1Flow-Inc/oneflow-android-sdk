@@ -5,3 +5,9 @@ m	java:S117s"QRename this local variable to match the regular expression '^[a-
 o	java:S116("NRename this field "_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(í—ø¨ıÿÿÿÿ8ŒßË¾¬1
 p	java:S116@"TRename this field "common_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ö‡º8ŒßË¾¬1
 j	java:S116D"NRename this field "__v" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Í‚ê8ŒßË¾¬1
+j	java:S100W"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡˜¨–8êãã…­1
+o	java:S100["NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©şÿÿÿÿ8ëãã…­1
+j	java:S100g"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(å¢åš8ëãã…­1
+j	java:S100k"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(åŸŠÓ8ëãã…­1
+j	java:S100o"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÜÆ£8ìãã…­1
+j	java:S100s"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(’­å¢8ìãã…­1

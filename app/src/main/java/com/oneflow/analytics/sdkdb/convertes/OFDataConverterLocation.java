@@ -34,7 +34,7 @@ import java.util.List;
 public class OFDataConverterLocation implements Serializable {
 
     @TypeConverter
-    public String toStringFromList(List<OFLocationDetails> myList){
+    public String toStringFromList(ArrayList<OFLocationDetails> myList){
 
         if (myList == null) {
             return (null);

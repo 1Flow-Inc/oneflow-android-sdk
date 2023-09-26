@@ -64,7 +64,7 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
 
     RecyclerView listOfSurvey;
     ProgressBar progressBar;
-    List<OFGetSurveyListResponse> slr;
+    ArrayList<OFGetSurveyListResponse> slr;
     OFSurveyListAdapter addb;
     Boolean configureCalled = false;
 

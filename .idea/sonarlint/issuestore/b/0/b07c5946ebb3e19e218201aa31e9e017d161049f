@@ -7,3 +7,11 @@ r	java:S117H"QRename this local variable to match the regular expression '^[a-
 …	java:S116"iRename this field "frequency_capping_select_value" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(É¬ªù8şÏÛ¾¬1
 t	java:S116 "XRename this field "time_per_user" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Û“ùö8şÏÛ¾¬1
 o	java:S116""NRename this field "_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(í—ø¨ıÿÿÿÿ8şÏÛ¾¬1
+j	java:S100,"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(À­š8âã…­1
+o	java:S1000"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Û¨±¾øÿÿÿÿ8âã…­1
+o	java:S1004"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ¸Šùøÿÿÿÿ8âã…­1
+j	java:S1008"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(à×’8âã…­1
+o	java:S100<"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(„Æä—ÿÿÿÿÿ8âã…­1
+j	java:S100@"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ê°å“8âã…­1
+j	java:S100D"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡˜¨–8âã…­1
+o	java:S100H"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©şÿÿÿÿ8âã…­1

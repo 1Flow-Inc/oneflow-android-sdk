@@ -1,4 +1,8 @@
 
+ã
+java:S1319‡"mThe return type of this method should be an interface such as "Map" rather than the implementation "HashMap".(—€ªÛ8ú≤“á≠1
+~
+java:S1319‡"`The type of "map" should be an interface such as "Map" rather than the implementation "HashMap".(—€ªÛ8‚‚‹á≠1
 x
 java:S1104I"[Make commanLogEnable a static final constant or non-public and provide accessors if needed.(ôÓ†’8ç“ÇÌ¨1
 w

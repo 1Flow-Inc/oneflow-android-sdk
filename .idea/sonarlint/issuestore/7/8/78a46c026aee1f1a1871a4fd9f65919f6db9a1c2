@@ -1,5 +1,11 @@
 
-r	java:S1173"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©þÿÿÿÿ8Ö’Î¾¬1
-o	java:S116$"NRename this field "_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(í—ø¨ýÿÿÿÿ8Ù’Î¾¬1
-j	java:S100/"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡˜¨–8Û’Î¾¬1
-o	java:S1003"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©þÿÿÿÿ8Û’Î¾¬1
+Š
+java:S1319X"mThe return type of this method should be an interface such as "Map" rather than the implementation "HashMap".(çœ«¼8¶òå‡­1
+†
+java:S1319\"dThe type of "dataMap" should be an interface such as "Map" rather than the implementation "HashMap".(ÿ¯ÞÝüÿÿÿÿ8½‹æ‡­1
+r	java:S1174"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©þÿÿÿÿ8Ö’Î¾¬1
+o	java:S116%"NRename this field "_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(í—ø¨ýÿÿÿÿ8Ù’Î¾¬1
+j	java:S1000"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡˜¨–8Û’Î¾¬1
+o	java:S1004"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©þÿÿÿÿ8Û’Î¾¬1
+L
+java:S1128"*Remove this unused import 'java.util.Map'.(¼è½Òþÿÿÿÿ8Ã‹æ‡­1

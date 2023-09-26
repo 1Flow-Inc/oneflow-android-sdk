@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class OFEventAPIRequest extends OFBaseModel {
 
     @SerializedName("events")
-    transient ArrayList<OFRecordEventsTabToAPI> events;
+    ArrayList<OFRecordEventsTabToAPI> events;
     @SerializedName("user_id") String userId;
 
 

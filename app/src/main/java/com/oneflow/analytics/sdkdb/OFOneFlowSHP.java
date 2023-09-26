@@ -150,14 +150,14 @@ public class OFOneFlowSHP {
     }
 
 
-    public void setSurveyList(List<OFGetSurveyListResponse> list) {
+    public void setSurveyList(ArrayList<OFGetSurveyListResponse> list) {
         SharedPreferences.Editor editor = pref.edit();
         String json = gson.toJson(list);
         editor.putString(OFConstants.SURVEYLISTSHP, json);
         editor.apply();     // This line is IMPORTANT !!!
     }
 
-    public List<OFGetSurveyListResponse> getSurveyList() {
+    public ArrayList<OFGetSurveyListResponse> getSurveyList() {
         String json = pref.getString(OFConstants.SURVEYLISTSHP, null);
         Type type = new TypeToken<ArrayList<OFGetSurveyListResponse>>() {
         }.getType();
@@ -165,14 +165,14 @@ public class OFOneFlowSHP {
     }
 
 
-    public void setClosedSurveyList(List<String> list) {
+    public void setClosedSurveyList(ArrayList<String> list) {
         SharedPreferences.Editor editor = pref.edit();
         String json = gson.toJson(list);
         editor.putString(OFConstants.SURVEYCLOSEDLISTSHP, json);
         editor.apply();     // This line is IMPORTANT !!!
     }
 
-    public List<String> getClosedSurveyList() {
+    public ArrayList<String> getClosedSurveyList() {
         String json = pref.getString(OFConstants.SURVEYCLOSEDLISTSHP, null);
         Type type = new TypeToken<ArrayList<String>>() {
         }.getType();

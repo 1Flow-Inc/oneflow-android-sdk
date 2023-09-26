@@ -27,7 +27,7 @@ public class OFGenericResponse<T> implements Serializable {// extends BaseRespon
 
 
     @SerializedName("result")
-    private transient T result ;
+    private T result ;
 
     @SerializedName("success")
     private int success;

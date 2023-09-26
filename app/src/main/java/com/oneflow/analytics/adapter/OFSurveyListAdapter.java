@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 public class OFSurveyListAdapter extends RecyclerView.Adapter<OFSurveyListAdapter.MyViewHolder> {
-    private List<OFGetSurveyListResponse> itemsList;
+    private ArrayList<OFGetSurveyListResponse> itemsList;
     private View.OnClickListener gch;
 
     @Override
@@ -55,13 +55,13 @@ public class OFSurveyListAdapter extends RecyclerView.Adapter<OFSurveyListAdapte
 
     }
 
-    public OFSurveyListAdapter(List<OFGetSurveyListResponse> arrayList, View.OnClickListener gch) {
+    public OFSurveyListAdapter(ArrayList<OFGetSurveyListResponse> arrayList, View.OnClickListener gch) {
         this.itemsList = arrayList;
         this.gch = gch;
         OFHelper.v(this.getClass().getName(), "OneFlow size[" + itemsList.size() + "]");
     }
 
-    public void notifyMyList(List<OFGetSurveyListResponse> arrayList) {
+    public void notifyMyList(ArrayList<OFGetSurveyListResponse> arrayList) {
         this.itemsList = arrayList;
         this.notifyDataSetChanged();
     }

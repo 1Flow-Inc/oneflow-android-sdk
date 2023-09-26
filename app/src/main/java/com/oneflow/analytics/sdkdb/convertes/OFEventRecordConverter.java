@@ -33,7 +33,7 @@ import java.util.List;
 public class OFEventRecordConverter implements Serializable {
 
     @TypeConverter
-    public String toStringFromList(List<OFDeviceDetails> myList){
+    public String toStringFromList(ArrayList<OFDeviceDetails> myList){
 
         if (myList == null) {
             return (null);

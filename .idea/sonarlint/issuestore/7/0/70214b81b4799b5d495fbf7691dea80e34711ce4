@@ -3,3 +3,7 @@ r	java:S117&"QRename this local variable to match the regular expression '^[a-
 r	java:S117."QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©þÿÿÿÿ8ìŽÝ¾¬1
 r	java:S116"VRename this field "button_type" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(…®êž8ïŽÝ¾¬1
 o	java:S116"NRename this field "_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(í—ø¨ýÿÿÿÿ8ïŽÝ¾¬1
+o	java:S100""NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Óéž›øÿÿÿÿ8¥àã…­1
+o	java:S100&"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢ŠŽ€úÿÿÿÿ8¥àã…­1
+j	java:S100*"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡˜¨–8¥àã…­1
+o	java:S100."NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©þÿÿÿÿ8¦àã…­1

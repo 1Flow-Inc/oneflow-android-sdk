@@ -34,7 +34,7 @@ import java.util.List;
 public class OFSurveyUserResponseChildConverter implements Serializable {
 
     @TypeConverter
-    public String toStringFromList(List<OFSurveyUserResponseChild> myList){
+    public String toStringFromList(ArrayList<OFSurveyUserResponseChild> myList){
 
         if (myList == null) {
             return (null);

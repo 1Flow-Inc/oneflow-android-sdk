@@ -1,5 +1,9 @@
 
 o
 java:S3776P"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(ï ±ª8ˆÜ§ƒ¬1
+h
+java:S1874¶"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(Ê™ÒŒ8Â÷ã…­1
+X
+java:S1874·":Remove this use of "setUserVisibleHint"; it is deprecated.(Ö‚Û8Ã÷ã…­1
 p
 java:S3776à"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(öÿÕÅ8€‚œë¬1

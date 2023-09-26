@@ -189,7 +189,7 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
 
             //closed survey logic for storage.
             OFOneFlowSHP ofs = OFOneFlowSHP.getInstance(OFSDKBaseActivity.this);
-            List<String> closedSurveyList = ofs.getClosedSurveyList();
+            ArrayList<String> closedSurveyList = ofs.getClosedSurveyList();
             if (closedSurveyList == null) {
                 closedSurveyList = new ArrayList<>();
             }

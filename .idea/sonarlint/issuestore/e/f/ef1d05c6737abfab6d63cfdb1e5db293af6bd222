@@ -11,3 +11,15 @@ r	java:S116&"QRename this field "os_ver" to match the regular expression '^[a-
 t	java:S116("XRename this field "screen_height" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±ü°‚8ŒšØ¾¬1
 s	java:S116*"WRename this field "screen_width" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ªë8ŒšØ¾¬1
 p	java:S116,"TRename this field "unique_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æÒÛş8ŒšØ¾¬1
+j	java:S100."NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡˜¨–8¥äã…­1
+o	java:S1002"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©şÿÿÿÿ8¥äã…­1
+j	java:S100>"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ç´×Â8¦äã…­1
+o	java:S100B"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ê´åÿÿÿÿÿ8¦äã…­1
+o	java:S100^"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ë ¢×ıÿÿÿÿ8§äã…­1
+o	java:S100b"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÉËıøÿÿÿÿ8¨äã…­1
+o	java:S100f"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¬À„İûÿÿÿÿ8¨äã…­1
+j	java:S100j"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÑÎÏí8¨äã…­1
+o	java:S100n"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.( Â¦ïüÿÿÿÿ8¨äã…­1
+j	java:S100r"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰Äï©8¨äã…­1
+o	java:S100v"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(úÑ¸·øÿÿÿÿ8©äã…­1
+j	java:S100z"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(•˜¦º8©äã…­1

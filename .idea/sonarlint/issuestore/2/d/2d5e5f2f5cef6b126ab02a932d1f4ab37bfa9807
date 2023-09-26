@@ -9,3 +9,13 @@ o	java:S116"NRename this field "_id" to match the regular expression '^[a-z][
 p	java:S116!"TRename this field "common_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ö‡º8üîØ¾¬1
 v	java:S116'"URename this field "deleted_on" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´¾Ìëùÿÿÿÿ8üîØ¾¬1
 u	java:S116/"YRename this field "schema_version" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œøæš8üîØ¾¬1
+j	java:S1003"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÜÆ£8Áåã…­1
+j	java:S1007"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(’­å¢8Áåã…­1
+j	java:S100;"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡˜¨–8Áåã…­1
+o	java:S100?"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©şÿÿÿÿ8Âåã…­1
+j	java:S100K"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(å¢åš8Âåã…­1
+j	java:S100O"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(åŸŠÓ8Âåã…­1
+o	java:S100c"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(µ±¤ôùÿÿÿÿ8Ãåã…­1
+o	java:S100g"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ùá–Øıÿÿÿÿ8Ãåã…­1
+p	java:S100ƒ"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(˜É®äıÿÿÿÿ8Ååã…­1
+k	java:S100‡"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÎš8Ååã…­1

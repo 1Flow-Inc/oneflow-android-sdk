@@ -1,7 +1,15 @@
 
+ƒ
+java:S13192"gThe type of "parameters" should be an interface such as "Map" rather than the implementation "HashMap".(¤ø‰%8†·Ñ‡­1
 m	java:S117*"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ç¢È»8çªÙ¾¬1
 r	java:S117:"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–ØõÍþÿÿÿÿ8ï¢áì¬1
 r	java:S117B"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÅÅòžùÿÿÿÿ8ï¢áì¬1
 x	java:S116 "\Rename this field "anonymous_user_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¦ÕÊŒ8êªÙ¾¬1
 n	java:S116""RRename this field "user_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(„ž¡Ü8êªÙ¾¬1
 t	java:S116$"SRename this field "log_user" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ïÄ™üÿÿÿÿ8êªÙ¾¬1
+j	java:S100&"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ºÎƒ©8îäã…­1
+j	java:S100*"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ç¢È»8ïäã…­1
+o	java:S1006"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(É’éëûÿÿÿÿ8ïäã…­1
+o	java:S100:"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–ØõÍþÿÿÿÿ8ðäã…­1
+i	java:S100>"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ã‹³.8ðäã…­1
+o	java:S100B"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÅÅòžùÿÿÿÿ8ðäã…­1

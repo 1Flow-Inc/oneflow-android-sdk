@@ -31,10 +31,10 @@ public class OFFilterSurveys extends Thread {
 
     String tag = this.getClass().getName();
     public void getFilterList() {
-        List<OFGetSurveyListResponse> currentList = OFOneFlowSHP.getInstance(context).getSurveyList();
+        ArrayList<OFGetSurveyListResponse> currentList = OFOneFlowSHP.getInstance(context).getSurveyList();
         ArrayList<OFGetSurveyListResponse> returningList = new ArrayList<>();
 
-        List<String> closedSurveyList = OFOneFlowSHP.getInstance(context).getClosedSurveyList();
+        ArrayList<String> closedSurveyList = OFOneFlowSHP.getInstance(context).getClosedSurveyList();
         boolean hasClosed = false;
 
         if (currentList != null) {

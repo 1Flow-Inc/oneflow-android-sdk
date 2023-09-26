@@ -1,4 +1,8 @@
 
+g
+java:S1874|"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(Ê™ÒŒ8åøã…­1
+W
+java:S1874}":Remove this use of "setUserVisibleHint"; it is deprecated.(Ö‚Û8åøã…­1
 p
 java:S3776¦"RRefactor this method to reduce its Cognitive Complexity from 36 to the 15 allowed.(ï ±ª8Çâ­ë¬1
 p
