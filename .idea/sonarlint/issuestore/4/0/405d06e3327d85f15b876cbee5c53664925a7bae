@@ -1,0 +1,33 @@
+
+x
+java:S1104I"[Make commanLogEnable a static final constant or non-public and provide accessors if needed.(™î Õ8Ò‚í¬1
+w
+java:S1104L"UMake headerKey a static final constant or non-public and provide accessors if needed.(ÉúÁÚùÿÿÿÿ8“ú‰í¬1
+R
+java:S1444I"5Make this "public static commanLogEnable" field final(™î Õ8Ò‚í¬1
+Q
+java:S1444L"/Make this "public static headerKey" field final(ÉúÁÚùÿÿÿÿ8“ú‰í¬1
+}
+java:S1149—"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(ºĞ‡ã8Ÿ­İì¬1
+P
+java:S1172Š"2Remove this unused method parameter "shouldPrint".(ÿ¡ğï8¨­İì¬1
+U
+java:S1172•"2Remove this unused method parameter "shouldPrint".(Âù…ıÿÿÿÿ8¨­İì¬1
+R
+java:S1874º"/Remove this use of "setView"; it is deprecated.(’æ·ëúÿÿÿÿ8«­İì¬1
+Q
+java:S1874í"3Remove this use of "NetworkInfo"; it is deprecated.(â¡Àù8®­İì¬1
+Z
+java:S1874ï"<Remove this use of "getActiveNetworkInfo"; it is deprecated.(ŸÓ³×8®­İì¬1
+Q
+java:S1874õ"3Remove this use of "NetworkInfo"; it is deprecated.(éûÖÔ8®­İì¬1
+Z
+java:S1874õ"<Remove this use of "getActiveNetworkInfo"; it is deprecated.(éûÖÔ8®­İì¬1
+V
+java:S1874ø"3Remove this use of "isConnected"; it is deprecated.(´Æò…ıÿÿÿÿ8®­İì¬1
+V
+java:S1874Ê"9Remove this use of "getDefaultDisplay"; it is deprecated.(¸êÄ8¿­İì¬1
+O
+java:S1874Ê"2Remove this use of "getMetrics"; it is deprecated.(¸êÄ8¿­İì¬1
+W
+java:S2864å"4Iterate over the "entrySet" instead of the "keySet".(½Ö²’ûÿÿÿÿ8À­İì¬1

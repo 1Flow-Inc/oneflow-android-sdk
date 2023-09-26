@@ -1,0 +1,7 @@
+
+m	java:S117*"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ç¢È»8çªÙ¾¬1
+r	java:S117:"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(–ØõÍşÿÿÿÿ8ï¢áì¬1
+r	java:S117B"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÅÅòùÿÿÿÿ8ï¢áì¬1
+x	java:S116 "\Rename this field "anonymous_user_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¦ÕÊŒ8êªÙ¾¬1
+n	java:S116""RRename this field "user_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(„¡Ü8êªÙ¾¬1
+t	java:S116$"SRename this field "log_user" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ïÄ™üÿÿÿÿ8êªÙ¾¬1

@@ -26,6 +26,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -53,9 +54,8 @@ public class OFSurveyQueInfoFragment extends BaseFragment implements View.OnClic
 
     ImageView waterMarkImage;
 
-    // LinearLayout waterMarkLayout;
-
-    OFCustomTextViewBold surveyTitle, submitButton;
+    OFCustomTextViewBold surveyTitle;
+    OFCustomTextViewBold submitButton;
 
     OFCustomTextView surveyDescription;
 
@@ -92,9 +92,6 @@ public class OFSurveyQueInfoFragment extends BaseFragment implements View.OnClic
         webContent = view.findViewById(R.id.webview_contents);
         pBar = view.findViewById(R.id.pbar);
 
-
-        //setupWeb();
-
         waterMarkImage = (ImageView) view.findViewById(R.id.watermark_img);
         waterMarkLayout = (LinearLayout) view.findViewById(R.id.bottom_water_mark);
         infoWebLayout = (LinearLayout) view.findViewById(R.id.info_weblayout);
@@ -106,7 +103,7 @@ public class OFSurveyQueInfoFragment extends BaseFragment implements View.OnClic
 
         surveyTitle.setTextColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())));
 
-        int colorAlpha = OFHelper.manipulateColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), 0.8f);//ColorUtils.setAlphaComponent(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), 80);//ColorUtils.setAlphaComponent(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), 80);
+        int colorAlpha = OFHelper.manipulateColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), 0.8f);
         int colorlike = OFHelper.manipulateColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), 0.6f);
         ((TextView) waterMarkLayout.getChildAt(1)).setTextColor(colorlike);
         surveyDescription.setTextColor(colorAlpha);
@@ -138,7 +135,6 @@ public class OFSurveyQueInfoFragment extends BaseFragment implements View.OnClic
         }
         submitButton.setOnClickListener(this);
         handleWaterMarkStyle(sdkTheme);
-        //Glide.with(this).load(R.drawable.thank_you).into(thankyouImage);
         try {
             if (!OFHelper.validateString(surveyScreens.getButtons().get(0).getTitle()).equalsIgnoreCase("NA")) {
                 submitButton.setText(surveyScreens.getButtons().get(0).getTitle());
@@ -159,34 +155,26 @@ public class OFSurveyQueInfoFragment extends BaseFragment implements View.OnClic
             gdSubmit = (GradientDrawable) (submitButton).getBackground();
 
             int colorAlpha = OFHelper.manipulateColor(Color.parseColor(themeColor), 0.5f);
-            gdSubmit.setColor(colorAlpha);//Color.parseColor(themeColor));
+            gdSubmit.setColor(colorAlpha);
             submitButton.setTypeface(null, Typeface.BOLD);
 
-            submitButton.setOnTouchListener(new View.OnTouchListener() {
-
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            //if (userInput.getText().toString().trim().length() >= surveyScreens.getInput().getMin_chars()) {
-                            gdSubmit.setColor(colorAlpha);
-                            //}
-                            break;
-                        case MotionEvent.ACTION_MOVE:
-
-                            break;
-
-                        case MotionEvent.ACTION_UP:
-                            //if (userInput.getText().toString().trim().length() >= surveyScreens.getInput().getMin_chars()) {
-                            gdSubmit.setColor(Color.parseColor(themeColor));
-                            //}
-                            break;
-                    }
-                    return false;
+            submitButton.setOnTouchListener((v, event) -> {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        gdSubmit.setColor(colorAlpha);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        gdSubmit.setColor(Color.parseColor(themeColor));
+                        break;
+                    default:
+                        break;
                 }
+                return false;
             });
         } catch (Exception ex) {
-
+            // error
         }
     }
 
@@ -198,44 +186,26 @@ public class OFSurveyQueInfoFragment extends BaseFragment implements View.OnClic
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-
+                    // Start
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-
+                    // End
                 }
 
                 @Override
                 public void onAnimationRepeat(Animation animation) {
-
+                    // Repeat
                 }
             });
             surveyTitle.startAnimation(animation);
-        } else {
-            //Helper.makeText(getActivity(), "Visibility Gone", 1);
         }
     }
 
-
-
-  /*  @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        //sa = (OFSDKBaseActivity) context;
-        OFHelper.v(tag,"1Flow onAttach sa ["+sa+"]");
-        if(sa!=null) {
-//            sa.resetHeight(this);
-        }else{
-            OFHelper.v(tag,"1Flow onAttach sa null");
-        }
-
-    }*/
-
-
     public void handleClick(View v) {
         if (v.getId() == R.id.watermark_img) {
-            String waterMark = "https://1flow.app/?utm_source=1flow-android-sdk&utm_medium=watermark&utm_campaign=real-time+feedback+powered+by+1flow";//https://www.notion.so/Powered-by-1Flow-logo-should-link-to-website-c186fca5220e41d19f420dd871f9696d";
+            String waterMark = "https://1flow.app/?utm_source=1flow-android-sdk&utm_medium=watermark&utm_campaign=real-time+feedback+powered+by+1flow";
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(waterMark));
             startActivity(browserIntent);
 
@@ -244,20 +214,17 @@ public class OFSurveyQueInfoFragment extends BaseFragment implements View.OnClic
 
     int i = 0;
     Dialog dialog;
-    Animation animation1, animation2, animation3, animation4, animation5;
+    Animation animation1;
+    Animation animation2;
+    Animation animation3;
+    Animation animation4;
+    Animation animation5;
 
     @Override
     public void onResume() {
         super.onResume();
 
         setupWeb();
-
-        /*if (sa != null && sa.getWindow() != null) {
-            int fragmentHeight = *//* calculate the height of your fragment *//*;
-
-            sa.setDialogHeight(fragmentHeight);
-        }*/
-
 
         View[] animateViews;
         if(OFHelper.validateString(surveyScreens.getMediaEmbedHTML()).equalsIgnoreCase("NA")) {
@@ -270,29 +237,23 @@ public class OFSurveyQueInfoFragment extends BaseFragment implements View.OnClic
         Animation[] annim = new Animation[]{animation1, animation2, animation3, animation4, animation5};
 
         if (i == 0) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    annim[i].setFillAfter(true);
-                    animateViews[i].startAnimation(annim[i]);
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                annim[i].setFillAfter(true);
+                animateViews[i].startAnimation(annim[i]);
 
-                }
             }, 500);
 
             animation1.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-                    //OFHelper.v(tag, "1Flow animation START [" + i + "]");
+                    // Start
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                   // OFHelper.v(tag, "1Flow animation END[" + i + "]");
-                    //
                     i++;
                     if (i < animateViews.length) {
                         animateViews[i].setVisibility(View.VISIBLE);
-                        //animateViews[i].clearAnimation();
                         animateViews[i].startAnimation(annim[i]);
                     }
 
@@ -316,7 +277,6 @@ public class OFSurveyQueInfoFragment extends BaseFragment implements View.OnClic
                     i++;
                     if (i < animateViews.length) {
                         animateViews[i].setVisibility(View.VISIBLE);
-                        //animateViews[i].clearAnimation();
                         animateViews[i].startAnimation(annim[i]);
                     }
 
@@ -340,7 +300,6 @@ public class OFSurveyQueInfoFragment extends BaseFragment implements View.OnClic
                     i++;
 
                     if (i < animateViews.length) {
-                        /* if (surveyScreens.getInput().getMin_chars() <= 0) {*/
                         try {
                             OFHelper.v(tag, "1Flow min char reached [" + surveyScreens.getButtons().get(0).getTitle() + "]");
                             if (!OFHelper.validateString(surveyScreens.getButtons().get(0).getTitle()).equalsIgnoreCase("NA")) {
@@ -377,7 +336,6 @@ public class OFSurveyQueInfoFragment extends BaseFragment implements View.OnClic
                     i++;
                     if (i < animateViews.length) {
                         animateViews[i].setVisibility(View.VISIBLE);
-                        //animateViews[i].clearAnimation();
                         animateViews[i].startAnimation(annim[i]);
                     }
 
@@ -394,21 +352,10 @@ public class OFSurveyQueInfoFragment extends BaseFragment implements View.OnClic
     @Override
     public void onClick(View v) {
 
-        //OFHelper.makeText(getActivity(), "Clicked on button", 1);
-       /* if (v.getId() == R.id.skip_btn) {
-            sa.addUserResponseToList(surveyScreens.get_id(), null, null);
-        } else if (v.getId() == R.id.submit_btn) {*/
-        /*long lastHitGap = System.currentTimeMillis()- OFOneFlowSHP.getInstance(getActivity()).getLongValue(OFConstants.SHP_LAST_CLICK_TIME);
-        OFHelper.v(tag, "1Flow lastHit[" + lastHitGap + "]");
-        if(lastHitGap>1500) {*/
         if(weakReference.get()!=null) {
             weakReference.get().addUserResponseToList(surveyScreens.get_id(), null, null);
         }else{
             OFHelper.v(tag,"1Flow no instance available to process");
         }
-        //}
-        /*} else if (v.getId() == R.id.cancel_btn) {
-            //
-        }*/
     }
 }

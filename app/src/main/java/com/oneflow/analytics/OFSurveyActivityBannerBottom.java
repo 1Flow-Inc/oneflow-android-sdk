@@ -21,6 +21,7 @@ package com.oneflow.analytics;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -57,15 +58,9 @@ public class OFSurveyActivityBannerBottom extends OFSDKBaseActivity {
         WindowManager.LayoutParams wlp = window.getAttributes();
         OFHelper.v(tag, "OneFlow Window size width[" + window.getAttributes().width + "]height[" + window.getAttributes().height + "]");
 
-        //double[] data = OFHelper.getScreenSize(this);
-
         wlp.gravity = Gravity.BOTTOM;
-       /* if (data[0] > 3) {
-            wlp.width = 1000;
-        } else {*/
-            wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        //}
-        wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        wlp.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        wlp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         wlp.flags &= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
 
         window.setAttributes(wlp);

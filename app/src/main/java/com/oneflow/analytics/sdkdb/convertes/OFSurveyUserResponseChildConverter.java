@@ -27,13 +27,14 @@ import com.oneflow.analytics.model.survey.OFSurveyUserResponseChild;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 
 //@ProvidedTypeConverter
 public class OFSurveyUserResponseChildConverter implements Serializable {
 
     @TypeConverter
-    public String toStringFromList(ArrayList<OFSurveyUserResponseChild> myList){
+    public String toStringFromList(List<OFSurveyUserResponseChild> myList){
 
         if (myList == null) {
             return (null);
@@ -41,8 +42,7 @@ public class OFSurveyUserResponseChildConverter implements Serializable {
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<OFSurveyUserResponseChild>>() {
         }.getType();
-        String json = gson.toJson(myList, type);
-        return json;
+        return gson.toJson(myList, type);
     }
 
     @TypeConverter
@@ -52,7 +52,6 @@ public class OFSurveyUserResponseChildConverter implements Serializable {
         }
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<OFSurveyUserResponseChild>>() {}.getType();
-        ArrayList<OFSurveyUserResponseChild> productCategoriesList = gson.fromJson(listStr, type);
-        return productCategoriesList;
+        return gson.fromJson(listStr, type);
     }
 }

@@ -27,12 +27,13 @@ import com.oneflow.analytics.model.adduser.OFDeviceDetails;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 //@ProvidedTypeConverter
 public class OFEventRecordConverter implements Serializable {
 
     @TypeConverter
-    public String toStringFromList(ArrayList<OFDeviceDetails> myList){
+    public String toStringFromList(List<OFDeviceDetails> myList){
 
         if (myList == null) {
             return (null);
@@ -40,18 +41,16 @@ public class OFEventRecordConverter implements Serializable {
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<OFDeviceDetails>>() {
         }.getType();
-        String json = gson.toJson(myList, type);
-        return json;
+        return gson.toJson(myList, type);
     }
 
     @TypeConverter
-    public ArrayList<OFDeviceDetails> toListFromString(String listStr){
+    public List<OFDeviceDetails> toListFromString(String listStr){
         if (listStr == null) {
             return (null);
         }
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<OFDeviceDetails>>() {}.getType();
-        ArrayList<OFDeviceDetails> productCategoriesList = gson.fromJson(listStr, type);
-        return productCategoriesList;
+        return gson.fromJson(listStr, type);
     }
 }

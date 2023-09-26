@@ -13,21 +13,6 @@ import kotlinx.coroutines.launch
 
 class OFLogUserDBRepoKT {
 
-    /*fun insertUserInputs(context: Context, sui: OFSurveyUserInputKT, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?) {
-        OFHelper.v("OFLogUserDBRepoKT.insertUserInputs", "OneFlow SurveyInput reached at insertUserInput method [" + sui.user_id + "]")
-
-        val job = Job()
-
-        val scope = CoroutineScope(job)
-        scope.launch {
-            val sdkdb: OFSDKKOTDB = OFSDKKOTDB.getDatabase(context, scope)
-            var inserted = sdkdb.logDAOKT()?.insertUserInput(sui)
-            OFHelper.v("OFLogUserDBRepoKT", "OneFlow SurveyInput inserted["+inserted+"]")
-            mrh.onResponseReceived(type, sui, inserted, "", null, null)
-        }
-
-
-    }*/
     fun insertUserInputs(context: Context, sui: OFSurveyUserInput, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?) {
         OFHelper.v("OFLogUserDBRepoKT.insertUserInputs", "OneFlow SurveyInput reached at insertUserInput method [" + sui.user_id + "]")
 
@@ -44,46 +29,6 @@ class OFLogUserDBRepoKT {
 
     }
 
-    /*fun deleteSentSurveyFromDB(context: Context, ids: Array<Int?>?, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?) {
-        OFHelper.v("LogDBRepo.DeleteUserInput", "OneFlow reached at delete method")
-
-        val job = Job()
-        val scope = CoroutineScope(job)
-        scope.launch {
-            val sdkdb: OFSDKKOTDB = OFSDKKOTDB.getDatabase(context, scope)
-            val deleteCount = sdkdb.logDAOKT()?.deleteSurvey(ids)
-            OFHelper.v("LogDBRepo.DeleteUserInput", "OneFlow reached at delete method count["+deleteCount+"]")
-            mrh.onResponseReceived(type, deleteCount, 0L, "", null, null)
-        }
-
-    }*/
-    /*fun deleteSentSurveyFromDB(context: Context, ids: Array<Int?>?, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?) {
-        OFHelper.v("LogDBRepo.DeleteUserInput", "OneFlow reached at delete method")
-
-        val job = Job()
-        val scope = CoroutineScope(job)
-        scope.launch {
-            val sdkdb = OFSDKDB.getInstance(context)
-            val deleteCount = sdkdb.logDAO().deleteSurvey(ids)
-            OFHelper.v("LogDBRepo.DeleteUserInput", "OneFlow reached at delete method count["+deleteCount+"]")
-            mrh.onResponseReceived(type, deleteCount, 0L, "", null, null)
-        }
-
-    }*/
-
-
-    /*fun fetchSurveyInput(context: Context, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?) {
-        OFHelper.v("LogDBRepo.fetchSurveyInputList", "OneFlow reached at fetchSurveyEvents method")
-
-        val job = Job()
-        val scope = CoroutineScope(job)
-        scope.launch {
-            val sdkdb: OFSDKKOTDB = OFSDKKOTDB.getDatabase(context, scope)
-            val sui = sdkdb.logDAOKT()?.getOfflineUserInput()
-            mrh.onResponseReceived(type, sui, 0L, "", null, null)
-        }
-
-    }*/
     fun fetchSurveyInput(context: Context, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?) {
         OFHelper.v("LogDBRepo.fetchSurveyInputList", "OneFlow reached at fetchSurveyEvents method")
 
@@ -128,7 +73,7 @@ class OFLogUserDBRepoKT {
                     mrh.onResponseReceived(type, updated, 0L, "", "", "")
                 }
             }catch (ex: Exception){
-
+                // error
             }
         }
 
@@ -160,26 +105,6 @@ class OFLogUserDBRepoKT {
 
     }
 
-    /*fun findSurveyForID(context: Context, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?, gslr: OFGetSurveyListResponse?, id: String, userId: String, eventName: String?) {
-        OFHelper.v("LogDBRepo.findSurveyForID", "OneFlow reached at updateSurveyInput method")
-
-        val job = Job()
-        val scope = CoroutineScope(job)
-        scope.launch {
-            val sdkdb: OFSDKKOTDB = OFSDKKOTDB.getDatabase(context, scope)
-            val surveyUserInput = sdkdb.logDAOKT()?.getSurveyForID(id, userId)
-            var ret:Long? = 0L
-            ret = if (surveyUserInput != null) {
-                surveyUserInput.createdOn
-            } else {
-                0L
-            }
-            OFHelper.e("LogDBRepo.updateSurveyUserId", "OneFlow find Survey for id[" + ret + "]eventName[" + eventName + "]")
-            mrh.onResponseReceived(type, gslr, 0L, "", ret, eventName)
-        }
-
-
-    } */
     fun findSurveyForID(context: Context, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?, gslr: OFGetSurveyListResponse?, id: String, userId: String, eventName: String?) {
         OFHelper.v("LogDBRepo.findSurveyForID", "OneFlow reached at updateSurveyInput method")
 
@@ -188,9 +113,7 @@ class OFLogUserDBRepoKT {
         scope.launch {
             val sdkdb = OFSDKDB.getInstance(context)
             val surveyUserInput = sdkdb.logDAO()?.getSurveyForID(id, userId)
-            //val surveyUserInput = sdkdb.logDAO()?.getSurveyForID(, userId)
-            var ret:Long? = 0L
-            ret = if (surveyUserInput != null) {
+            val ret:Long? = if (surveyUserInput != null) {
                 surveyUserInput.createdOn
             } else {
                 0L
@@ -202,20 +125,6 @@ class OFLogUserDBRepoKT {
 
     }
 
-    /*fun findLastSubmittedSurveyID(context: Context, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?, eventName: String?){
-        val job = Job()
-        val scope = CoroutineScope(job)
-        scope.launch {
-            val sdkdb: OFSDKKOTDB = OFSDKKOTDB.getDatabase(context, scope)
-            val surveyUserInputKT = sdkdb.logDAOKT()?.getLastSyncedSurveyId()
-
-            val ofSurveyUserInput = surveyUserInputKT as List<OFSurveyUserInputKT>
-            OFHelper.v("OFLogUserDBRepoKT", "OneFlow fetching Last submitted survey[" + ofSurveyUserInput.size +"]")
-            OFHelper.v("OFLogUserDBRepoKT", "OneFlow fetching Last submitted survey[" + ofSurveyUserInput.get(0).createdOn +"]")
-            OFHelper.v("OFLogUserDBRepoKT", "OneFlow fetching Last submitted survey[" + ofSurveyUserInput.get(0).synced +"]")
-            mrh.onResponseReceived(type, surveyUserInputKT.get(0), 0L, eventName, null, null)
-        }
-    }*/
     fun findLastSubmittedSurveyID(context: Context, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?, eventName: String?, surveyToInit :OFGetSurveyListResponse){
         val job = Job()
         val scope = CoroutineScope(job)

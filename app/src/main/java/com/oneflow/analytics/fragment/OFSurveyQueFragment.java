@@ -23,6 +23,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -59,16 +60,16 @@ import com.oneflow.analytics.utils.OFHelper;
 import java.util.ArrayList;
 
 
-public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickHandler {//View.OnClickListener {
+public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickHandler {
 
-
-    OFCustomTextViewBold surveyTitle, submitButton;
+    OFCustomTextViewBold surveyTitle;
+    OFCustomTextViewBold submitButton;
     RecyclerView surveyOptionRecyclerView;
-    OFCustomTextView ratingsNotLike, ratingsFullLike, surveyDescription, starRatingLabel;
+    OFCustomTextView ratingsNotLike;
+    OFCustomTextView ratingsFullLike;
+    OFCustomTextView surveyDescription;
+    OFCustomTextView starRatingLabel;
 
-
-    /*@BindView(R.id.cancel_btn)
-    CustomTextViewBold cancelButton;*/
     RelativeLayout optionLayout;
 
     //this is for testing
@@ -76,10 +77,11 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
     String tag = this.getClass().getName();
 
     OFSurveyOptionsAdapter dashboardAdapter;
-    Animation animation1, animation2, animation3, animation4, animationIn;//animationOut;
-
-    //String ratingsLabel[] = new String[]{"Very dissatisfied", "Somewhat dissatisfied", "Not dissatisfied nor satisfied", "Somewhat satisfied", "Very satisfied"};
-
+    Animation animation1;
+    Animation animation2;
+    Animation animation3;
+    Animation animation4;
+    Animation animationIn;
 
     public static OFSurveyQueFragment newInstance(OFSurveyScreens ahdList, OFSDKSettingsTheme sdkTheme, String themeColor) {
         OFSurveyQueFragment myFragment = new OFSurveyQueFragment();
@@ -107,25 +109,20 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
         Animation[] annim = new Animation[]{animation1, animation2, animation3, animation4};
 
         if (i == 0) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    annim[i].setFillAfter(true);
-                    animateViews[i].startAnimation(annim[i]);
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                annim[i].setFillAfter(true);
+                animateViews[i].startAnimation(annim[i]);
 
-                }
             }, 1000);
 
             animation1.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-                    //OFHelper.v(tag, "1Flow animation START [" + i + "]");
+                    // Start
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    //OFHelper.v(tag, "1Flow animation END[" + i + "]");
-                    //
                     i++;
 
                     if (!(surveyScreens.getMessage() != null && surveyScreens.getMessage().length() > 0)) {
@@ -134,7 +131,6 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
 
                     if (i < animateViews.length) {
                         animateViews[i].setVisibility(View.VISIBLE);
-                        //animateViews[i].clearAnimation();
                         animateViews[i].startAnimation(annim[i]);
                     }
 
@@ -142,23 +138,20 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
 
                 @Override
                 public void onAnimationRepeat(Animation animation) {
-                    //OFHelper.v(tag, "1Flow animation REPEAT[" + i + "]");
+                    // Repeat
                 }
             });
             animation2.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-                    //OFHelper.v(tag, "1Flow animation START [" + i + "]");
+                    // Start
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    //OFHelper.v(tag, "1Flow animation END[" + i + "]");
-                    //
                     i++;
                     if (i < animateViews.length) {
                         animateViews[i].setVisibility(View.VISIBLE);
-                        //animateViews[i].clearAnimation();
                         animateViews[i].startAnimation(annim[i]);
                     }
 
@@ -172,22 +165,16 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
             animation3.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-                    //OFHelper.v(tag, "1Flow animation START [" + i + "]");
+                    // Start
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-                    // OFHelper.v(tag, "1Flow animation END[" + i + "]");
-
                     i++;
-                    if (surveyScreens.getInput().getInput_type().equalsIgnoreCase("checkbox")) {
-                        if (i < animateViews.length) {
+                    if (surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_CHECKBOX) && (i < animateViews.length)) {
                             animateViews[i].setVisibility(View.VISIBLE);
-                            //animateViews[i].clearAnimation();
                             animateViews[i].startAnimation(annim[i]);
-                        }
                     }
-
                 }
 
                 @Override
@@ -196,9 +183,6 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
                 }
             });
         }
-
-           /* }
-        },1100);*/
     }
 
 
@@ -223,8 +207,8 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
 
         surveyTitle.setTextColor(colorTitle);
 
-        int colorDesc = OFHelper.manipulateColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), 0.8f);//ColorUtils.setAlphaComponent(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), OFHelper.getAlphaNumber(80));
-        int colorlike = OFHelper.manipulateColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), 0.6f);//ColorUtils.setAlphaComponent(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), OFHelper.getAlphaNumber(60));
+        int colorDesc = OFHelper.manipulateColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), 0.8f);
+        int colorlike = OFHelper.manipulateColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), 0.6f);
 
 
         surveyDescription.setTextColor(colorDesc);
@@ -235,12 +219,9 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
 
 
         handleWaterMarkStyle(sdkTheme);
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                OFHelper.v(tag, "1Flow button size found 0 ");
-                itemClicked(v, null, "");
-            }
+        submitButton.setOnClickListener(v -> {
+            OFHelper.v(tag, "1Flow button size found 0 ");
+            itemClicked(v, null, "");
         });
 
         submitButtonBeautification();
@@ -254,7 +235,6 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
         animation3 = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in_sdk);
         animation4 = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in_sdk);
         animationIn = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_in_sdk);
-        //animationOut = AnimationUtils.loadAnimation(getActivity(), R.anim.fade_out);
 
         if (OneFlow.titleFace != null) {
             if (OneFlow.titleFace.getTypeface() != null) {
@@ -285,15 +265,11 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
 
         if (surveyScreens.getInput().getRating_min_text() != null) {
             ratingsNotLike.setText(surveyScreens.getInput().getRating_min_text());
-        }/*else{
-            ratingsNotLike.setText("Not likely at all");
-        }*/
+        }
 
         if (surveyScreens.getInput().getRating_max_text() != null) {
             ratingsFullLike.setText(surveyScreens.getInput().getRating_max_text());
-        }/*else{
-            ratingsFullLike.setText("Extermely likely");
-        }*/
+        }
 
 
         webLayout = view.findViewById(R.id.weblayout);
@@ -302,7 +278,7 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
 
 
         OFHelper.v(tag, "1Flow input type [" + surveyScreens.getInput().getInput_type() + "][" + surveyScreens.getInput().getStars() + "]min[" + surveyScreens.getInput().getMin_val() + "][" + surveyScreens.getInput().getMax_val() + "][][][]");
-        if (surveyScreens.getInput().getInput_type().equalsIgnoreCase("rating-numerical")) {
+        if (surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_RATING_NUMERICAL)) {
             if (surveyScreens.getInput() != null) {
                 //Setting default value if not received from api
                 if (surveyScreens.getInput().getMin_val() == null) {
@@ -315,7 +291,7 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
                 surveyScreens.getInput().setRatingsList(prepareRatingsList(surveyScreens.getInput().getMin_val(), surveyScreens.getInput().getMax_val()));
             }
 
-        } else if (surveyScreens.getInput().getInput_type().equalsIgnoreCase("rating-5-star") || surveyScreens.getInput().getInput_type().equalsIgnoreCase("rating")) {
+        } else if (surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_RATING_FIVE_START) || surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_RATING)) {
             if (surveyScreens.getInput() != null) {
 
                 // this is only to keep stars closer
@@ -323,14 +299,14 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
                 params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
                 surveyOptionRecyclerView.setLayoutParams(params);
 
-                surveyScreens.getInput().setRatingsList(prepareRatingsList(1, 5));//surveyScreens.getInput().getMin_val(), surveyScreens.getInput().getMax_val()));
+                surveyScreens.getInput().setRatingsList(prepareRatingsList(1, 5));
                 ratingsNotLike.setVisibility(View.GONE);
                 ratingsFullLike.setVisibility(View.GONE);
             }
-        } else if (surveyScreens.getInput().getInput_type().contains("rating-emojis")) {
+        } else if (surveyScreens.getInput().getInput_type().contains(OFConstants.STR_RATING_EMOJI)) {
             if (surveyScreens.getInput() != null) {
 
-                surveyScreens.getInput().setRatingsList(prepareRatingsList(1, 5));//surveyScreens.getInput().getMin_val(), surveyScreens.getInput().getMax_val()));
+                surveyScreens.getInput().setRatingsList(prepareRatingsList(1, 5));
                 ratingsNotLike.setVisibility(View.GONE);
                 ratingsFullLike.setVisibility(View.GONE);
             }
@@ -351,27 +327,22 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
         OFHelper.v(tag, "1Flow input type min after[" + surveyScreens.getInput().getMin_val() + "][" + surveyScreens.getInput().getMax_val() + "]");
 
         RecyclerView.LayoutManager mLayoutManager = null;
-        if (surveyScreens.getInput().getInput_type().equalsIgnoreCase("rating-numerical") || surveyScreens.getInput().getInput_type().equalsIgnoreCase("nps")) {
+        if (surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_RATING_NUMERICAL) || surveyScreens.getInput().getInput_type().equalsIgnoreCase("nps")) {
             OFHelper.v(tag, "1Flow gridLayout set");
             mLayoutManager = new GridLayoutManager(getActivity(), (surveyScreens.getInput().getMax_val() + 1) - surveyScreens.getInput().getMin_val());
-        } else if (surveyScreens.getInput().getInput_type().equalsIgnoreCase("rating-emojis")) {
+        } else if (surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_RATING_EMOJI)) {
             mLayoutManager = new GridLayoutManager(getActivity(), 5);
-        } else if (surveyScreens.getInput().getInput_type().equalsIgnoreCase("rating") || surveyScreens.getInput().getInput_type().equalsIgnoreCase("rating-5-star")) {
+        } else if (surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_RATING) || surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_RATING_FIVE_START)) {
             mLayoutManager = new GridLayoutManager(getActivity(), 5);
             starRatingLabel.setVisibility(View.VISIBLE);
             starRatingLabel.setText(surveyScreens.getInput().getRating_text().get("0"));
         } else {
-            if (surveyScreens.getInput().getChoices() != null) {
-                if (surveyScreens.getInput().getChoices().size() > 0) {
-                    OFHelper.v(tag, "1Flow inputtype choices init");
-                    ratingsNotLike.setVisibility(View.GONE);
-                    starRatingLabel.setVisibility(View.GONE);
-                    ratingsFullLike.setVisibility(View.GONE);
-                    checkBoxSelection = new ArrayList<String>();
-                    //OFHelper.v(tag, "1Flow inputtype choices init ["+surveyScreens.getInput().getChoices().size()+"]");
-                    // surveyScreens.getInput().getChoices().addAll(fakeList());
-                    // OFHelper.v(tag, "1Flow inputtype choices init after["+surveyScreens.getInput().getChoices().size()+"]");
-                }
+            if (surveyScreens.getInput().getChoices() != null && !surveyScreens.getInput().getChoices().isEmpty()) {
+                OFHelper.v(tag, "1Flow inputtype choices init");
+                ratingsNotLike.setVisibility(View.GONE);
+                starRatingLabel.setVisibility(View.GONE);
+                ratingsFullLike.setVisibility(View.GONE);
+                checkBoxSelection = new ArrayList<>();
             }
 
             OFHelper.v(tag, "1Flow linearlayout set");
@@ -400,43 +371,38 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
             submitButton.setText(surveyScreens.getButtons().get(0).getTitle());
             submitButton.setTypeface(null,Typeface.BOLD);
 
-            submitButton.setOnTouchListener(new View.OnTouchListener() {
+            submitButton.setOnTouchListener((v, event) -> {
 
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (checkBoxSelection != null && !checkBoxSelection.isEmpty()) {
+                            gdSubmit.setColor(colorAlpha);
+                        }
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        //touch move code
+                        break;
 
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            if (checkBoxSelection != null && checkBoxSelection.size() > 0) {
-                                gdSubmit.setColor(colorAlpha);
-                            }
-                            break;
-                        case MotionEvent.ACTION_MOVE:
-                            //touch move code
-                            //Helper.makeText(mContext,"Moved",1);
-                            break;
+                    case MotionEvent.ACTION_UP:
+                        // touch up code
+                        if (checkBoxSelection != null && !checkBoxSelection.isEmpty()) {
+                            gdSubmit.setColor(Color.parseColor(themeColor));
+                        }
 
-                        case MotionEvent.ACTION_UP:
-                            // touch up code
-                            //Helper.makeText(mContext, "Released", 1);
-                            if (checkBoxSelection != null && checkBoxSelection.size() > 0) {
-                                gdSubmit.setColor(Color.parseColor(themeColor));
-                            }
-
-                            break;
-                    }
-                    return false;
+                        break;
+                    default:
+                        break;
                 }
+                return false;
             });
 
-            if (surveyScreens.getInput().getInput_type().equalsIgnoreCase("checkbox")) {
-                //submitButton.setVisibility(View.INVISIBLE);
-                gdSubmit.setColor(colorAlpha);//Color.parseColor(themeColor));
+            if (surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_CHECKBOX)) {
+                gdSubmit.setColor(colorAlpha);
             } else {
                 submitButton.setVisibility(View.GONE);
             }
         } catch (Exception ex) {
-
+            // error
         }
     }
 
@@ -458,48 +424,43 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
 
         long lastHitGap = System.currentTimeMillis() - OFOneFlowSHP.getInstance(getActivity()).getLongValue(OFConstants.SHP_LAST_CLICK_TIME);
         OFHelper.v(tag, "1Flow lastHit[" + lastHitGap + "]");
-        if (lastHitGap > 1000 || surveyScreens.getInput().getInput_type().equalsIgnoreCase("checkbox")) {
+        if (lastHitGap > 1000 || surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_CHECKBOX)) {
 
             OFHelper.v(tag, "1Flow othervalue [" + obj + "]reserve[" + reserve + "]");
             if (v.getId() == R.id.submit_btn) {
                 if (lastHitGap > 400) {
                     OFOneFlowSHP.getInstance(getActivity()).storeValue(OFConstants.SHP_LAST_CLICK_TIME, System.currentTimeMillis());
                     OFHelper.v(tag, "1Flow othervalue submit btn");
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (checkBoxSelection != null) {
-                                if (checkBoxSelection.size() > 0) {
-                                    String allSelections = checkBoxSelection.toString().replace("[", "");
-                                    allSelections = allSelections.replace("]", "");
-                                    allSelections = allSelections.replace(" ", "");
-                                    OFHelper.v(tag, "1Flow allselection[" + allSelections + "] str[" + reserve + "]");
-                                    if (weakReference != null) {
-                                        weakReference.get().addUserResponseToList(surveyScreens.get_id(), allSelections, reserve);
-                                    } else {
-                                        OFHelper.v(tag, "1Flow no instance available to process");
-                                    }
+                    new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                        if (checkBoxSelection != null && (!checkBoxSelection.isEmpty())) {
+                                String allSelections = checkBoxSelection.toString().replace("[", "");
+                                allSelections = allSelections.replace("]", "");
+                                allSelections = allSelections.replace(" ", "");
+                                OFHelper.v(tag, "1Flow allselection[" + allSelections + "] str[" + reserve + "]");
+                                if (weakReference != null) {
+                                    weakReference.get().addUserResponseToList(surveyScreens.get_id(), allSelections, reserve);
+                                } else {
+                                    OFHelper.v(tag, "1Flow no instance available to process");
                                 }
-                            }
                         }
                     }, 1000);
                 }
             } else {
                 OFOneFlowSHP.getInstance(getActivity()).storeValue(OFConstants.SHP_LAST_CLICK_TIME, System.currentTimeMillis());
-                OFHelper.v(tag, "1Flow inputtype[" + surveyScreens.getInput().getInput_type() + "]isCheckbox[" + surveyScreens.getInput().getInput_type().equalsIgnoreCase("checkbox") + "]ratings[" + surveyScreens.getInput().getInput_type().contains("rating") + "]isStar[" + surveyScreens.getInput().getStars() + "]");
-                if (surveyScreens.getInput().getInput_type().contains("rating-emojis")) {
+                OFHelper.v(tag, "1Flow inputtype[" + surveyScreens.getInput().getInput_type() + "]isCheckbox[" + surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_CHECKBOX) + "]ratings[" + surveyScreens.getInput().getInput_type().contains(OFConstants.STR_RATING) + "]isStar[" + surveyScreens.getInput().getStars() + "]");
+                if (surveyScreens.getInput().getInput_type().contains(OFConstants.STR_RATING_EMOJI)) {
                     int position = (int) v.getTag();
                     OFHelper.v(tag, "1Flow inputType[" + surveyScreens.getInput().getStars() + "]position[" + position + "]");
                     setSelected(position, true);
 
-                } else if (surveyScreens.getInput().getInput_type().equalsIgnoreCase("rating") ||
-                        surveyScreens.getInput().getInput_type().equalsIgnoreCase("rating-5-star")) {
+                } else if (surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_RATING) ||
+                        surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_RATING_FIVE_START)) {
                     int position = (int) v.getTag();
                     OFHelper.v(tag, "1Flow inputType[" + surveyScreens.getInput().getStars() + "]position[" + position + "]rating text[" + surveyScreens.getInput().getRating_text() + "]");
                     setSelected(position, false);
-                    starRatingLabel.setText(surveyScreens.getInput().getRating_text().get(String.valueOf(position + 1)));//ratingsLabel[position]);
+                    starRatingLabel.setText(surveyScreens.getInput().getRating_text().get(String.valueOf(position + 1)));
                 } else if (surveyScreens.getInput().getInput_type().equalsIgnoreCase("nps") ||
-                        surveyScreens.getInput().getInput_type().equalsIgnoreCase("rating-numerical")) {
+                        surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_RATING_NUMERICAL)) {
                     int position = (int) v.getTag();
                     setSelected(position, true);
                 } else if (surveyScreens.getInput().getInput_type().equalsIgnoreCase("mcq")) {
@@ -510,32 +471,26 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
                         OFHelper.v(tag, "1Flow mcq clicked choices radio id[]other id[" + surveyScreens.getInput().getOtherOption() + "]");
                         if (!surveyScreens.getInput().getOtherOption().equalsIgnoreCase(position)) {
 
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (weakReference.get() != null) {
-                                        weakReference.get().addUserResponseToList(surveyScreens.get_id(), position, null);
-                                    } else {
-                                        OFHelper.v(tag, "1Flow no instance available to process");
-                                    }
+                            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                                if (weakReference.get() != null) {
+                                    weakReference.get().addUserResponseToList(surveyScreens.get_id(), position, null);
+                                } else {
+                                    OFHelper.v(tag, "1Flow no instance available to process");
                                 }
                             }, 5);
                         }
                     } else {
 
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (weakReference.get() != null) {
-                                    weakReference.get().addUserResponseToList(surveyScreens.get_id(), position, (String) obj);
-                                } else {
-                                    OFHelper.v(tag, "1Flow no instance available to process");
-                                }
+                        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                            if (weakReference.get() != null) {
+                                weakReference.get().addUserResponseToList(surveyScreens.get_id(), position, (String) obj);
+                            } else {
+                                OFHelper.v(tag, "1Flow no instance available to process");
                             }
                         }, 5);
                     }
 
-                } else if (surveyScreens.getInput().getInput_type().equalsIgnoreCase("checkbox")) {
+                } else if (surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_CHECKBOX)) {
                     OFHelper.v(tag, "1Flow inside checkbox reserve[" + reserve + "]");
                     if (v instanceof CheckBox) {
                         CheckBox cb = (CheckBox) v;
@@ -556,27 +511,22 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
 
 
     private void setSelected(int position, Boolean isSingle) {
-        int i = 0;
+        int pos = 0;
         OFHelper.v(tag, "1Flow position [" + position + "]isSingle[" + isSingle + "]");
         try {
 
-
-            while (i < surveyScreens.getInput().getRatingsList().size()) {
-                if (isSingle) {
-                    surveyScreens.getInput().getRatingsList().get(i).setSelected(false);
+            while (pos < surveyScreens.getInput().getRatingsList().size()) {
+                if (Boolean.TRUE.equals(isSingle)) {
+                    surveyScreens.getInput().getRatingsList().get(pos).setSelected(false);
                 } else {
-                    if (i <= position) {
-                        surveyScreens.getInput().getRatingsList().get(i).setSelected(true);
-                    } else {
-                        surveyScreens.getInput().getRatingsList().get(i).setSelected(false);
-                    }
+                    surveyScreens.getInput().getRatingsList().get(pos).setSelected(pos <= position);
                 }
-                i++;
+                pos++;
             }
-            if (isSingle) {
+            if (Boolean.TRUE.equals(isSingle)) {
                 if (surveyScreens.getInput().getInput_type().equalsIgnoreCase("nps") ||
-                        surveyScreens.getInput().getInput_type().equalsIgnoreCase("rating-numerical") ||
-                        surveyScreens.getInput().getInput_type().equalsIgnoreCase("rating-5-star")
+                        surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_RATING_NUMERICAL) ||
+                        surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_RATING_FIVE_START)
                 ) {
                     for (OFRatingsModel rm : surveyScreens.getInput().getRatingsList()) {
                         OFHelper.v(tag, "1Flow " + surveyScreens.getInput().getInput_type() + " rm.getId()[" + rm.getId() + "]position[" + position + "]");
@@ -591,22 +541,19 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
             dashboardAdapter.notifyMyList(surveyScreens.getInput());
             if (submitButton.getVisibility() != View.VISIBLE) {
 
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (surveyScreens.getInput().getInput_type().equalsIgnoreCase("rating-5-star") ||
-                                surveyScreens.getInput().getInput_type().equalsIgnoreCase("rating-emojis")) {
-                            if(weakReference.get()!=null) {
-                                weakReference.get().addUserResponseToList(surveyScreens.get_id(), null, String.valueOf(position + 1));
-                            }else{
-                                OFHelper.v(tag,"1Flow no instance available to process");
-                            }
-                        } else {
-                            if(weakReference.get()!=null) {
-                                weakReference.get().addUserResponseToList(surveyScreens.get_id(), null, String.valueOf(position));
-                            }else{
-                                OFHelper.v(tag,"1Flow no instance available to process");
-                            }
+                new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                    if (surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_RATING_FIVE_START) ||
+                            surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_RATING_EMOJI)) {
+                        if(weakReference.get()!=null) {
+                            weakReference.get().addUserResponseToList(surveyScreens.get_id(), null, String.valueOf(position + 1));
+                        }else{
+                            OFHelper.v(tag,"1Flow no instance available to process");
+                        }
+                    } else {
+                        if(weakReference.get()!=null) {
+                            weakReference.get().addUserResponseToList(surveyScreens.get_id(), null, String.valueOf(position));
+                        }else{
+                            OFHelper.v(tag,"1Flow no instance available to process");
                         }
                     }
                 }, 1000);
@@ -620,7 +567,7 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
 
     private void checkBoxSelectionStatus(String tag, Boolean isCheck, String str) {
         OFHelper.v(tag, "1Flow button size tag[" + tag + "]isChecked[" + isCheck + "]othervalue[" + str + "]");
-        if (isCheck) { // adding value in the list
+        if (Boolean.TRUE.equals(isCheck)) { // adding value in the list
             if (!checkBoxSelection.contains(tag)) {
                 checkBoxSelection.add(tag);
             }
@@ -628,49 +575,30 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
             checkBoxSelection.remove(tag);
         }
 
-
-        // OFHelper.v(tag, "1Flow button size found[" + checkBoxSelection.size() + "]othervalue[" + str + "]btn[" + surveyScreens.getButtons() + "][" + surveyScreens.getButtons().size() + "]");
-        if (checkBoxSelection.size() > 0) {
+        if (!checkBoxSelection.isEmpty()) {
             if (surveyScreens.getButtons() != null) {
                 if (surveyScreens.getButtons().size() == 1) {
-                    //if (submitButton.getVisibility() != View.VISIBLE) {
                     submitButton.setText(surveyScreens.getButtons().get(0).getTitle());
-                    //submitButton.setVisibility(View.VISIBLE);
                     OFHelper.v(tag, "1Flow color theme[" + themeColor + "]parsed color[" + Color.parseColor(themeColor) + "]");
 
                     if (!isActive) {
                         transitActive();
                         isActive = true;
                     }
-                    //submitButton.startAnimation(animationIn);
-                    submitButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            OFHelper.v(tag, "1Flow button size found 1 ");
-                            String strLoc = dashboardAdapter.handleCheckboxFromOutside();
-                            itemClicked(v, str, strLoc);
-                        }
+                    submitButton.setOnClickListener(v -> {
+                        OFHelper.v(tag, "1Flow button size found 1 ");
+                        String strLoc = dashboardAdapter.handleCheckboxFromOutside();
+                        itemClicked(v, str, strLoc);
                     });
-                    // }
                 } else if (surveyScreens.getButtons().size() == 2) {
-                    //if (submitButton.getVisibility() != View.VISIBLE) {
                     submitButton.setText(surveyScreens.getButtons().get(0).getTitle());
-                    //submitButton.setVisibility(View.VISIBLE);
                     submitButton.setBackgroundColor(Color.parseColor(themeColor));
                     gdSubmit.setColor(Color.parseColor(themeColor));
-                    //submitButton.startAnimation(animationIn);
-                    submitButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            OFHelper.v(tag, "1Flow button size found 2 ");
-                            itemClicked(v, str, "");
-                        }
+                    submitButton.setOnClickListener(v -> {
+                        OFHelper.v(tag, "1Flow button size found 2 ");
+                        itemClicked(v, str, "");
                     });
                 }
-                    /*cancelButton.setText(surveyScreens.getButtons().get(1).getTitle());
-                    cancelButton.setVisibility(View.VISIBLE);
-                    cancelButton.setOnClickListener(this);*/
-                // }
             } else {
                 OFHelper.e(tag, "Button list not found");
             }

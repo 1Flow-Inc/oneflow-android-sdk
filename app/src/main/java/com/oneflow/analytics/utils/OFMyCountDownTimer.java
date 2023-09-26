@@ -56,7 +56,6 @@ public class OFMyCountDownTimer extends CountDownTimer implements OFMyResponseHa
     public void onTick(long millisUntilFinished) {
         OFHelper.v("MyCountDownTimer", "1Flow tick called");
         if (OFHelper.isConnected(mContext)) {
-            //OFEventDBRepo.fetchEvents(mContext, this, OFConstants.ApiHitType.fetchEventsFromDB);
             new OFEventDBRepoKT().fetchEvents(mContext, this, OFConstants.ApiHitType.fetchEventsFromDB);
 
         }
@@ -80,7 +79,7 @@ public class OFMyCountDownTimer extends CountDownTimer implements OFMyResponseHa
                     ArrayList<OFRecordEventsTab> list = (ArrayList<OFRecordEventsTab>) obj;
                     OFHelper.v("OFMyCountDownTimer", "1Flow fetchEventsFromDB list received size[" + list.size() + "]");
                     //Preparing list to send api
-                    if (list.size() > 0) {
+                    if (!list.isEmpty()) {
                         Integer[] ids = new Integer[list.size()];
                         int i = 0;
                         ArrayList<OFRecordEventsTabToAPI> retListToAPI = new ArrayList<>();
@@ -97,15 +96,14 @@ public class OFMyCountDownTimer extends CountDownTimer implements OFMyResponseHa
                             ids[i++] = ret.getId();
                         }
                         OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
-                        if (shp.getUserDetails() != null) {
-                            if (!OFHelper.validateString(shp.getUserDetails().getAnalytic_user_id()).equalsIgnoreCase("NA")) {
+                        if (shp.getUserDetails() != null && (!OFHelper.validateString(shp.getUserDetails().getAnalytic_user_id()).equalsIgnoreCase("NA"))) {
                                 OFEventAPIRequest ear = new OFEventAPIRequest();
                                 ear.setUserId(shp.getUserDetails().getAnalytic_user_id());
                                 ear.setEvents(retListToAPI);
                                 OFHelper.v("OFMyCountDownTimer", "1Flow fetchEventsFromDB request prepared");
                                 shp.storeValue(OFConstants.SHP_EVENTS_DELETE_PENDING, true);
                                 OFEventAPIRepo.sendLogsToApi(shp.getStringValue(OFConstants.APPIDSHP), ear, this, OFConstants.ApiHitType.sendEventsToAPI, ids);
-                            }
+
                         }
                     }
                 }else{
@@ -116,16 +114,15 @@ public class OFMyCountDownTimer extends CountDownTimer implements OFMyResponseHa
                 if (obj != null) {
                     //Events has been sent to api now deleting local records
                     Integer[] ids1 = (Integer[]) obj;
-                    //OFEventDBRepo.deleteEvents(mContext, ids1, this, OFConstants.ApiHitType.deleteEventsFromDB);
                     new OFEventDBRepoKT().deleteEvents(mContext, ids1, this, OFConstants.ApiHitType.deleteEventsFromDB);
                 }
                 break;
             case deleteEventsFromDB:
                 if (obj != null) {
                     OFOneFlowSHP.getInstance(mContext).storeValue(OFConstants.SHP_EVENTS_DELETE_PENDING, false);
-                    OFHelper.v("MyCountDownTimer", "1Flow events delete count[" + ((Integer) obj) + "]");
+                    OFHelper.v("MyCountDownTimer", "1Flow events delete count[" + (obj) + "]");
                     Intent intent = new Intent("events_submitted");
-                    intent.putExtra("size", String.valueOf((Integer) obj));
+                    intent.putExtra("size", String.valueOf(obj));
                     mContext.sendBroadcast(intent);
                 }
 
@@ -145,16 +142,15 @@ public class OFMyCountDownTimer extends CountDownTimer implements OFMyResponseHa
 
                 if (obj != null) {
                     OFSurveyUserInput survey1 = (OFSurveyUserInput) obj;
-                    //new OFLogUserDBRepoKT().deleteSentSurveyFromDB(context, new Integer[]{survey1.get_id()}, this, OFConstants.ApiHitType.deleteEventsFromDB);
 
                     new OFLogUserDBRepoKT().updateSurveyInput(mContext, this, OFConstants.ApiHitType.updateSurveyIds, true, survey1.getSurvey_id());
-
-                    //new OFMyDBAsyncTask(context,this,OFConstants.ApiHitType.deleteEventsFromDB).execute(new Integer[]{survey1.get_id()});
                 }
                 break;
             //case deleteSurveyFromDB:
             case updateSurveyIds:
                 checkOffLineSurvey();
+                break;
+            default:
                 break;
         }
 
@@ -164,7 +160,5 @@ public class OFMyCountDownTimer extends CountDownTimer implements OFMyResponseHa
         OFHelper.v("MyCountDownTimer", "1Flow calling check non submitted survey");
 
         new OFLogUserDBRepoKT().fetchSurveyInput(mContext, this, OFConstants.ApiHitType.fetchSurveysFromDB);
-        //new OFMyDBAsyncTask(context,this,OFConstants.ApiHitType.fetchSurveysFromDB).execute();
-
     }
 }

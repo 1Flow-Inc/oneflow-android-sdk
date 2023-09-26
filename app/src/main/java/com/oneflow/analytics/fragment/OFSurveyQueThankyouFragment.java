@@ -24,6 +24,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,8 @@ import com.oneflow.analytics.utils.OFHelper;
 
 public class OFSurveyQueThankyouFragment extends BaseFragment {
 
-    ImageView thankyouImage, waterMarkImage;
+    ImageView thankyouImage;
+    ImageView waterMarkImage;
 
     OFCustomTextViewBold surveyTitle;
 
@@ -93,7 +95,7 @@ public class OFSurveyQueThankyouFragment extends BaseFragment {
         surveyDescription = (OFCustomTextView) view.findViewById(R.id.survey_sub_title);
         surveyTitle.setTextColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())));
 
-        int colorAlpha = OFHelper.manipulateColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), 0.8f);//ColorUtils.setAlphaComponent(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), 80);//ColorUtils.setAlphaComponent(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), 80);
+        int colorAlpha = OFHelper.manipulateColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), 0.8f);
         int colorlike = OFHelper.manipulateColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), 0.6f);
         ((TextView) waterMarkLayout.getChildAt(1)).setTextColor(colorlike);
         surveyDescription.setTextColor(colorAlpha);
@@ -135,7 +137,6 @@ public class OFSurveyQueThankyouFragment extends BaseFragment {
             OFHelper.v(tag,"1Flow no instance available to process");
         }
         handleWaterMarkStyle(sdkTheme);
-        //Glide.with(this).load(R.drawable.thank_you).into(thankyouImage);
         Glide.with(this).load(R.drawable.thanku_bg).into(new DrawableImageViewTarget(thankyouImage) {
             @Override
             public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
@@ -145,7 +146,7 @@ public class OFSurveyQueThankyouFragment extends BaseFragment {
                     ((GifDrawable) resource).registerAnimationCallback(new Animatable2Compat.AnimationCallback() {
                         @Override
                         public void onAnimationStart(Drawable drawable) {
-                            super.onAnimationStart(drawable);
+                            // Start
                         }
 
                         @Override
@@ -154,77 +155,44 @@ public class OFSurveyQueThankyouFragment extends BaseFragment {
 
                             if (surveyScreens.getRules() != null) {
                                 if (surveyScreens.getRules().getDismissBehavior() != null) {
-                                    if (surveyScreens.getRules().getDismissBehavior().getFadesAway()) {
-                                        new Handler().postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
+                                    boolean fades = surveyScreens.getRules().getDismissBehavior().getFadesAway();
+                                    if (fades) {
+                                        new Handler(Looper.getMainLooper()).postDelayed(() -> {
 
-                                                ruleAction();
-                                                if(weakReference!=null) {
-                                                    weakReference.get().finish();
-                                                }else{
-                                                    OFHelper.v(tag,"1Flow no instance available to process");
-                                                }
-                                            }
-                                        }, surveyScreens.getRules().getDismissBehavior().getFadesAway() ? (surveyScreens.getRules().getDismissBehavior().getDelayInSeconds() * 1000) : 20);
-                                        // above logic is added for fade away if true then should fade away in mentioned duration
-                                    }
-                                } else {
-                                    new Handler().postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
                                             ruleAction();
                                             if(weakReference!=null) {
                                                 weakReference.get().finish();
                                             }else{
                                                 OFHelper.v(tag,"1Flow no instance available to process");
                                             }
-                                        }
-                                    }, 20);
-                                }
-                            } else {
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
+                                        }, (long)surveyScreens.getRules().getDismissBehavior().getDelayInSeconds() * 1000);
+                                        // above logic is added for fade away if true then should fade away in mentioned duration
+                                    }
+                                } else {
+                                    new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                                        ruleAction();
                                         if(weakReference!=null) {
                                             weakReference.get().finish();
                                         }else{
                                             OFHelper.v(tag,"1Flow no instance available to process");
                                         }
+                                    }, 20);
+                                }
+                            } else {
+                                new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                                    if(weakReference!=null) {
+                                        weakReference.get().finish();
+                                    }else{
+                                        OFHelper.v(tag,"1Flow no instance available to process");
                                     }
                                 }, 20);
                             }
-
-
-                            /*if (surveyScreens.getRules() != null) {
-                                if (surveyScreens.getRules().getDismissBehavior() != null) {
-                                    if (surveyScreens.getRules().getDismissBehavior().getFadesAway()) {
-                                        new Handler().postDelayed(new Runnable() {
-                                            @Override
-                                            public void run() {
-
-                                                sa.finish();
-                                            }
-                                        }, surveyScreens.getRules().getDismissBehavior().getFadesAway() ? (surveyScreens.getRules().getDismissBehavior().getDelayInSeconds() * 1000) : 20);
-                                        // above logic is added for fade away if true then should fade away in mentioned duration
-                                    }
-                                } else {
-                                    new Handler().postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-
-                                            sa.finish();
-                                        }
-                                    }, 20);
-                                }
-                            }*/
                         }
                     });
                 }
 
             }
         });
-        //ruleAction();
         if(weakReference!=null) {
             weakReference.get().initFragment(5);
         }else{
@@ -239,7 +207,8 @@ public class OFSurveyQueThankyouFragment extends BaseFragment {
         super.onResume();
         try {
             //Logic for showing close button if fade away is false then have to show close button at thankyou page
-            if (!surveyScreens.getRules().getDismissBehavior().getFadesAway()) {
+            boolean fades = surveyScreens.getRules().getDismissBehavior().getFadesAway();
+            if (!fades) {
                 if(weakReference!=null) {
                     weakReference.get().closeBtn.setVisibility(View.VISIBLE);
                 }else{
@@ -247,24 +216,18 @@ public class OFSurveyQueThankyouFragment extends BaseFragment {
                 }
             }
         } catch (Exception ex) {
-
-           // OFHelper.e(tag, "1Flow Error[" + ex.getMessage() + "]");
-
+           // error
         }
     }
 
     private void ruleAction() {
-        //OFHelper.v(tag,"1Flow thankyou page rule ["+new Gson().toJson(surveyScreens.getRules())+"]");
-        if (surveyScreens.getRules() != null) {
-            if (surveyScreens.getRules().getDataLogic() != null && surveyScreens.getRules().getDataLogic().size() > 0) {
+        if (surveyScreens.getRules() != null && (surveyScreens.getRules().getDataLogic() != null && !surveyScreens.getRules().getDataLogic().isEmpty())) {
                 OFDataLogic dl = surveyScreens.getRules().getDataLogic().get(0);
                 if (dl != null) {
                     if (dl.getType().equalsIgnoreCase("open-url")) {
-                        //todo need to close properly
                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(dl.getAction()));
                         startActivity(browserIntent);
                     } else if (dl.getType().equalsIgnoreCase("rating")) {
-                        // OFHelper.makeText(OFSurveyActivity.this,"RATING METHOD CALLED",1);
                         if(weakReference!=null) {
                             weakReference.get().reviewThisApp(getActivity());
                         }else{
@@ -272,7 +235,7 @@ public class OFSurveyQueThankyouFragment extends BaseFragment {
                         }
                     }
                 }
-            }
+
         }
     }
 
@@ -284,44 +247,20 @@ public class OFSurveyQueThankyouFragment extends BaseFragment {
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-
+                    // Start
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
-
+                    // End
                 }
 
                 @Override
                 public void onAnimationRepeat(Animation animation) {
-
+                    // Repeat
                 }
             });
             surveyTitle.startAnimation(animation);
-        } else {
-            //Helper.makeText(getActivity(), "Visibility Gone", 1);
         }
     }
-
-
-
-   /* @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        sa = (OFSDKBaseActivity) context;
-
-    }*/
-
-
-  /*  public void handleClick(View v) {
-        if (v.getId() == R.id.watermark_img) {
-            String waterMark = "https://1flow.app/?utm_source=1flow-android-sdk&utm_medium=watermark&utm_campaign=real-time+feedback+powered+by+1flow";//https://www.notion.so/Powered-by-1Flow-logo-should-link-to-website-c186fca5220e41d19f420dd871f9696d";
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(waterMark));
-            startActivity(browserIntent);
-
-        }
-    }*/
-
-
-
 }

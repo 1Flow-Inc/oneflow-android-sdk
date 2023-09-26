@@ -21,6 +21,7 @@ package com.oneflow.analytics;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -70,9 +71,9 @@ public class OFSurveyActivityCenter extends OFSDKBaseActivity {
         if (data[0] > 3) {
             wlp.width = OFConstants.screenWidth;
         } else {
-            wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
+            wlp.width = ViewGroup.LayoutParams.MATCH_PARENT;
         }
-        wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        wlp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         wlp.flags &= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
 
         window.setAttributes(wlp);

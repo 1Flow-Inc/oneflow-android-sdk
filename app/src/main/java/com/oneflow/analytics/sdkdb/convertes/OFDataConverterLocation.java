@@ -27,13 +27,14 @@ import com.oneflow.analytics.model.adduser.OFLocationDetails;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 
 //@ProvidedTypeConverter
 public class OFDataConverterLocation implements Serializable {
 
     @TypeConverter
-    public String toStringFromList(ArrayList<OFLocationDetails> myList){
+    public String toStringFromList(List<OFLocationDetails> myList){
 
         if (myList == null) {
             return (null);
@@ -41,8 +42,7 @@ public class OFDataConverterLocation implements Serializable {
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<OFLocationDetails>>() {
         }.getType();
-        String json = gson.toJson(myList, type);
-        return json;
+        return gson.toJson(myList, type);
     }
     @TypeConverter
     public String toStringFromList(OFLocationDetails myList){
@@ -53,20 +53,8 @@ public class OFDataConverterLocation implements Serializable {
         Gson gson = new Gson();
         Type type = new TypeToken<OFLocationDetails>() {
         }.getType();
-        String json = gson.toJson(myList, type);
-        return json;
+        return gson.toJson(myList, type);
     }
-
-    /*@TypeConverter
-    public ArrayList<OFLocationDetails> toListFromString(String listStr){
-        if (listStr == null) {
-            return (null);
-        }
-        Gson gson = new Gson();
-        Type type = new TypeToken<ArrayList<OFLocationDetails>>() {}.getType();
-        ArrayList<OFLocationDetails> productCategoriesList = gson.fromJson(listStr, type);
-        return productCategoriesList;
-    }*/
 
     @TypeConverter
     public OFLocationDetails toListFromString(String listStr){
@@ -75,7 +63,6 @@ public class OFDataConverterLocation implements Serializable {
         }
         Gson gson = new Gson();
         Type type = new TypeToken<OFLocationDetails>() {}.getType();
-        OFLocationDetails productCategoriesList = gson.fromJson(listStr, type);
-        return productCategoriesList;
+        return gson.fromJson(listStr, type);
     }
 }

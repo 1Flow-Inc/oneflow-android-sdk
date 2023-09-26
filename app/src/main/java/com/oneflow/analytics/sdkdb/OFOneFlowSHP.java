@@ -37,6 +37,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -48,9 +49,6 @@ import javax.crypto.spec.SecretKeySpec;
 public class OFOneFlowSHP {
     String keyName = "one_flow_temp.db";
     SharedPreferences pref;
-    //private static SharedPreferences.Editor editor;
-    private static String key = "";
-    private static String iv = "";
     Gson gson;
     private static OFOneFlowSHP shp = null;
 
@@ -69,35 +67,25 @@ public class OFOneFlowSHP {
     private OFOneFlowSHP(Context context) {
 
         pref = context.getSharedPreferences(keyName, 0); // 0 - for private mode
-       // editor = pref.edit();
 
         GsonBuilder builder = new GsonBuilder();
         builder.serializeNulls();
         gson = builder.setPrettyPrinting().create();
     }
 
-    private static final String characterEncoding = "UTF-8";
-    private static final String cipherTransformation = "AES/CBC/PKCS7Padding";
-    private static final String aesEncryptionAlgorithm = "AES";
-
-
     public void storeValue(String key, Object value) {
-        //OFHelper.v(this.getClass().getName(), "OneFlow key[" + key + "]value[" + (value) + "]");
         SharedPreferences.Editor editor = pref.edit();
         if (value instanceof Boolean) {
             editor.putBoolean(key, (boolean) value);
         } else if (value instanceof Integer) {
             editor.putInt(key, (int) value);
         } else if (value instanceof String) {
-            // editor.putString(key, (String) value != null && ((String)value).length() > 0 ? encryptString((String)value) : (String)value);
-
             editor.putString(key, (String) value);
         } else if (value instanceof Float) {
             editor.putFloat(key, (Float) value);
         } else if (value instanceof Long) {
             editor.putLong(key, (Long) value);
         }
-        //editor.commit();
         editor.apply();
     }
 
@@ -105,9 +93,7 @@ public class OFOneFlowSHP {
     public OFAddUserResponse getUserDetails() {
         String json = pref.getString(OFConstants.USERDETAILSHP, null);
         OFHelper.v("json", "[" + json + "]");
-        OFAddUserResponse obj =
-                gson.fromJson(json, OFAddUserResponse.class);
-        return obj;
+        return gson.fromJson(json, OFAddUserResponse.class);
     }
 
     public void setUserDetails(OFAddUserResponse arr) {
@@ -164,14 +150,14 @@ public class OFOneFlowSHP {
     }
 
 
-    public void setSurveyList(ArrayList<OFGetSurveyListResponse> list) {
+    public void setSurveyList(List<OFGetSurveyListResponse> list) {
         SharedPreferences.Editor editor = pref.edit();
         String json = gson.toJson(list);
         editor.putString(OFConstants.SURVEYLISTSHP, json);
         editor.apply();     // This line is IMPORTANT !!!
     }
 
-    public ArrayList<OFGetSurveyListResponse> getSurveyList() {
+    public List<OFGetSurveyListResponse> getSurveyList() {
         String json = pref.getString(OFConstants.SURVEYLISTSHP, null);
         Type type = new TypeToken<ArrayList<OFGetSurveyListResponse>>() {
         }.getType();
@@ -179,95 +165,21 @@ public class OFOneFlowSHP {
     }
 
 
-    public void setClosedSurveyList(ArrayList<String> list) {
+    public void setClosedSurveyList(List<String> list) {
         SharedPreferences.Editor editor = pref.edit();
         String json = gson.toJson(list);
         editor.putString(OFConstants.SURVEYCLOSEDLISTSHP, json);
         editor.apply();     // This line is IMPORTANT !!!
     }
 
-    public ArrayList<String> getClosedSurveyList() {
+    public List<String> getClosedSurveyList() {
         String json = pref.getString(OFConstants.SURVEYCLOSEDLISTSHP, null);
         Type type = new TypeToken<ArrayList<String>>() {
         }.getType();
         return gson.fromJson(json, type);
     }
 
-    /**
-     * Save and get ArrayList in SharedPreference
-     */
-
-    /*public void saveReimbursementHistoryDataArrayList(ArrayList<CapHubInnerData> list, String key) {
-        SharedPreferences.Editor editor = pref.edit();
-        String json = gson.toJson(list);
-        editor.putString(key, json);
-        editor.apply();     // This line is IMPORTANT !!!
-    }
-
-    public ArrayList<CapHubInnerData> getReimbursementHistoryDataArrayList(String key) {
-        String json = pref.getString(key, null);
-        Type type = new TypeToken<ArrayList<CapHubInnerData>>() {
-        }.getType();
-        return gson.fromJson(json, type);
-    }*/
-    private static byte[] encrypt(byte[] plainText, byte[] key, byte[] initialVector) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
-        Cipher cipher = Cipher.getInstance(cipherTransformation);
-        SecretKeySpec secretKeySpec = new SecretKeySpec(key, aesEncryptionAlgorithm);
-        IvParameterSpec ivParameterSpec = new IvParameterSpec(initialVector);
-        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
-        plainText = cipher.doFinal(plainText);
-        return plainText;
-    }
-
-    private static String decryptString(String encryptedText) {
-        try {
-            byte[] cipheredBytes = Base64.decode(encryptedText, Base64.DEFAULT);
-            return new String(decrypt(cipheredBytes, hexStringToByteArray(key), hexStringToByteArray(iv)), characterEncoding);
-        } catch (Exception e) {
-            OFHelper.e("HRMSSHP", e.getMessage());
-        }
-        return "";
-    }
-
-    private static byte[] decrypt(byte[] cipherText, byte[] key, byte[] initialVector) throws Exception {
-        Cipher cipher = Cipher.getInstance(cipherTransformation);
-        SecretKeySpec secretKeySpecy = new SecretKeySpec(key, aesEncryptionAlgorithm);
-        IvParameterSpec ivParameterSpec = new IvParameterSpec(initialVector);
-        cipher.init(Cipher.DECRYPT_MODE, secretKeySpecy, ivParameterSpec);
-        cipherText = cipher.doFinal(cipherText);
-        return cipherText;
-    }
-
-    private static byte[] hexStringToByteArray(String s) {
-        int len = s.length();
-        byte[] data = new byte[len / 2];
-        String byted = "";
-        for (int i = 0; i < len; i += 2) {
-            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4) + Character.digit(s.charAt(i + 1), 16));
-            byted += data[i / 2] + ",";
-        }
-        return data;
-    }
-
-   /* public void clearPreference() {
-        String token = getStringValue(Constants.shpFCMToken);
-        editor.clear();
-        editor.commit();
-        keepFCMToken(token);
-    }*/
-
-    /*public void keepFCMToken(String token) {
-        storeValue(Constants.shpFCMToken, token);
-    }*/
-
-    /**
-     * Will return sharedpreference value of shared key if not found will return NA
-     *
-     * @param key
-     * @return String
-     */
     public String getStringValue(String key) {
-        //return decryptString(pref.getString(key, "NA"));
         return pref.getString(key, "NA");
     }
 

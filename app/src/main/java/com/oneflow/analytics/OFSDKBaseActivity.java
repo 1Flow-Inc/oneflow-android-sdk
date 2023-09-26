@@ -32,6 +32,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.DragEvent;
@@ -87,6 +88,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponseHandlerOneFlow {
@@ -141,16 +143,12 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
         } catch (Exception ex) {
             OFHelper.e(this.getClass().getName(), "1Flow onRestoreInstanceState base called 0");
         }
-        //position--;
     }
 
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         OFHelper.v(tag, "1Flow onConfigurationChanged called [" + position + "]");
-
-        //initFragment();
-
 
     }
 
@@ -181,71 +179,49 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
 
         surveyName = surveyItem.getName();
         screens = surveyItem.getScreens();
-        triggerEventName = this.getIntent().getStringExtra("eventName");//surveyItem.getTrigger_event_name();
-        // Helper.makeText(getApplicationContext(),"Size ["+screens.size()+"]",1);
+        triggerEventName = this.getIntent().getStringExtra("eventName");
         setProgressMax(surveyItem.getScreens().size()); // -1 for excluding thankyou page from progress bar; 2-sept-2022 showing progressbar at thankyou page
         selectedSurveyId = surveyItem.get_id();
 
         OFHelper.v(this.getClass().getName(), "1Flow onLoadThisView called position[" + position + "]surveyId[" + selectedSurveyId + "]triggerEventName[" + triggerEventName + "]");
 
-        closeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        closeBtn.setOnClickListener(v -> {
 
-                //closed survey logic for storage.
-                OFOneFlowSHP ofs = OFOneFlowSHP.getInstance(OFSDKBaseActivity.this);
-                ArrayList<String> closedSurveyList = ofs.getClosedSurveyList();
-                if (closedSurveyList == null) {
-                    closedSurveyList = new ArrayList<>();
-                }
-                OFHelper.v(tag, "1Flow close button clicked [" + surveyResponseChildren + "]position[" + position + "]size[" + screens.size() + "]");
-                if (surveyResponseChildren == null || surveyResponseChildren.size() == 0) {
+            //closed survey logic for storage.
+            OFOneFlowSHP ofs = OFOneFlowSHP.getInstance(OFSDKBaseActivity.this);
+            List<String> closedSurveyList = ofs.getClosedSurveyList();
+            if (closedSurveyList == null) {
+                closedSurveyList = new ArrayList<>();
+            }
+            OFHelper.v(tag, "1Flow close button clicked [" + surveyResponseChildren + "]position[" + position + "]size[" + screens.size() + "]");
+            if (surveyResponseChildren == null || surveyResponseChildren.isEmpty()) {
 
-                    surveyClosingStatus = "skipped";
-                    if (!closedSurveyList.contains(selectedSurveyId)) {
-                        closedSurveyList.add(selectedSurveyId);
-                        ofs.setClosedSurveyList(closedSurveyList);
-                        OFEventController ec = OFEventController.getInstance(OFSDKBaseActivity.this);
-                        HashMap<String, Object> mapValue = new HashMap<>();
-                        mapValue.put("survey_id", selectedSurveyId);
-                        ec.storeEventsInDB(OFConstants.AUTOEVENT_CLOSED_SURVEY, mapValue, 0);
-                    }
-
-                    //} else if (position == screens.size()) {
-                } else if (screens != null && screens.size() > 0 && position < screens.size()) {
-                    if(screens.get(position).getInput().getInput_type().equalsIgnoreCase("thank_you") ||
-                            screens.get(position).getInput().getInput_type().equalsIgnoreCase("end-screen")){
-                        surveyClosingStatus = "finished";
-                    }else{
-                        surveyClosingStatus = "closed";
-                    }
-
-                    /*OFHelper.v(tag,"1Flow event step seen recording");
-                    // event for all type of step visibility
-                    HashMap<String, Object> mapValue = new HashMap<>();
-                    mapValue.put("flow_id", selectedSurveyId);
-
+                surveyClosingStatus = "skipped";
+                if (!closedSurveyList.contains(selectedSurveyId)) {
+                    closedSurveyList.add(selectedSurveyId);
+                    ofs.setClosedSurveyList(closedSurveyList);
                     OFEventController ec = OFEventController.getInstance(OFSDKBaseActivity.this);
-                    ec.storeEventsInDB(OFConstants.AUTOEVENT_FLOW_COMPLETED, mapValue, 0);*/
-                } else {
+                    HashMap<String, Object> mapValue = new HashMap<>();
+                    mapValue.put("survey_id", selectedSurveyId);
+                    ec.storeEventsInDB(OFConstants.AUTOEVENT_CLOSED_SURVEY, mapValue, 0);
+                }
+
+            } else if (!screens.isEmpty() && position < screens.size()) {
+                if(screens.get(position).getInput().getInput_type().equalsIgnoreCase("thank_you") ||
+                        screens.get(position).getInput().getInput_type().equalsIgnoreCase("end-screen")){
+                    surveyClosingStatus = "finished";
+                }else{
                     surveyClosingStatus = "closed";
-
-                    /*OFHelper.v(tag,"1Flow event step seen recording");
-                    // event for all type of step visibility
-                    HashMap<String, Object> mapValue = new HashMap<>();
-                    mapValue.put("flow_id", selectedSurveyId);
-                    OFEventController ec = OFEventController.getInstance(OFSDKBaseActivity.this);
-                    ec.storeEventsInDB(OFConstants.AUTOEVENT_FLOW_ENDED, mapValue, 0);*/
-
                 }
 
-                if (screens != null && position >= screens.size()) {
-                    OFSDKBaseActivity.this.finish();
-                } else {
-                    finishSurveyNow();
-                }
+            } else {
+                surveyClosingStatus = "closed";
+            }
 
-                // overridePendingTransition(0,R.anim.slide_down_dialog);
+            if (position >= screens.size()) {
+                OFSDKBaseActivity.this.finish();
+            } else {
+                finishSurveyNow();
             }
         });
 
@@ -267,16 +243,14 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
 
 
             if (!surveyItem.getStyle().getPrimary_color().startsWith("#")) {
-                themeColor = "#" + tranparancy + tempColor;//surveyItem.getStyle().getPrimary_color();
+                themeColor = "#" + tranparancy + tempColor;
             } else {
-                themeColor = tranparancy + tempColor;//surveyItem.getStyle().getPrimary_color();
+                themeColor = tranparancy + tempColor;
             }
 
         } catch (Exception ex) {
-            //styleColor=""+getResources().getColor(R.color.colorPrimaryDark);
+            // error
         }
-        //styleColor=String.valueOf(getResources().getColor(R.color.colorPrimaryDark));
-
         try {
             pagePositionPBar.setProgressTintList(ColorStateList.valueOf(Color.parseColor(themeColor)));
         } catch (NumberFormatException nfe) {
@@ -297,35 +271,28 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
 
         slider.setOnTouchListener(sliderTouchListener);
         sliderLayout.setOnTouchListener(sliderTouchListener);
-        slider.setOnDragListener(new View.OnDragListener() {
-            @Override
-            public boolean onDrag(View v, DragEvent event) {
-
-
-                return false;
-            }
-        });
+        slider.setOnDragListener((v, event) -> false);
 
 
         //New theme custome UI
-        if (sdkTheme.getProgress_bar()) {
+        boolean progress = sdkTheme.getProgress_bar();
+        if (progress) {
             pagePositionPBar.setVisibility(View.VISIBLE);
         } else {
             pagePositionPBar.setVisibility(View.GONE);
         }
 
-
-        if (sdkTheme.getClose_button()) {
+        boolean close = sdkTheme.getClose_button();
+        if (close) {
             closeBtn.setVisibility(View.VISIBLE);
         } else {
-
             closeBtn.setVisibility(View.GONE);
-
         }
 
         isActive = true;
 
-        if (sdkTheme.getDark_overlay()) {
+        boolean darkOverlay = sdkTheme.getDark_overlay();
+        if (darkOverlay) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND); // This flag is required to set otherwise the setDimAmount method will not show any effect
             window.setDimAmount(0.25f); //0 for no dim to 1 for full dim
         } else {
@@ -341,8 +308,7 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
 
     @Override
     public void onBackPressed() {
-        if (false) {//!sdkTheme.getClose_button()) {
-
+        if (false) {
             super.onBackPressed();
         }
 
@@ -351,8 +317,6 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
     @Override
     protected void onPause() {
         OFHelper.v(tag, "1Flow onPause called");
-        //overridePendingTransition(0, R.anim.slide_down_dialog_sdk);
-
         super.onPause();
     }
 
@@ -360,16 +324,12 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
     protected void onResume() {
         super.onResume();
         OFHelper.v(tag, "1Flow onResume called[" + position + "]");
-        //if(!savedInstanceCalled) {
         // below method has been shifted in onResume because onStart is being called befor onRestoreState method
         loadThisView();
-        //}
 
     }
 
     public void finishSurveyNow() {
-
-        //OFHelper.v(tag, "1Flow finishSurveyNow called ["+surveyClosingStatus+"]currentScreen["+screens.get(position-1).getInput().getInput_type()+"]");
 
         // recording finish events
         if (surveyClosingStatus.equalsIgnoreCase("finished")) {
@@ -385,7 +345,6 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
             // event for all type of step visibility
             HashMap<String, Object> mapValue = new HashMap<>();
             mapValue.put("flow_id", selectedSurveyId);
-            //mapValue.put("step_id", screens.get(position).get_id());
 
             OFEventController ec = OFEventController.getInstance(OFSDKBaseActivity.this);
             ec.storeEventsInDB(OFConstants.AUTOEVENT_FLOW_ENDED, mapValue, 0);
@@ -395,7 +354,7 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
         OFOneFlowSHP.getInstance(this).storeValue(OFConstants.SHP_SURVEY_RUNNING, false);
         //on close of this page considering survey is over, so submit the respones to api
         if (surveyResponseChildren != null) {
-            if (surveyResponseChildren.size() > 0) {
+            if (!surveyResponseChildren.isEmpty()) {
 
                 OFHelper.v(tag, "1Flow input found submitting");
                 prepareAndSubmitUserResposneNew();
@@ -412,7 +371,6 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
                 finishData.setScreens(prepareFinishCallback());
 
                 intent.putExtra(OFConstants.surveyDetail, new Gson().toJson(finishData));
-                //OFHelper.v(tag,"1Flow sending data ["+new Gson().toJson(finishData)+"]");
                 sendBroadcast(intent);
                 OFSDKBaseActivity.this.finish();
             }
@@ -429,7 +387,6 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
             finishData.setScreens(prepareFinishCallback());
 
             intent.putExtra(OFConstants.surveyDetail, new Gson().toJson(finishData));
-            //OFHelper.v(tag,"1Flow sending data ["+new Gson().toJson(finishData)+"]");
             sendBroadcast(intent);
             OFSDKBaseActivity.this.finish();
         }
@@ -447,12 +404,8 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
     @Override
     protected void onStop() {
         super.onStop();
-        //isActive = false;
         OFOneFlowSHP.getInstance(this).storeValue(OFConstants.SHP_SURVEY_RUNNING, false);
         OFHelper.v(tag, "1Flow onStop called [" + isActive + "]");
-        /*OFOneFlowSHP ofs1 = new OFOneFlowSHP(this);
-        ofs1.storeValue(OFConstants.SHP_SURVEY_RUNNING, true);*/
-        //overridePendingTransition(0,R.anim.slide_down_dialog);
     }
 
     /**
@@ -496,7 +449,7 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
             boolean found = false;
             // checking if list already have same value
             for (OFSurveyUserResponseChild src : surveyResponseChildren) {
-                if (src.getScreen_id() == screenID) {
+                if (src.getScreen_id().equals(screenID)) {
                     OFHelper.v(tag, "1Flow Replacing Value");
                     found = true;
                     Collections.replaceAll(surveyResponseChildren, src, asrc);
@@ -529,7 +482,6 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
         OFHelper.v(tag, "1Flow position after[" + position + "]");
 
         try {
-            // OFHelper.v(tag, "1Flow rules [" + new Gson().toJson(screens.get(position - 1).getRules()) + "]");
             if (screens.get(position - 1).getRules() != null) {
                 preparePositionOnRule(screenID, answerIndex, answerValue);
             } else {
@@ -545,11 +497,11 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
     private void preparePositionOnRule(String screenID, String answerIndex, String answerValue) {
 
         boolean found = false;
-        String action = "", type = "";
+        String action = "";
+        String type = "";
 
         OFHelper.v(tag, "1Flow condition rule[" + screenID + "]answerIndex[" + answerIndex + "][" + answerValue + "]");
-        if (screens.get(position - 1).getRules() != null) {
-            if (screens.get(position - 1).getRules().getDataLogic() != null) {
+        if (screens.get(position - 1).getRules() != null && (screens.get(position - 1).getRules().getDataLogic() != null)) {
                 for (OFDataLogic dataLogic : screens.get(position - 1).getRules().getDataLogic()) {
 
                     OFHelper.v(tag, "1Flow condition rule[" + new Gson().toJson(screens.get(position - 1).getRules()) + "]");
@@ -570,25 +522,11 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
                             if (answerValue != null) {
                                 String[] valueArray = answerValue.split(",");
                                 String[] logicValue = dataLogic.getValues().split(",");
-                                int i = 0;
                                 OFHelper.v(tag, "1Flow condition[" + Arrays.asList(valueArray) + "][" + dataLogic.getValues() + "]");
-                                // if(logicValue.length == valueArray.length) {
-                            /*while (i < valueArray.length) {
-                                if (dataLogic.getValues().equalsIgnoreCase(valueArray[i])) {
-                                    OFHelper.v(tag, "1Flow condition[found in array]");
-                                    found = true;
-                                    //      action = dataLogic.getAction();
-                                    break;
-                                }
-                                i++;
-                            }*/
                                 if (Arrays.equals(valueArray, logicValue)) {
                                     found = true;
                                     break;
                                 }
-                                //}
-                        /*// breaking outer loop
-                        if(found) break;*/
                             }
                         }
                     } else if (dataLogic.getCondition().equalsIgnoreCase("is-not")) {
@@ -599,7 +537,6 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
                             if (!dataLogic.getValues().equalsIgnoreCase(answerIndex)) {
                                 found = true;
                                 break;
-                                //findNextQuestionPosition(dataLogic.getValues());
                             }
                         } else {
                             String[] values = answerValue.split(",");
@@ -655,20 +592,17 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
                             if (found) break;
                         }
                     } else if (dataLogic.getCondition().equalsIgnoreCase("is-any")) {
-
-                        //findNextQuestionPosition(dataLogic.getAction());
                         found = true;
                         break;
                     }
                 }
-            }
+
         }
 
         OFHelper.v(tag, "1Flow found [" + found + "]action[" + action + "]type[" + type + "]");
         // rating and open url is pending
         if (found) {
             if (OFHelper.validateString(action).equalsIgnoreCase("the-end")) {
-                //TODO if last screen is thankyou then only move there else close the survey
                 try {
                     if ((screens.get(screens.size() - 1).getInput().getInput_type().equalsIgnoreCase("thank_you") ||
                             screens.get(screens.size() - 1).getInput().getInput_type().equalsIgnoreCase("end-screen")
@@ -678,21 +612,16 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
                         position = screens.size();
                     }
                 } catch (Exception ex) {
-
+                    // error
                 }
                 initFragment(2);
 
             } else {
                 if (type.equalsIgnoreCase("open-url")) {
-                    //todo need to close properly
-
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(action));
                     startActivity(browserIntent);
                     finishSurveyNow();
                 } else if (type.equalsIgnoreCase("rating")) {
-                    //OFHelper.makeText(OFSurveyActivity.this,"RATING METHOD CALLED",1);
-                    //position = screens.size();
-                    //initFragment();
 
                     reviewThisApp(this);
                     finishSurveyNow();
@@ -718,11 +647,8 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
                 flow.addOnCompleteListener(task2 -> {
 
                 });
-                flow.addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void result) {
-
-                    }
+                flow.addOnSuccessListener(result -> {
+                    // onSuccess
                 });
             }
         });
@@ -762,7 +688,7 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
         OFHelper.v(tag, "1Flow checking value prepareAndSubmitUserResposneNew called [" + ofs.getBooleanValue(OFConstants.SHP_SURVEY_RUNNING, false));
 
         OFSurveyUserInput sur = new OFSurveyUserInput();
-        sur.setId(OFHelper.mongoObjectId());//UUID.randomUUID().toString());
+        sur.setId(OFHelper.mongoObjectId());
         sur.setTotDuration(totalTimeSpentInSec());
         sur.setMode(OFConstants.MODE);
         sur.setTrigger_event(triggerEventName);
@@ -770,7 +696,6 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
         sur.setOs(OFConstants.os);
         sur.setAnalytic_user_id(OFHelper.validateString(ofs.getUserDetails().getAnalytic_user_id()));
         sur.setSurvey_id(selectedSurveyId);
-        //sur.setSession_id(ofs.getStringValue(OFConstants.SESSIONDETAIL_IDSHP));
         sur.setUser_id(ofs.getStringValue(OFConstants.USERUNIQUEIDSHP));
         sur.setCreatedOn(System.currentTimeMillis());
         new OFLogUserDBRepoKT().insertUserInputs(this, sur, this, OFConstants.ApiHitType.insertSurveyInDB);
@@ -791,7 +716,6 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
     public void initFragment(int calledFrom) {
         OFHelper.v(tag, "1Flow initFragment answer calledFrom[" + calledFrom + "] position [" + position + "]screensize[" + screens.size() + "]selected answers[" + new Gson().toJson(surveyResponseChildren) + "]");
 
-//      OFHelper.v(tag, "1Flow answer position [" +new Gson().toJson(screens.get(position-1) )+ "]");
         if (position >= screens.size()) {
             finishSurveyNow();
         } else {
@@ -811,15 +735,12 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
         OFHelper.v(tag, "1Flow progressbar [" + position + "] max [" + pagePositionPBar.getProgress() + "]postion[" + (position * 100) + "]");
 
         if (position == 0) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    ObjectAnimator animation = ObjectAnimator.ofInt(pagePositionPBar, "progress", 0, 100);
-                    animation.setDuration(500);
-                    animation.setAutoCancel(true);
-                    animation.setInterpolator(new DecelerateInterpolator());
-                    animation.start();
-                }
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                ObjectAnimator animation = ObjectAnimator.ofInt(pagePositionPBar, "progress", 0, 100);
+                animation.setDuration(500);
+                animation.setAutoCancel(true);
+                animation.setInterpolator(new DecelerateInterpolator());
+                animation.start();
             }, 500);
         } else {
             ObjectAnimator animation = ObjectAnimator.ofInt(pagePositionPBar, "progress", pagePositionPBar.getProgress(), (position + 1) * 100);
@@ -833,33 +754,9 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
 
     Fragment frag;
 
-    private void loadFragmentsRes() {
-
-        OFHelper.v(this.getClass().getName(), "1Flow loadFragments called[" + position + "]frag[" + frag + "]");
-        //if (screen != null) {
-
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-
-        frag = getFragment();
-
-        if (frag != null) {
-            setProgressAnimate();
-
-            if (position == 0) {
-                ft.add(R.id.fragment_view, frag).commit();
-            } else {
-                ft.replace(R.id.fragment_view, frag).commit();
-            }
-        } else {
-            //Helper.makeText(getApplicationContext(), "frag null", 1);
-        }
-
-    }
-
     private void loadFragments() {
 
         OFHelper.v(this.getClass().getName(), "1Flow loadFragments called[" + position + "]frag[" + frag + "]");
-        //if (screen != null) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
@@ -879,7 +776,6 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
             OFHelper.v(tag, "1Flow auto event seen recording [" + mapValue + "]");
 
             frag = getFragment();
-            //frag.setRetainInstance(true);
 
             if (frag != null) {
                 setProgressAnimate();
@@ -889,20 +785,13 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
                 } else {
                     ft.replace(R.id.fragment_view, frag, "Frag" + position).commit();
                 }
-            } else {
-                //Helper.makeText(getApplicationContext(), "frag null", 1);
             }
         } else {
             setProgressAnimate();
-            // ft.replace(R.id.fragment_view, frag,"Frag"+position).commit();
         }
         //===============================================================================
     }
 
-
-    //String tempImage = "<img style=\"max-width: 100%; height: auto;\" src=\"https://live.staticflickr.com/65535/48680180151_c6773c8936_k.jpg\">";
-    /*String tempImage1 = "<img style=\"max-width: 100%; display: block; margin-left: auto;margin-right: auto;\" src=\"https://i.pinimg.com/originals/da/45/fb/da45fb10d3b777560c4bf3c10c314508.jpg\">";
-    String tempVideo = "<div style=\"position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;\"><iframe src=\"https://www.youtube.com/embed/sGXHJvEttpE?autoplay=1\" style=\"position: absolute; top: 0; left: 0; width: 100%; height: 100%;\" frameborder=\"0\" allow=\"autoplay; fullscreen\" allowfullscreen></iframe></div>";*/
 
     public void resetHeight(int fragmentHeight) {
 
@@ -917,12 +806,11 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
         if (data[0] > 3) {
             width = OFConstants.screenWidth;
         } else {
-            width = WindowManager.LayoutParams.MATCH_PARENT;
+            width = ViewGroup.LayoutParams.MATCH_PARENT;
         }
 
 ///=================================================================
 
-        // getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, dialogHeight);
         getWindow().setLayout(width, dialogHeight);
 
         OFHelper.v(tag, "1Flow displayHeight condi[" + (fragmentHeight > heightScreen) + "]dialogHeight[" + dialogHeight + "]inPx[" + heightScreen + "]dialogHeight inPx[" + fragmentHeight + "].");
@@ -942,13 +830,11 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
                 if (screen.getInput().getInput_type().equalsIgnoreCase("thank_you") ||
                         screen.getInput().getInput_type().equalsIgnoreCase("end-screen")
                 ) {
-                    //screen.setMediaEmbedHTML(tempImage);
-                    //Now thankyou page will also show progress bar 2-sept-2022
-                    //pagePositionPBar.setVisibility(View.GONE);
                     frag = OFSurveyQueThankyouFragment.newInstance(screen, sdkTheme, themeColor);
                     try {
                         //Logic for showing close button if fade away is false then have to show close button at thankyou page
-                        if (!screen.getRules().getDismissBehavior().getFadesAway()) {
+                        boolean fades = screen.getRules().getDismissBehavior().getFadesAway();
+                        if (!fades) {
                             closeBtn.setVisibility(View.VISIBLE);
                             shouldFadeAway = true;
                         }
@@ -963,7 +849,6 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
                 ) {
                     frag = OFSurveyQueTextFragment.newInstance(screen, sdkTheme, themeColor);
                 } else if (screen.getInput().getInput_type().equalsIgnoreCase("welcome-screen")) {
-                    //screen.setMediaEmbedHTML(tempVideo);
                     frag = OFSurveyQueInfoFragment.newInstance(screen, sdkTheme, themeColor);
 
                 } else {
@@ -972,10 +857,7 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
             }
         } catch (Exception ex) {
 
-            //  ex.printStackTrace();
-            //  OFHelper.e(tag, "1Flow ERROR [" + ex.getMessage() + "]");
-
-            //frag = SurveyQueThankyouFragment.newInstance(screen);
+            //  error
         }
         return frag;
     }
@@ -996,11 +878,11 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
             OFHelper.v(tag, "1Flow finding question type [" + screen.getInput().getInput_type() + "]");
             if (Arrays.asList(possibleType).contains(screen.getInput().getInput_type())) {
                 OFHelper.v(tag, "1Flow finding question type [" + screen.getInput().getInput_type() + "] found position[" + position + "]");
-                break; // if found then stop;
+                break;
             } else {
-                screen = null;
                 OFHelper.v(tag, "1Flow finding question type [" + screen.getInput().getInput_type() + "] not found skipping this question");
-                position++;// if not found then check next survey
+                screen = null;
+                position++;
             }
         }
 
@@ -1020,18 +902,12 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
 
                     OFHelper.v(tag, "1Flow calling submit user surveyId[" + sur.getSurvey_id() + "]surID[" + sur.get_lid() + "] Resposne [" + sur.getAnswers() + "]");
 
-                    if (sur.getAnswers() != null) {
-                        if (sur.getAnswers().size() > 0) {
-                            OFSurvey.submitUserResponse(OFOneFlowSHP.getInstance(this).getStringValue(OFConstants.APPIDSHP), sur, OFConstants.ApiHitType.surveySubmited, this);
-                        }
+                    if (sur.getAnswers() != null && (!sur.getAnswers().isEmpty())) {
+                        OFSurvey.submitUserResponse(OFOneFlowSHP.getInstance(this).getStringValue(OFConstants.APPIDSHP), sur, OFConstants.ApiHitType.surveySubmited, this);
                     }
                 } else {
 
                     OFHelper.v(tag, "1Flow no data connectivity available submit survey later[" + position + "][" + screens.size() + "]lastScreen[" + screens.get(screens.size() - 1).getInput().getInput_type() + "]");
-                    /*this logic is added to avoid wait on thankyou page after clicking close button,
-                     * Below logic will also help to close survey if there is no thankyou page
-                     * */
-                    // OFHelper.v(tag, "1Flow input response current screen[" + screens.get(position - 1).getInput().getInput_type() + "]");
                     try {
                         if (!(screens.get(position - 1).getInput().getInput_type().equalsIgnoreCase("thank_you") ||
                                 screens.get(position - 1).getInput().getInput_type().equalsIgnoreCase("end-screen")
@@ -1052,7 +928,6 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
                     OFHelper.v(tag, "1Flow survey submitted successfully [" + sur.get_lid() + "]surveyId[" + sur.getSurvey_id() + "]");
                     //Updating survey once data is sent to server, Sending type null as return is not required
                     new OFLogUserDBRepoKT().updateSurveyInput(this, null, null, true, sur.getSurvey_id());
-                    //new OFMyDBAsyncTask(this,this,OFConstants.ApiHitType.updateSubmittedSurveyLocally,false).execute(true,sur.get_id());
 
                     OFOneFlowSHP.getInstance(this).storeValue(sur.getSurvey_id(), Calendar.getInstance().getTimeInMillis());
 
@@ -1066,14 +941,9 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
                     finishData.setScreens(prepareFinishCallback());
 
                     intent.putExtra(OFConstants.surveyDetail, new Gson().toJson(finishData));
-                    //OFHelper.v(tag,"1Flow sending data ["+new Gson().toJson(finishData)+"]");
                     sendBroadcast(intent);
                 }
                 surveyResponseChildren = null;
-                /*this logic is added to avoid wait on thankyou page after clicking close button,
-                 * Below logic will also help to close survey if there is no thankyou page
-                 * */
-                // OFHelper.v(tag, "1Flow input response current screen[" + screens.get(position - 1).getInput().getInput_type() + "]");
                 try {
                     if (!(screens.get(position - 1).getInput().getInput_type().equalsIgnoreCase("thank_you") ||
                             screens.get(position - 1).getInput().getInput_type().equalsIgnoreCase("end-screen")
@@ -1084,6 +954,8 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
                     OFSDKBaseActivity.this.finish();
                 }
 
+                break;
+            default:
                 break;
         }
     }
@@ -1112,9 +984,7 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
                             //This if is for handling multiple option in checkbox.
                             if (sr.getAnswer_index().contains(",")) {
                                 String[] options = sr.getAnswer_index().split(",");
-                                // OFHelper.v(tag,"1Flow sending data ["+options.length+"]");
                                 for (String option : options) {
-                                    //  OFHelper.v(tag,"1Flow sending data inside loop["+option+"]");
                                     finishChild = new OFSurveyFinishChild();
                                     finishChild.setAnswerValue(getFieldValue(ss, option));
                                     if (finishChild.getAnswerValue().equalsIgnoreCase("other") || finishChild.getAnswerValue().equalsIgnoreCase("others")) {
@@ -1142,12 +1012,10 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
 
                 }
             }
-            if (finishModel.getQuestionAns() != null && finishModel.getQuestionAns().size() > 0) {
+            if (finishModel.getQuestionAns() != null && !finishModel.getQuestionAns().isEmpty()) {
                 list.add(finishModel);
             }
         }
-        //}
-        // OFHelper.v(tag,"1Flow list ["+new Gson().toJson(list)+"]");
         return list;
     }
 
@@ -1204,19 +1072,13 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
 
                             // Has user scroll down before -> view is smaller than it's default size -> resize it instead of change it position
                             if (basePopupLayout.getHeight() < defaultViewHeight) {
-                                /*basePopupLayout.getLayoutParams().height = basePopupLayout.getHeight() - (Y - previousFingerPosition);
-                                basePopupLayout.requestLayout();*/
+                                // height
                             } else {
                                 // Has user scroll enough to "auto close" popup ?
                                 if ((baseLayoutPosition - currentYPosition) > defaultViewHeight / 4) {
-                                    //closeUpAndDismissDialog(currentYPosition);
                                     return true;
                                 }
-
-                                //
                             }
-                            // basePopupLayout.setY(basePopupLayout.getY() + (Y - previousFingerPosition));
-
                         }
                         // If we scroll down
                         else {
@@ -1242,6 +1104,8 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
                         previousFingerPosition = Y;
                     }
                     break;
+                default:
+                    break;
             }
             return true;
         }
@@ -1255,17 +1119,17 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
 
             @Override
             public void onAnimationRepeat(Animator animation) {
-
+                // Repeat
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
-
+                // Cancel
             }
 
             @Override
             public void onAnimationStart(Animator animation) {
-
+                // Start
             }
 
             @Override
@@ -1288,17 +1152,17 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
         positionAnimator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationRepeat(Animator animation) {
-
+                // Repeat
             }
 
             @Override
             public void onAnimationCancel(Animator animation) {
-
+                // Cancel
             }
 
             @Override
             public void onAnimationStart(Animator animation) {
-
+                // Start
             }
 
             @Override

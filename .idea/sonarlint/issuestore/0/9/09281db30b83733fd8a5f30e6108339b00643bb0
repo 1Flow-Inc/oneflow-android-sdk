@@ -1,0 +1,9 @@
+
+l	java:S117("QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¼“¥8ž¨Þ¾¬1
+r	java:S1178"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©þÿÿÿÿ8Ÿ¨Þ¾¬1
+m	java:S117@"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ê„ÅÊ8Ÿ¨Þ¾¬1
+m	java:S117H"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ºÅÆ¶8Ÿ¨Þ¾¬1
+s	java:S116"WRename this field "display_mode" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(—ðÏ³8¡¨Þ¾¬1
+o	java:S116"NRename this field "_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(í—ø¨ýÿÿÿÿ8¡¨Þ¾¬1
+y	java:S116 "XRename this field "primary_color" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡èæ—ûÿÿÿÿ8¢¨Þ¾¬1
+t	java:S116""XRename this field "corner_radius" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(²àõå8¢¨Þ¾¬1

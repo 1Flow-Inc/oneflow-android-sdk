@@ -1,0 +1,11 @@
+
+m	java:S1177"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(’­å¢8÷îØ¾¬1
+r	java:S117?"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©şÿÿÿÿ8øîØ¾¬1
+m	java:S117O"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(åŸŠÓ8øîØ¾¬1
+r	java:S117g"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ùá–Øıÿÿÿÿ8øîØ¾¬1
+n	java:S117‡"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÎš8øîØ¾¬1
+j	java:S116"NRename this field "__v" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Í‚ê8üîØ¾¬1
+o	java:S116"NRename this field "_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(í—ø¨ıÿÿÿÿ8üîØ¾¬1
+p	java:S116!"TRename this field "common_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ö‡º8üîØ¾¬1
+v	java:S116'"URename this field "deleted_on" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´¾Ìëùÿÿÿÿ8üîØ¾¬1
+u	java:S116/"YRename this field "schema_version" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œøæš8üîØ¾¬1

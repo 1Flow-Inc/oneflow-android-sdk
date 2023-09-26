@@ -1,0 +1,7 @@
+
+r	java:S117$"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‚Ρδϋÿÿÿÿ8φτίΎ¬1
+r	java:S117,"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(κΣ ©ώÿÿÿÿ8χτίΎ¬1
+u	java:S116"YRename this field "OFTimingOption" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¥άΓ8ϊτίΎ¬1
+j	java:S116"NRename this field "_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ϊιΡΪ8ϊτίΎ¬1
+j	java:S100("NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡¨–8ϋτίΎ¬1
+o	java:S100,"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(κΣ ©ώÿÿÿÿ8ότίΎ¬1

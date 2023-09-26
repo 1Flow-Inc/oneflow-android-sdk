@@ -1,0 +1,17 @@
+
+r	java:S117}"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÉËıøÿÿÿÿ8İË¾¬1
+n	java:S117…"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¯â¹ú8ŞË¾¬1
+s	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¾®ıúÿÿÿÿ8ŞË¾¬1
+s	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©şÿÿÿÿ8ŞË¾¬1
+n	java:S117¥"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(åŸŠÓ8ŞË¾¬1
+n	java:S117­"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(’­å¢8ŞË¾¬1
+n	java:S117½"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(•˜¦º8ŞË¾¬1
+s	java:S117Å"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ê´åÿÿÿÿÿ8ŞË¾¬1
+r	java:S1161"QRename this field "os_ver" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ïØ‘·ûÿÿÿÿ8éË¾¬1
+s	java:S1165"WRename this field "screen_width" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÀÅÂ£8éË¾¬1
+y	java:S1169"XRename this field "screen_height" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(øˆ²øÿÿÿÿ8éË¾¬1
+o	java:S116B"NRename this field "_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(í—ø¨ıÿÿÿÿ8éË¾¬1
+p	java:S116J"TRename this field "unique_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æÒÛş8éË¾¬1
+p	java:S116N"TRename this field "device_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Æô×í8éË¾¬1
+p	java:S116R"TRename this field "common_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ö‡º8éË¾¬1
+j	java:S116V"NRename this field "__v" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Í‚ê8éË¾¬1

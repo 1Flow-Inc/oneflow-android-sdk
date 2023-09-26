@@ -25,16 +25,17 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Map;
 
 //@ProvidedTypeConverter
 public class OFMapConverter implements Serializable {
     @TypeConverter
-    public HashMap<String, Object> stringToMap(String value)  {
+    public Map<String, Object> stringToMap(String value)  {
         return new Gson().fromJson(value,  new TypeToken<HashMap<String, Object>>(){}.getType());
     }
 
     @TypeConverter
-    public String mapToString(HashMap<String, Object> map) {
+    public String mapToString(Map<String, Object> map) {
         if(map == null)
             return "";
         else

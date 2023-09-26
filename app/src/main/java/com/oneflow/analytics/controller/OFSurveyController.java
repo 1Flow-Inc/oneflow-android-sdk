@@ -56,7 +56,6 @@ public class OFSurveyController implements OFMyResponseHandlerOneFlow {
 
     private OFSurveyController(Context context) {
         this.mContext = context;
-        // getSurveyFromAPI();
     }
 
     public static OFSurveyController getInstance(Context context) {
@@ -73,14 +72,6 @@ public class OFSurveyController implements OFMyResponseHandlerOneFlow {
         OFSurvey.getSurvey(shp.getStringValue(OFConstants.APPIDSHP), this, OFConstants.ApiHitType.fetchSurveysFromAPI,shp.getUserDetails().getAnalytic_user_id(),OFConstants.currentVersion);
     }
 
-
-    public void fetchSurveyFromList() {
-
-    }
-
-    public void submitFinishedSurveyToAPI() {
-
-    }
     HashMap<String, Class> activityName;
     public void setUpHashForActivity() {
         activityName = new HashMap<>();
@@ -104,7 +95,6 @@ public class OFSurveyController implements OFMyResponseHandlerOneFlow {
 
 
     }
-    //ArrayList<HashMap<String, Object>> eventMap;
     JSONArray eventMapArray;
     @Override
     public void onResponseReceived(OFConstants.ApiHitType hitType, Object obj, Long reserve, String reserved, Object obj2, Object obj3) {
@@ -124,7 +114,7 @@ public class OFSurveyController implements OFMyResponseHandlerOneFlow {
                         Gson gson = builder.setPrettyPrinting().create();
 
 
-                        OFThrottlingConfig ofThrottlingConfig = (OFThrottlingConfig) gson.fromJson(reserved, OFThrottlingConfig.class);
+                        OFThrottlingConfig ofThrottlingConfig = gson.fromJson(reserved, OFThrottlingConfig.class);
                         shp.setThrottlingConfig(ofThrottlingConfig);
                     }
                     setupGlobalTimerToDeactivateThrottlingLocally();
@@ -146,7 +136,6 @@ public class OFSurveyController implements OFMyResponseHandlerOneFlow {
                     }
                     //Enabled again on 13/June/22
                     new OFEventDBRepoKT().fetchEventsBeforeSurvey(mContext, this, OFConstants.ApiHitType.fetchEventsBeforSurveyFetched);
-                    //new OFMyDBAsyncTask(mContext, this, OFConstants.ApiHitType.fetchEventsBeforSurveyFetched).execute();
                 }
                 break;
             case fetchEventsBeforSurveyFetched:
@@ -164,56 +153,18 @@ public class OFSurveyController implements OFMyResponseHandlerOneFlow {
                                 eventMapLocal = new HashMap<>();
                                 eventMapLocal.put("name", nameLocal);
                                 eventMapLocal.put("timestamp", System.currentTimeMillis() / 1000);
-                                //eventMap.add(eventMapLocal);
                                 eventMapArray.put(new JSONObject(eventMapLocal));
 
                             }
                             triggerSurveyNew();
-                            /*Object[] ret = checkSurveyTitleAndScreens(Arrays.asList(name));
-                            OFGetSurveyListResponse surveyItem = (OFGetSurveyListResponse) ret[1];
-                            OFHelper.v("SurveyController", "OneFlow survey found[" + surveyItem + "]");
-                            if (surveyItem != null) {
-                                if (surveyItem.getScreens() != null) {
-
-                                    OFHelper.v("OneFlow", "OneFlow screens not null");
-                                    if(mContext!=null) {
-                                        if (surveyItem.getScreens().size() > 0) {
-                                            setUpHashForActivity();
-                                            OFOneFlowSHP.getInstance(mContext).storeValue(OFConstants.SHP_SURVEYSTART, Calendar.getInstance().getTimeInMillis());
-                                            Intent surveyIntent = null;
-                                            if (surveyItem.getSurveySettings().getSdkTheme().getWidgetPosition() == null) {
-                                                surveyIntent = new Intent(mContext.getApplicationContext(), activityName.get("bottom-center"));
-                                            } else {
-                                                surveyIntent = new Intent(mContext.getApplicationContext(), activityName.get(surveyItem.getSurveySettings().getSdkTheme().getWidgetPosition()));
-                                            }
-
-
-                                            HashMap<String, Object> mapValue = new HashMap<>();
-                                            mapValue.put("flow_id", surveyItem.get_id());
-                                            OFEventController ec = OFEventController.getInstance(mContext);
-                                            ec.storeEventsInDB(OFConstants.AUTOEVENT_SURVEYIMPRESSION, mapValue, 0);
-
-                                            surveyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                            surveyIntent.putExtra("SurveyType", surveyItem);//"move_file_in_folder");//""empty0");//
-                                            surveyIntent.putExtra("eventName", (String) ret[0]);
-
-                                            OFHelper.v("1Flow", "1Flow activity running[" + OFSDKBaseActivity.isActive + "]");
-                                            if (!OFSDKBaseActivity.isActive) {
-                                                mContext.getApplicationContext().startActivity(surveyIntent);
-                                            }
-                                        } else {
-                                            OFHelper.v("SurveyController", "OneFlow no older survey found");
-                                        }
-                                    }
-                                }
-                            }*/
                         }
                     }
                 }
                catch(Exception ex){
-
-                   // ex.printStackTrace();
+                    // ex
                }
+                break;
+            default:
                 break;
         }
     }
@@ -238,9 +189,7 @@ public class OFSurveyController implements OFMyResponseHandlerOneFlow {
         OFHelper.v("OFSurveyController", "1Flow deactivate called ");
         OFThrottlingConfig config = OFOneFlowSHP.getInstance(mContext).getThrottlingConfig();
         OFHelper.v("OFSurveyController", "1Flow deactivate called config activated[" + config.isActivated() + "]globalTime[" + config.getGlobalTime() + "]activatedBy[" + config.getActivatedById() + "]");
-        //OFMyCountDownTimerThrottling.getInstance(mContext,0l,0l).cancel();
         if (config.getGlobalTime() != null && config.getGlobalTime() > 0) {
-            //OFMyCountDownTimerThrottling.getInstance(mContext, config.getGlobalTime() * 1000, ((Long) (config.getGlobalTime() * 1000) / 2)).start();
             setThrottlingAlarm(config);
         } else {
             OFHelper.v("OFSurveyController", "1Flow deactivate called at else");
@@ -252,74 +201,8 @@ public class OFSurveyController implements OFMyResponseHandlerOneFlow {
 
 
     }
-    /*private void setupGlobalTimerToDeactivateThrottlingLocally() {
-
-
-        OFHelper.v("OneFlow", "OneFlow checking throttling after survey received");
-        OFThrottlingConfig config = OFOneFlowSHP.getInstance(mContext).getThrottlingConfig();
-        //OFMyCountDownTimerThrottling.getInstance(mContext,0l,0l).cancel();
-        if (config != null) {
-            OFHelper.v("OneFlow", "OneFlow checking called config[" + config.getActivatedById() + "][" + config.getActivatedAt() + "]");
-            if (config.getGlobalTime() != null && config.getGlobalTime() > 0) {
-
-
-                if (config.isActivated()) {
-
-                    long throttlingLifeTime = (config.getActivatedAt() + config.getGlobalTime()) * 1000;
-                    OFHelper.v("OneFlow", "OneFlow checking called activated at [" + OFHelper.formatedDate(config.getActivatedAt() * 1000, "dd-MM-yyyy hh:mm:ss") + "]readable[" + OFHelper.formatedDate(throttlingLifeTime, "dd-MM-yyyy hh:mm:ss") + "]");
-                    if (System.currentTimeMillis() < throttlingLifeTime) {
-                        long throttlingFinishTime = throttlingLifeTime - System.currentTimeMillis();
-                        OFHelper.v("OneFlow", "OneFlow checking called remaining time ["+throttlingFinishTime+"]");
-                        //OFMyCountDownTimerThrottling.getInstance(mContext, throttlingFinishTime, (throttlingFinishTime / 2)).start();
-                        setThrottlingAlarm(throttlingFinishTime);
-                    } else {
-                        OFHelper.v("OneFlow", "OneFlow checking throttling time over no need to start timer");
-                    }
-                } else {
-                    config.setActivated(false);
-                    config.setActivatedById(null);
-                    OFOneFlowSHP.getInstance(mContext).setThrottlingConfig(config);
-                }
-            } else {
-                config.setActivated(false);
-                config.setActivatedById(null);
-                OFOneFlowSHP.getInstance(mContext).setThrottlingConfig(config);
-                OFHelper.v("OneFlow", "OneFlow checking called no throttling found after survey received");
-            }
-        }
-
-        /*if (config != null) {
-
-            if (config.getGlobalTime() != null) {
-                if (config.getGlobalTime() > 0) {
-
-                    OFHelper.v("OneFlow", "OneFlow deactivate called config global time not null");
-                    if (config.isActivated()) {
-
-                        long throttlingLifeTime = config.getActivatedAt() + (config.getGlobalTime() * 1000);
-                        if (System.currentTimeMillis() > throttlingLifeTime) {
-                            OFHelper.v("OneFlow", "OneFlow deactivate called time finished");
-                            config.setActivated(false);
-                            config.setActivatedById(null);
-                            OFOneFlowSHP.getInstance(mContext).setThrottlingConfig(config);
-                        }
-
-                    }
-                } else {
-                    config.setActivated(false);
-                    config.setActivatedById(null);
-                    OFOneFlowSHP.getInstance(mContext).setThrottlingConfig(config);
-                }
-            }
-        }*/
-   // }
     public void setThrottlingAlarm(long throttlingLifeTime) {
 
-
-        /*AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(mContext, OFThrottlingAlarm.class);
-        PendingIntent pi = PendingIntent.getBroadcast(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, (config.getGlobalTime() * 1000)+System.currentTimeMillis(), pi);*/
 
         OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
         shp.storeValue(OFConstants.SHP_THROTTLING_TIME, throttlingLifeTime);
@@ -331,53 +214,5 @@ public class OFSurveyController implements OFMyResponseHandlerOneFlow {
 
         OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
         shp.storeValue(OFConstants.SHP_THROTTLING_TIME, config.getGlobalTime() * 1000 + System.currentTimeMillis());
-    }
-    /**
-     * This method will return survey and its event name
-     *
-     * @param type
-     * @return [0] = event name [1] = Survey data
-     */
-    private Object[] checkSurveyTitleAndScreens(List<String> type) {
-        Object[] ret = new Object[2];
-        OFOneFlowSHP ofs = OFOneFlowSHP.getInstance(mContext);
-        if (ofs.getBooleanValue(OFConstants.SHP_SHOULD_SHOW_SURVEY, true)) {
-            ArrayList<OFGetSurveyListResponse> slr = ofs.getSurveyList();
-            //OFGetSurveyListResponse gslr = null;
-            //ArrayList<SurveyScreens> surveyScreens = null;
-
-            int counter = 0;
-            String tag = this.getClass().getName();
-
-            if (slr != null) {
-                OFHelper.v(tag, "OneFlow list size[" + slr.size() + "]type[" + type + "]");
-                for (OFGetSurveyListResponse item : slr) {
-                    OFHelper.v(tag, "OneFlow list size 0 [" + item.getTrigger_event_name() + "]type[" + type + "]");
-
-                    boolean recordFound = false;
-                    for (String name : type) {
-
-                        if (item.getTrigger_event_name().contains(name)) {
-                            //  gslr = item;
-                            recordFound = true;
-                            OFHelper.v("SurveyController", "OneFlow survey from against[" + name + "]");
-                            ret[0] = name;
-                            ret[1] = item;
-                            break;
-                        }
-                    }
-                    if (recordFound) break;
-                }
-            } /*else {
-            Helper.makeText(mContext, "Configure project first", 1);
-        }*/
-
-
-            //retake survey check not required
-
-            return ret;
-        } else {
-            return null;
-        }
     }
 }

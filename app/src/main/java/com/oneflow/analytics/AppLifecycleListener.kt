@@ -25,8 +25,8 @@ class AppLifecycleListener : LifecycleObserver {
        // OFHelper.v(tag, "1Flow app is in Foreground");
         //GetSurveyListResponse surveyItem = checkSurveyTitleAndScreens(tag);
 
-        var app_ver: Any? = ""
-        app_ver = try {
+        val appVer: Any?
+        appVer = try {
             OneFlow.mContext.packageManager.getPackageInfo(OneFlow.mContext.packageName, 0).versionName
         } catch (e: PackageManager.NameNotFoundException) {
             ""
@@ -35,9 +35,8 @@ class AppLifecycleListener : LifecycleObserver {
 
         OFHelper.v(tag, "1Flow app is in Foreground[" + shp.getBooleanValue(OFConstants.AUTOEVENT_SESSIONSTART, false) + "]");
         val mapvalues = HashMap<String, Any>()
-        //mapvalues.put("whenStarted", System.currentTimeMillis() / 1000)
         mapvalues.put("library_version", OFConstants.currentVersion)
-        mapvalues.put("app_version", app_ver)
+        mapvalues.put("app_version", appVer)
 
         //added this condition to avoid storing start_session twice once alread being called from add user response
         if(!shp.getBooleanValue(OFConstants.AUTOEVENT_SESSIONSTART, false)) {

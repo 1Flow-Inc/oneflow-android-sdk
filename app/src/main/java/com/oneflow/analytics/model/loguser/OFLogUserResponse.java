@@ -102,14 +102,6 @@ public class OFLogUserResponse extends OFBaseModel {
         this.parameters = parameters;
     }
 
-    /*public LogSession getSession() {
-        return session;
-    }
-
-    public void setSession(LogSession session) {
-        this.session = session;
-    }*/
-
     public String getSessionId() {
         return sessionId;
     }

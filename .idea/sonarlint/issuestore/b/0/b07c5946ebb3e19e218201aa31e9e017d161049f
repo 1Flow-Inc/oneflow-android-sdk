@@ -1,0 +1,9 @@
+
+r	java:S1170"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Û¨±¾øÿÿÿÿ8úÏÛ¾¬1
+m	java:S1178"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(à×’8úÏÛ¾¬1
+m	java:S117@"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ê°å“8úÏÛ¾¬1
+r	java:S117H"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©şÿÿÿÿ8úÏÛ¾¬1
+„	java:S116"hRename this field "frequency_capping_input_value" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßÅ–ƒ8şÏÛ¾¬1
+…	java:S116"iRename this field "frequency_capping_select_value" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(É¬ªù8şÏÛ¾¬1
+t	java:S116 "XRename this field "time_per_user" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Û“ùö8şÏÛ¾¬1
+o	java:S116""NRename this field "_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(í—ø¨ıÿÿÿÿ8şÏÛ¾¬1

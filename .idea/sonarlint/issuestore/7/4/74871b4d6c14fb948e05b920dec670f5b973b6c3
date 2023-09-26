@@ -1,0 +1,21 @@
+
+r	java:S117E"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰Á¯ûÿÿÿÿ8ú×İ¾¬1
+m	java:S117]"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ùõã‰8ú×İ¾¬1
+r	java:S117e"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ß÷²áüÿÿÿÿ8ú×İ¾¬1
+r	java:S117u"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÀÊ‡üÿÿÿÿ8ú×İ¾¬1
+n	java:S117‚"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«Ùæü8ú×İ¾¬1
+s	java:S117¢"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(â†â¹úÿÿÿÿ8ú×İ¾¬1
+n	java:S117ª"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æÏõÂ8ú×İ¾¬1
+s	java:S117²"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¿…à‘ıÿÿÿÿ8ú×İ¾¬1
+s	java:S117º"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©şÿÿÿÿ8ú×İ¾¬1
+n	java:S117Ê"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¼Ùå‰8ú×İ¾¬1
+n	java:S116 "RRename this field "min_val" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ñ¯İ…8‹Øİ¾¬1
+s	java:S116""RRename this field "max_val" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(„›õ¯ùÿÿÿÿ8‹Øİ¾¬1
+{	java:S116*"ZRename this field "star_fill_color" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÿÒ¢·ıÿÿÿÿ8‹Øİ¾¬1
+p	java:S116,"TRename this field "min_chars" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Æï×”8‹Øİ¾¬1
+p	java:S116."TRename this field "max_chars" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢ÛËÚ8‹Øİ¾¬1
+o	java:S1160"NRename this field "_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(í—ø¨ıÿÿÿÿ8‹Øİ¾¬1
+q	java:S1164"URename this field "input_type" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(úçë¼8‹Øİ¾¬1
+{	java:S1168"ZRename this field "rating_min_text" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(éñ¬óüÿÿÿÿ8‹Øİ¾¬1
+u	java:S116:"ZRename this field "rating_max_text" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÉåL8‹Øİ¾¬1
+r	java:S116>"VRename this field "rating_text" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(†¯†8‹Øİ¾¬1

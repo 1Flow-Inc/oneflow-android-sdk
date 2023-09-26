@@ -59,8 +59,6 @@ public class OFAddUserRepo {
                     } else {
                         OFHelper.v(tag, "OneFlow response 0[" + response.message() + "]");
                          mrh.onResponseReceived(hitType, null, 0l, response.message(),null,null);
-                       /* Helper.v(tag,"OneFlow response 1["+response.body().getMessage()+"]");
-                        Helper.v(tag,"OneFlow response 2["+response.body().getSuccess()+"]");*/
 
                     }
                 }

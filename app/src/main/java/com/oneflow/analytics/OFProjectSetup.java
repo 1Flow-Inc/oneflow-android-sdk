@@ -23,7 +23,7 @@ public class OFProjectSetup extends OFSDKBaseActivity{
 
     public void submitHandle(View v){
 
-        String projectId = "oneflow_sandbox_2Z9e492aa1qH22E2SnoSAT5broVR80RF9EXhQ0UcOTyZNgDRCsS4Y88hG4mL+IjPURFgrvCIsuNtUinVIr/ClQ==";//projectIdEditText.getText().toString();
+        String projectId = "oneflow_sandbox_2Z9e492aa1qH22E2SnoSAT5broVR80RF9EXhQ0UcOTyZNgDRCsS4Y88hG4mL+IjPURFgrvCIsuNtUinVIr/ClQ==";
         if(OFHelper.validateString(projectId).equalsIgnoreCase("NA")){
             OFHelper.makeText(OFProjectSetup.this,"Please enter project id",0);
         }else{

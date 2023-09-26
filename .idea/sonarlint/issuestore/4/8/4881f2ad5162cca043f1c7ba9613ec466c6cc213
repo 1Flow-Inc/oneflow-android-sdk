@@ -1,0 +1,37 @@
+
+v
+java:S1104#"TMake isActive a static final constant or non-public and provide accessors if needed.(ïíûõùÿÿÿÿ8¿¯Šê¬1
+v
+java:S1104$"TMake gdSubmit a static final constant or non-public and provide accessors if needed.(ŸÁö¾ûÿÿÿÿ8¿¯Šê¬1
+w
+java:S1104%"UMake webLayout a static final constant or non-public and provide accessors if needed.(Éİ¥¶ûÿÿÿÿ8¿¯Šê¬1
+r
+java:S1104&"PMake pBar a static final constant or non-public and provide accessors if needed.(¹¡•°ùÿÿÿÿ8¿¯Šê¬1
+s
+java:S1104'"VMake webContent a static final constant or non-public and provide accessors if needed.(Ù–“æ8¿¯Šê¬1
+v
+java:S1104*"YMake surveyScreens a static final constant or non-public and provide accessors if needed.(Ãë¡ò8¿¯Šê¬1
+q
+java:S1104+"TMake sdkTheme a static final constant or non-public and provide accessors if needed.(ÃŒ®¼8¿¯Šê¬1
+s
+java:S1104,"VMake themeColor a static final constant or non-public and provide accessors if needed.(­÷È8¿¯Šê¬1
+q
+java:S1104-"OMake tag a static final constant or non-public and provide accessors if needed.(¶µ¤ôúÿÿÿÿ8¿¯Šê¬1
+|
+java:S1104e"ZMake thisViewHeight a static final constant or non-public and provide accessors if needed.(ê˜şÿÿÿÿÿ8¿¯Šê¬1
+Y
+java:S1874W"7Remove this use of "getSerializable"; it is deprecated.(˜Ó‡öşÿÿÿÿ8Ş¯Šê¬1
+Y
+java:S1874X"7Remove this use of "getSerializable"; it is deprecated.(ÒÍ±şüÿÿÿÿ8Ş¯Šê¬1
+T
+java:S1874\"7Remove this use of "getSerializable"; it is deprecated.(‚şŠƒ8Ş¯Šê¬1
+Y
+java:S1874]"7Remove this use of "getSerializable"; it is deprecated.(ïˆŒûÿÿÿÿ8ß¯Šê¬1
+N
+java:S1874¶"0Remove this use of "getColor"; it is deprecated.(Úâ˜³8å¯Šê¬1
+S
+java:S1874·"0Remove this use of "getColor"; it is deprecated.(ì¿·ıÿÿÿÿ8æ¯Šê¬1
+N
+java:S1874Ë"0Remove this use of "getColor"; it is deprecated.(Úâ˜³8è¯Šê¬1
+S
+java:S1874Ì"0Remove this use of "getColor"; it is deprecated.(ì¿·ıÿÿÿÿ8è¯Šê¬1

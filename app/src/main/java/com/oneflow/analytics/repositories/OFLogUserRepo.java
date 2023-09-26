@@ -33,6 +33,10 @@ import retrofit2.Response;
 
 public class OFLogUserRepo {
 
+    private OFLogUserRepo() {
+
+    }
+
     static String tag = "LogUserRepo";
 
     public static void logUser(String headerKey, OFLogUserRequest lur, OFMyResponseHandlerOneFlow mrh, OFConstants.ApiHitType hitType){
@@ -40,8 +44,7 @@ public class OFLogUserRepo {
         OFApiInterface connectAPI = OFRetroBaseService.getClient().create(OFApiInterface.class);
         try {
             Call<OFGenericResponse<OFLogUserResponse>> responseCall = null;
-           // String url = "https://us-west-2.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/1flow-wslxs/service/Log-user/incoming_webhook/anonymous-user-api";
-            responseCall = connectAPI.logUser(headerKey,lur);//,url);
+            responseCall = connectAPI.logUser(headerKey,lur);
 
             responseCall.enqueue(new Callback<OFGenericResponse<OFLogUserResponse>>() {
                 @Override
@@ -59,9 +62,6 @@ public class OFLogUserRepo {
                     } else {
                         OFHelper.v(tag,"OneFlow response 0["+response.body()+"]");
                         mrh.onResponseReceived(hitType,null,0l,"",null,null);
-                       /* Helper.v(tag,"OneFlow response 1["+response.body().getMessage()+"]");
-                        Helper.v(tag,"OneFlow response 2["+response.body().getSuccess()+"]");*/
-
                     }
                 }
 
@@ -74,7 +74,7 @@ public class OFLogUserRepo {
                 }
             });
         } catch (Exception ex) {
-
+            // error
         }
 
     }

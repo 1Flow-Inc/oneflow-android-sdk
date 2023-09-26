@@ -33,11 +33,11 @@ import com.oneflow.analytics.utils.OFMyResponseHandlerOneFlow;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class OFEventController implements OFMyResponseHandlerOneFlow {
 
     Context mContext;
-    //OFSDKDB sdkdb;
     String tag = this.getClass().getName();
 
     private static OFEventController ec;
@@ -51,15 +51,11 @@ public class OFEventController implements OFMyResponseHandlerOneFlow {
 
     private OFEventController(Context mContext) {
         this.mContext = mContext;
-        //sdkdb = OFSDKDB.getInstance(mContext);
-
     }
 
-    public void storeEventsInDB(String eventName, HashMap<String, Object> eventValue, int value) {
+    public void storeEventsInDB(String eventName, Map<String, Object> eventValue, int value) {
 
-        //String data = new Gson().toJson(eventValue);
         OFHelper.v(tag, "Oneflow records inserted [" + eventName + "]value[" + eventValue + "]");
-        //OFEventDBRepo.insertEvents(mContext,eventName,eventValue,value,this, OFConstants.ApiHitType.insertEventsInDB);
         new OFEventDBRepoKT().insertEvents(mContext, eventName, eventValue, value, this, OFConstants.ApiHitType.insertEventsInDB);
 
     }
@@ -69,10 +65,9 @@ public class OFEventController implements OFMyResponseHandlerOneFlow {
 
         switch (hitType) {
             case insertEventsInDB:
-                OFHelper.v(tag, "Oneflow records inserted [" + ((Long) obj) + "]");
+                OFHelper.v(tag, "Oneflow records inserted [" + (obj) + "]");
                 if (reserved.equalsIgnoreCase(OFConstants.AUTOEVENT_SURVEYIMPRESSION)) {
-                    OFHelper.v(tag, "Oneflow found survey impression[" + ((Long) obj) + "]");
-                    //OFEventDBRepo.fetchEvents(mContext, this, OFConstants.ApiHitType.fetchEventsFromDB);
+                    OFHelper.v(tag, "Oneflow found survey impression[" + (obj) + "]");
                     new OFEventDBRepoKT().fetchEvents(mContext, this, OFConstants.ApiHitType.fetchEventsFromDB);
 
                 }
@@ -85,7 +80,7 @@ public class OFEventController implements OFMyResponseHandlerOneFlow {
                     ArrayList<OFRecordEventsTab> list = (ArrayList<OFRecordEventsTab>) obj;
                     OFHelper.v(this.getClass().getName(), "OneFlow fetchEventsFromDB list received size[" + list.size() + "]");
                     //Preparing list to send api
-                    if (list.size() > 0) {
+                    if (!list.isEmpty()) {
                         Integer[] ids = new Integer[list.size()];
                         int i = 0;
                         ArrayList<OFRecordEventsTabToAPI> retListToAPI = new ArrayList<>();
@@ -102,7 +97,6 @@ public class OFEventController implements OFMyResponseHandlerOneFlow {
                             ids[i++] = ret.getId();
                         }
 
-                        //if (!OFOneFlowSHP.getInstance(mContext).getStringValue(OFConstants.SESSIONDETAIL_IDSHP).equalsIgnoreCase("NA")) {
                         if (OFHelper.isConnected(mContext)) {
                             OFEventAPIRequest ear = new OFEventAPIRequest();
                             ear.setUserId(OFOneFlowSHP.getInstance(mContext).getUserDetails().getAnalytic_user_id());
@@ -112,26 +106,25 @@ public class OFEventController implements OFMyResponseHandlerOneFlow {
                             OFEventAPIRepo.sendLogsToApi(OFOneFlowSHP.getInstance(mContext).getStringValue(OFConstants.APPIDSHP), ear, this, OFConstants.ApiHitType.sendEventsToAPI, ids);
                         }
                     }
-
-                    //}
                 }
                 break;
             case sendEventsToAPI:
                 if (obj != null) {
                     //Events has been sent to api now deleting local records
                     Integer[] ids1 = (Integer[]) obj;
-                    //OFEventDBRepo.deleteEvents(mContext, ids1, this, OFConstants.ApiHitType.deleteEventsFromDB);
                     new OFEventDBRepoKT().deleteEvents(mContext, ids1, this, OFConstants.ApiHitType.deleteEventsFromDB);
                 }
                 break;
             case deleteEventsFromDB:
                 if (obj != null) {
                     OFOneFlowSHP.getInstance(mContext).storeValue(OFConstants.SHP_EVENTS_DELETE_PENDING,false);
-                    OFHelper.v(this.getClass().getName(), "OneFlow events delete count[" + ((Integer) obj) + "]");
+                    OFHelper.v(this.getClass().getName(), "OneFlow events delete count[" + (obj) + "]");
                     Intent intent = new Intent("events_submitted");
-                    intent.putExtra("size", String.valueOf((Integer) obj));
+                    intent.putExtra("size", String.valueOf(obj));
                     mContext.sendBroadcast(intent);
                 }
+                break;
+            default:
                 break;
         }
     }

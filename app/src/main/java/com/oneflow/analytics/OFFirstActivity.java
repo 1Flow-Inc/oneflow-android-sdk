@@ -59,12 +59,12 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
 
     String tag = this.getClass().getName();
 
-    OFCustomTextView sendLogsToAPI, noSurvey;
+    OFCustomTextView sendLogsToAPI;
+    OFCustomTextView noSurvey;
 
-    // OFCustomEditText fakeEditText;
     RecyclerView listOfSurvey;
     ProgressBar progressBar;
-    ArrayList<OFGetSurveyListResponse> slr;
+    List<OFGetSurveyListResponse> slr;
     OFSurveyListAdapter addb;
     Boolean configureCalled = false;
 
@@ -79,11 +79,6 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
         listOfSurvey = (RecyclerView) findViewById(R.id.list_of_survey);
 
         progressBar = (ProgressBar) findViewById(R.id.progress_circular);
-
-        /*Long lastHit = new SHPRepo().getLongShp(this,OFConstants.SHP_ONEFLOW_CONFTIMING);
-        OFHelper.v(tag,"StrictMode ["+lastHit+"]");
-
-        new SHPRepo().storeValue(this,OFConstants.SHP_THROTTLING_TIME,"Circo.OneFlow");*/
 
         OFOneFlowSHP ofs = OFOneFlowSHP.getInstance(this);
 
@@ -101,7 +96,7 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
 
 
         slr = new ArrayList<>();
-        addb = new OFSurveyListAdapter(this, slr, clickListener);
+        addb = new OFSurveyListAdapter(slr, clickListener);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         listOfSurvey.setLayoutManager(linearLayoutManager);
         listOfSurvey.setAdapter(addb);
@@ -113,9 +108,6 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
         inf.addAction("survey_finished");
         registerReceiver(listFetched, inf);
 
-        Typeface faceBold = Typeface.createFromAsset(getAssets(), "fonts/Lato-Bold.ttf");
-        Typeface faceReg = Typeface.createFromAsset(getAssets(), "fonts/Lato-Regular.ttf");
-
         String projectKey = ofs.getStringValue(OFConstants.APPIDSHP);
 
 
@@ -125,75 +117,18 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
             configureOneFlow(projectKey);
         } else {
 
-            //OFHelper.makeText(this,"Project key not available, Won't call OneFlow config",1);
             noSurvey.setText("Configure not called");
             progressBar.setVisibility(View.GONE);
             noSurvey.setVisibility(View.VISIBLE);
         }
-
-        /*fakeEditText.setHintTextColor(Color.parseColor("#00ff00"));
-        fakeEditText.setTextColor(Color.parseColor("#0000ff"));*/
-       // FirebaseApp.initializeApp(this);
-       // retriveCurrentFCMToken();
-
-    //    OFHelper.v(tag,"1Flow mongodb id method["+objectIdMy()+"]");
-
     }
 
 
-
-    /*private void retriveCurrentFCMToken() {
-        try {
-//            sendNotification();
-            final String[] token = {""};
-            FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-                @Override
-                public void onComplete(Task<String> task) {
-                    if(task.isComplete()){
-                        token[0] = task.getResult();
-                        OFHelper.e("AppConstants", "1Flow onComplete: new Token got: "+token[0] );
-
-                    }
-                }
-
-            });
-            //return token[0];
-
-        } catch (Exception e) {
-            if (BuildConfig.DEBUG)
-                e.printStackTrace();
-        }
-    }*/
-
-   /* @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-
-
-        Bundle bundle = intent.getExtras();
-        for (String key: bundle.keySet())
-        {
-            OFHelper.v(tag,"1Flow data from notifcation key["+key+"]value["+bundle.get(key)+"]");
-        }
-        OFHelper.v(tag,"1Flow data from notifcation finish");
-
-    }*/
-
     private void configureOneFlow(String projectKey) {
 
-        OneFlow.configure(getApplicationContext(), projectKey);//"fonts/pacifico1.ttf");//,titleSetup,descriptionFont,optionsFont);
-        //OneFlow.useFont("fonts/pacifico.ttf");
+        OneFlow.configure(getApplicationContext(), projectKey);
         OneFlow.shouldShowSurvey(true);
         OneFlow.shouldPrintLog(true);
-
-
-       /* HashMap<String, Object> mapValue = new HashMap<>();
-        mapValue.put("location", "MP");
-        mapValue.put("env", "Prod");
-        mapValue.put("test_date", OFHelper.formatDateIntoCustomFormat(new Date(),"yyyy-mm-dd"));
-        mapValue.put("tested_by", "Amit kumar sharma");
-
-        OneFlow.logUser("test_Android_2023_03_01", mapValue);*/
     }
 
     private void showCofigureDialog() {
@@ -219,17 +154,14 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
         //String projectKey = "oneflow_prod_yxwI14oGAEhYgOEJjo43IsoKuWbSPoXBcKD+Bj5UkiZtPXb1vuuBkRUm5YxfBCs6thcsxPWbxDeJHJZlSGzxkw==";//[TEST]Flutter/React Native SDKs
         projectKeyET.setText(projectKey);
         OFCustomTextView registerButton = dialog.findViewById(R.id.register_project);
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (projectKeyET.getText().toString().equalsIgnoreCase("")) {
-                    OFHelper.makeText(OFFirstActivity.this, "Please enter project key", 1);
-                } else {
-                    dialog.cancel();
-                    noSurvey.setVisibility(View.GONE);
-                    progressBar.setVisibility(View.VISIBLE);
-                    configureOneFlow(projectKeyET.getText().toString());
-                }
+        registerButton.setOnClickListener(v -> {
+            if (projectKeyET.getText().toString().equalsIgnoreCase("")) {
+                OFHelper.makeText(OFFirstActivity.this, "Please enter project key", 1);
+            } else {
+                dialog.cancel();
+                noSurvey.setVisibility(View.GONE);
+                progressBar.setVisibility(View.VISIBLE);
+                configureOneFlow(projectKeyET.getText().toString());
             }
         });
         dialog.show();
@@ -252,12 +184,10 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
                         listOfSurvey.setVisibility(View.VISIBLE);
                         addb.notifyMyList(slr);
                     } else {
-                        //OFHelper.makeText(OFFirstActivity.this, "No survey received", 1);
                         noSurvey.setText(intent.getStringExtra("msg"));
                         noSurvey.setVisibility(View.VISIBLE);
                     }
                 } else {
-                    //OFHelper.makeText(OFFirstActivity.this, "No survey received", 1);
                     noSurvey.setText(intent.getStringExtra("msg"));
                     noSurvey.setVisibility(View.VISIBLE);
                 }
@@ -270,38 +200,19 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
             }
         }
     };
-    View.OnClickListener clickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            String tag = (String) v.getTag();
+    View.OnClickListener clickListener = v -> {
+        String tags = (String) v.getTag();
 
-            OFHelper.v(tag,"1Flow clicked on tag["+tag+"]");
-            String tagArray[] = tag.split(",");
-            //GetSurveyListResponse surveyItem = checkSurveyTitleAndScreens(tag);
-
-            /*if (tagArray[0].trim().equalsIgnoreCase("")) {
-                OFHelper.showAlert(OFFirstActivity.this, "", "Event name not defined, Unable to trigger");
-            } else {*/
-                /*HashMap<String, Object> mapvalues = new HashMap<String, Object>();
-                mapvalues.put("testKey1", "testValue1");
-                mapvalues.put("testKey2", 25);
-                mapvalues.put("testKey3", "testValue3");
-                OneFlow.recordEvents(tagArray[0], mapvalues);*/
-            OneFlow.startFlow(tagArray[0]);
-            //}
-            /*Intent intent = new Intent(SurveyList.this, SurveyActivity.class);
-            intent.putExtra("SurveyType", surveyItem);
-            startActivity(intent);*/
-        }
+        OFHelper.v(tag,"1Flow clicked on tag["+tags+"]");
+        String[] tagArray = tags.split(",");
+        OneFlow.startFlow(tagArray[0]);
     };
 
     @Override
     protected void onResume() {
         super.onResume();
-        //Helper.makeText(this,"isConnected["+Helper.isInternetAvailable()+"]",1);
-
         OFHelper.v(tag,"1Flow onResume ["+configureCalled+"]");
-        if (!configureCalled) {
+        if (Boolean.FALSE.equals(configureCalled)) {
             slr = OFOneFlowSHP.getInstance(OFFirstActivity.this).getSurveyList();
             if (slr != null) {
                 addb.notifyMyList(slr);
@@ -314,70 +225,15 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
 
     public void clickHandler(View v) {
 
-        /*if (v.getId() == R.id.get_location) {
-            // Helper.makeText(FirstActivity.this, "Clicked on button 3", 1);
-            //new FeedbackController(this).getLocation();
-        } else if (v.getId() == R.id.fetch_survey_list) {
-            //  Helper.makeText(FirstActivity.this, "Clicked on button 4", 1);
-            //FeedbackController.getSurvey(this);
-        } else if (v.getId() == R.id.project_details) {
-            // Helper.makeText(FirstActivity.this, "Clicked on button 0", 1);
-            //new FeedbackController(this).getProjectDetails();
-        } else*/
-       /* else if (v.getId() == R.id.connect_vpn) {
-            // Helper.makeText(FirstActivity.this, "Clicked on button 0", 1);
-
-            HashMap<String, String> mapvalues = new HashMap<String, String>();
-            mapvalues.put("platform", "android");
-            mapvalues.put("location", "bihar");
-            mapvalues.put("webhook_test_andrid", "test_event_name");
-            //OneFlow.recordEvents("connect_vpn", mapvalues);
-            OneFlow.recordEvents("PopularOS", mapvalues);
-
-
-        } else if (v.getId() == R.id.disconnect_vpn) {
-            // Helper.makeText(FirstActivity.this, "Clicked on button 0", 1);
-
-            HashMap<String, String> mapvalues = new HashMap<String, String>();
-            mapvalues.put("disconnect1", "testValue1");
-            mapvalues.put("Location", "Nepal");
-            mapvalues.put("disconnect3", "testValue3");
-            OneFlow.recordEvents("Others", mapvalues);
-
-        } else if (v.getId() == R.id.record_log) {
-            OFHelper.v(tag, "OneFlow Clicked on button record log");
-            String localTag = (String) v.getTag();
-            HashMap<String, Object> mapvalues = new HashMap<String, Object>();
-            mapvalues.put("testKey1_" + localTag, "testValue1");
-            mapvalues.put("namewa", "Bigu");
-            mapvalues.put("testKey3_" + localTag, "testValue3");
-            mapvalues.put("testKey3_" + localTag, 23);
-            OneFlow.recordEvents(localTag, mapvalues);
-        } else if (v.getId() == R.id.configure_project) {
-
-            OneFlow.configure(this, "7oKyqBl/myk8h1Zkq1uSkxffXe9U+p6trHLqA2q1JOU=");
-        }*/
         if (v.getId() == R.id.trigger_survey) {
             startActivity(new Intent(OFFirstActivity.this,OFSecondActivity.class));
         }else if (v.getId() == R.id.send_log_to_api) {
-            // Helper.makeText(FirstActivity.this, "Clicked on button 0", 1);
             OneFlow.sendEventsToApi(this);
 
         } else if (v.getId() == R.id.configure_oneflow) {
             showCofigureDialog();
-        }
+        } else if (v.getId() == R.id.log_user) {
 
-        /* else if (v.getId() == R.id.start_session) {
-           // OneFlow.recordEvents("start_session",null);
-
-            OFEventController ec = OFEventController.getInstance(OFFirstActivity.this);
-            ec.storeEventsInDB("start_session", null, 0);
-
-
-        } */else if (v.getId() == R.id.log_user) {
-
-
-            String emailId = "";
             final EditText edittext = new EditText(this);
             final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -385,67 +241,31 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
 
             alert.setView(edittext);
 
-            alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
+            alert.setPositiveButton("Yes", (dialog, whichButton) -> {
 
-                    /*int a[] = new int[]{1, 2, 3, 4};
-                    String b[] = new String[]{"One", "Two", "Three", "Four"};
-                    OFDataLogic dl = new OFDataLogic();
-                    dl.setAction("Action");
-                    dl.setCondition("Condition");
-                    dl.setType("Type");
-                    dl.setValues("Values");
+                if (edittext.getText().toString().trim().equalsIgnoreCase("")) {
+                    OFHelper.makeText(OFFirstActivity.this, "Empty user name", 1);
 
-                    OFDataLogic obj[] = new OFDataLogic[]{dl};
-                    //if (!edittext.getText().toString().isEmpty()) {
-                    dialog.cancel();
-                    HashMap<String, Object> mapValue = new HashMap<>();
-                    mapValue.put("location", "Bihar");
-                    mapValue.put("env", null);
-                    mapValue.put("name", "Amit kumar");
-                    mapValue.put("age", 86);
-                    mapValue.put("isActive", true);
-                    mapValue.put("desitance", 25.16);
-                    mapValue.put("timestamp", System.currentTimeMillis());
-                    mapValue.put("DateObj", new Date());
-                    mapValue.put("StringArray", b);
-                    mapValue.put("IntArray", a);
-                    mapValue.put("pojo", dl);
-                    mapValue.put("pojoArray", obj);
-                    OneFlow.logUser(edittext.getText().toString(), mapValue);*/
-                    /*} else {
-                        OFHelper.makeText(OFFirstActivity.this, "Enter email id", 1);
-                    }*/
-                    if (edittext.getText().toString().trim().equalsIgnoreCase("")) {
-                        OFHelper.makeText(OFFirstActivity.this, "Empty user name", 1);
+                } else {
+                    if (OFHelper.isConnected(OFFirstActivity.this)) {
 
-                    } else {
-                        if (OFHelper.isConnected(OFFirstActivity.this)) {
+                        OFHelper.v(tag, "1Flow date[" + OFHelper.formatDateIntoCustomFormat(new Date(), "YYYY-MM-dd") + "]");
 
-                            OFHelper.v(tag, "1Flow date[" + OFHelper.formatDateIntoCustomFormat(new Date(), "YYYY-MM-dd") + "]");
-
-                            HashMap<String, Object> mapValue = new HashMap<>();
-                            mapValue.put("test_date", OFHelper.formatDateIntoCustomFormat(new Date(), "YYYY-MM-dd"));
-                            mapValue.put("tested_by", "DummyBuild_2023.02.09");
+                        HashMap<String, Object> mapValue = new HashMap<>();
+                        mapValue.put("test_date", OFHelper.formatDateIntoCustomFormat(new Date(), "YYYY-MM-dd"));
+                        mapValue.put("tested_by", "DummyBuild_2023.02.09");
 
 
-                            OneFlow.logUser(edittext.getText().toString(), mapValue);
-                        }
+                        OneFlow.logUser(edittext.getText().toString(), mapValue);
                     }
                 }
             });
 
-            alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    // what ever you want to do with No option.
-                }
+            alert.setNegativeButton("No", (dialog, whichButton) -> {
+                // what ever you want to do with No option.
             });
 
             alert.show();
-
-
-            //OneFlow.recordEvents("event_ev",mapValue);
-
         }
     }
 
@@ -458,16 +278,13 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
         projectKeyET.setText(projectKey);
         OFCustomTextView registerButton = dialog.findViewById(R.id.register_project);
         registerButton.setText("Init Survey");
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (projectKeyET.getText().toString().equalsIgnoreCase("")) {
-                    OFHelper.makeText(getApplicationContext(), "Please enter survey ID", 1);
-                } else {
-                    dialog.cancel();
+        registerButton.setOnClickListener(v -> {
+            if (projectKeyET.getText().toString().equalsIgnoreCase("")) {
+                OFHelper.makeText(getApplicationContext(), "Please enter survey ID", 1);
+            } else {
+                dialog.cancel();
 
-                    OneFlow.startFlow(projectKeyET.getText().toString());
-                }
+                OneFlow.startFlow(projectKeyET.getText().toString());
             }
         });
         dialog.show();
@@ -476,23 +293,15 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
     @Override
     public void onResponseReceived(OFConstants.ApiHitType hitType, Object obj, Long reserve, String reserved, Object Obj2, Object obj3) {
         OFHelper.v(tag, "1Flow reached onResponseEvent["+hitType+"]obj["+obj+"]");
-        switch (hitType) {
-            case fetchEventsFromDB:
-                if (obj != null) {
-                    List<OFRecordEventsTabKT> list = (List<OFRecordEventsTabKT>) obj;
-                    OFHelper.v(tag, "1Flow Events size[" + new Gson().toJson(list) + "]");
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            sendLogsToAPI.setText("Send Events to API (" + list.size() + ")");
-                        }
-                    });
+        if (hitType == OFConstants.ApiHitType.fetchEventsFromDB) {
+            if (obj != null) {
+                List<OFRecordEventsTabKT> list = (List<OFRecordEventsTabKT>) obj;
+                OFHelper.v(tag, "1Flow Events size[" + new Gson().toJson(list) + "]");
+                runOnUiThread(() -> sendLogsToAPI.setText("Send Events to API (" + list.size() + ")"));
 
-                }else{
-                    OFHelper.v(tag, "1Flow Events size no event to submit");
-                }
-                break;
-
+            } else {
+                OFHelper.v(tag, "1Flow Events size no event to submit");
+            }
         }
     }
 

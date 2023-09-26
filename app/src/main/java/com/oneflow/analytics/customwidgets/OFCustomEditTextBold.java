@@ -34,7 +34,6 @@ import com.oneflow.analytics.utils.OFHelper;
 
 public class OFCustomEditTextBold extends AppCompatEditText {
     public OFCustomEditTextBold(Context context) {
-        //super(context);
        super(context, null, R.style.EditTextCustomStyle);
         init();
     }
@@ -75,45 +74,24 @@ public class OFCustomEditTextBold extends AppCompatEditText {
         this.setCustomSelectionActionModeCallback(new ActionMode.Callback() {
 
             public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                // TODO Auto-generated method stub
                 menu.clear();
                 return false;
             }
 
             public void onDestroyActionMode(ActionMode mode) {
-                // TODO Auto-generated method stub
-
+                // mode
             }
 
             public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                // TODO Auto-generated method stub
                 return false;
             }
 
             public boolean onActionItemClicked(ActionMode mode,
                                                MenuItem item) {
-                // TODO Auto-generated method stub
                 return false;
             }
         });
 
 
     }
-
-   /* @Override
-    public int getSelectionStart() {
-
-        for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
-
-
-            if (element.getMethodName().equals("canPaste") || element.getMethodName().equals("canCopy") || element.getMethodName().equals("canCut") || element.getMethodName().equalsIgnoreCase("canSelectAll") || element.getMethodName().equalsIgnoreCase("canClipboard")) {
-                return -1;
-            }
-        }
-
-        return super.getSelectionStart();
-
-    }
-*/
-
 }

@@ -1,0 +1,145 @@
+
+{	java:S135ª"YReduce the total number of break and continue statements in this loop to use at most one.(Şûàğúÿÿÿÿ8ø÷úØ¬1
+R
+java:S1066©"/Merge this if statement with the enclosing one.(ä¹Ñ¡ÿÿÿÿÿ8ù÷úØ¬1
+R
+java:S1066"/Merge this if statement with the enclosing one.(é¨¨¶şÿÿÿÿ8ú÷úØ¬1
+„
+java:S1319h"gThe type of "screens" should be an interface such as "List" rather than the implementation "ArrayList".(‰£È8ú÷úØ¬1
+X
+java:S1141¶"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8û÷úØ¬1
+F
+java:S1604À"(Make this anonymous inner class a lambda(ÚÜßË8ı÷úØ¬1
+K
+java:S1604­"(Make this anonymous inner class a lambda(Âì‚ıÿÿÿÿ8ı÷úØ¬1
+K
+java:S1604Ò"(Make this anonymous inner class a lambda(±—§øÿÿÿÿ8ş÷úØ¬1
+F
+java:S1604¯"(Make this anonymous inner class a lambda(„ÑñŒ8ş÷úØ¬1
+K
+java:S1604†	"(Make this anonymous inner class a lambda(ãû¿ûÿÿÿÿ8ş÷úØ¬1
+v
+java:S1104c"TMake closeBtn a static final constant or non-public and provide accessors if needed.(ÿñ¦ıÿÿÿÿ8ÿ÷úØ¬1
+p
+java:S1104h"SMake screens a static final constant or non-public and provide accessors if needed.(‰£È8ÿ÷úØ¬1
+q
+java:S1104m"TMake sdkTheme a static final constant or non-public and provide accessors if needed.(ÃŒ®¼8ÿ÷úØ¬1
+w
+java:S1104Õ"TMake isActive a static final constant or non-public and provide accessors if needed.(ŒáÿÎûÿÿÿÿ8€øúØ¬1
+t
+java:S1104ñ"VMake themeColor a static final constant or non-public and provide accessors if needed.(ÛçĞŸ8€øúØ¬1
+r
+java:S1104•"TMake position a static final constant or non-public and provide accessors if needed.(ª¯ƒ‚8€øúØ¬1
+Q
+java:S1444Õ".Make this "public static isActive" field final(ŒáÿÎûÿÿÿÿ8áº¼Ù¬1
+\
+java:S3516‰	"9Refactor this method to not always return the same value.(Óı°ûÿÿÿÿ8‚ÿúØ¬1
+i
+java:S1659e"LDeclare "basePopupLayout" and all following declarations on a separate line.(ëş ä8ŠÿúØ¬1
+U
+java:S1874ˆ"7Remove this use of "getSerializable"; it is deprecated.(Í×8’ÿúØ¬1
+Z
+java:S1874‰"7Remove this use of "getSerializable"; it is deprecated.(Îî•¦ıÿÿÿÿ8’ÿúØ¬1
+U
+java:S1874Š"7Remove this use of "getSerializable"; it is deprecated.(ŠğØÕ8’ÿúØ¬1
+Y	java:S125‘"<This block of commented-out lines of code should be removed.(´‹‚£8“ÿúØ¬1
+Y	java:S125™"<This block of commented-out lines of code should be removed.(¿„à´8”ÿúØ¬1
+p
+java:S3776®"RRefactor this method to reduce its Cognitive Complexity from 34 to the 15 allowed.(ÈÅÜÈ8•ÿúØ¬1
+W
+java:S1874°"9Remove this use of "getDefaultDisplay"; it is deprecated.(ğ‰†×8–ÿúØ¬1
+O
+java:S1874±"2Remove this use of "getMetrics"; it is deprecated.(Éîî8–ÿúØ¬1
+_
+java:S1874µ"<Remove this use of "getSerializableExtra"; it is deprecated.(¼¿µıÿÿÿÿ8—ÿúØ¬1
+Y	java:S125¹"<This block of commented-out lines of code should be removed.(çÉÕŠ8—ÿúØ¬1
+^	java:S125×"<This block of commented-out lines of code should be removed.(ÃŒó‚ÿÿÿÿÿ8›ÿúØ¬1
+^	java:S125à"<This block of commented-out lines of code should be removed.(€õ·–şÿÿÿÿ8œÿúØ¬1
+^	java:S125ê"<This block of commented-out lines of code should be removed.(€õ·–şÿÿÿÿ8œÿúØ¬1
+Y	java:S125ù"<This block of commented-out lines of code should be removed.(ªŞ‡Š8ÿúØ¬1
+X	java:S125"<This block of commented-out lines of code should be removed.(Çª¼p8ŸÿúØ¬1
+^	java:S125‘"<This block of commented-out lines of code should be removed.(Ü«Íşÿÿÿÿÿ8ŸÿúØ¬1
+Y	java:S125•"<This block of commented-out lines of code should be removed.(š¿Ã«8ŸÿúØ¬1
+Y	java:S125—"<This block of commented-out lines of code should be removed.(ÛÖÇ¯8ŸÿúØ¬1
+S
+java:S1874¨"6Remove this use of "setColorFilter"; it is deprecated.(Á±¤$8¡ÿúØ¬1
+Y
+java:S2696Ç"6Make the enclosing method "static" or remove this set.(¾ÅíÄüÿÿÿÿ8¯¾¼Ù¬1
+m
+java:S1874Ø"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(œƒƒ©ùÿÿÿÿ8¤ÿúØ¬1
+Y	java:S125Ù"<This block of commented-out lines of code should be removed.(“£ªØ8¥ÿúØ¬1
+^	java:S125ã"<This block of commented-out lines of code should be removed.(ªÔİ×ûÿÿÿÿ8¦ÿúØ¬1
+Y	java:S125ì"<This block of commented-out lines of code should be removed.(Ó›¬8¦ÿúØ¬1
+^	java:S125ï"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8¦ÿúØ¬1
+Y	java:S125õ"<This block of commented-out lines of code should be removed.(¬ÿ½¨8§ÿúØ¬1
+Y	java:S125…"<This block of commented-out lines of code should be removed.(øü¸ë8¨ÿúØ¬1
+X	java:S125 "<This block of commented-out lines of code should be removed.(òÅÕ:8®ÿúØ¬1
+X	java:S125±"<This block of commented-out lines of code should be removed.(òÅÕ:8¯ÿúØ¬1
+T
+java:S2696»"6Make the enclosing method "static" or remove this set.(‚ÛÂÅ8º¾¼Ù¬1
+Y	java:S125Ã"<This block of commented-out lines of code should be removed.(Á˜Â8µÿúØ¬1
+^	java:S125Æ"<This block of commented-out lines of code should be removed.(»Ûë¾şÿÿÿÿ8µÿúØ¬1
+Y	java:S125È"<This block of commented-out lines of code should be removed.(ªŞ‡Š8µÿúØ¬1
+p
+java:S3776Ò"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(úÌÚâ8¶ÿúØ¬1
+^	java:S125•"<This block of commented-out lines of code should be removed.(Ëòóıÿÿÿÿ8ÁÿúØ¬1
+q
+java:S3776¢"SRefactor this method to reduce its Cognitive Complexity from 150 to the 15 allowed.(€ñîô8ÃÿúØ¬1
+@
+java:S1659¥""Declare "type" on a separate line.(…Ÿİ³8ÅÿúØ¬1
+I
+java:S1481¾"&Remove this unused "i" local variable.(ùó›Ìøÿÿÿÿ8ÊÿúØ¬1
+^	java:S125À"<This block of commented-out lines of code should be removed.(ÙªèÈıÿÿÿÿ8ËÿúØ¬1
+^	java:S125Î"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8ËÿúØ¬1
+^	java:S125Û"<This block of commented-out lines of code should be removed.(àí”âşÿÿÿÿ8ÍÿúØ¬1
+Y	java:S125”"<This block of commented-out lines of code should be removed.(Ë®¸¯8ÑÿúØ¬1
+U
+java:S1135 "2Complete the task associated to this TODO comment.(¦ÎÖ¼ûÿÿÿÿ8ÓÿúØ¬1
+K	java:S108©")Either remove or fill this block of code.(±Ÿ—±ÿÿÿÿÿ8ÖÿúØ¬1
+P
+java:S1135°"2Complete the task associated to this TODO comment.( õÆ8×ÿúØ¬1
+^	java:S125¶"<This block of commented-out lines of code should be removed.(Ö—ˆıÿÿÿÿ8ØÿúØ¬1
+^	java:S125ş"<This block of commented-out lines of code should be removed.(©Óíãúÿÿÿÿ8üÿúØ¬1
+^	java:S125†"<This block of commented-out lines of code should be removed.(ÀÑé®ıÿÿÿÿ8ıÿúØ¬1
+Y	java:S125›"<This block of commented-out lines of code should be removed.(‘‘Œ„8€€ûØ¬1
+M
+java:S1874¯"/Remove this use of "Handler"; it is deprecated.(„ÑñŒ8‹€ûØ¬1
+^	java:S125È"<This block of commented-out lines of code should be removed.(ÿÄ½²ÿÿÿÿÿ8€ûØ¬1
+Y	java:S125×"<This block of commented-out lines of code should be removed.(¯Šª8’€ûØ¬1
+^	java:S125ß"<This block of commented-out lines of code should be removed.(ÿÄ½²ÿÿÿÿÿ8•€ûØ¬1
+^	java:S125ó"<This block of commented-out lines of code should be removed.(¤ì¤ğÿÿÿÿÿ8˜€ûØ¬1
+Y	java:S125ş"<This block of commented-out lines of code should be removed.(¯Šª8œ€ûØ¬1
+Y	java:S125‚"<This block of commented-out lines of code should be removed.(Ô¸¶8œ€ûØ¬1
+Y	java:S125ˆ"<This block of commented-out lines of code should be removed.(ŸÏÌÈ8€ûØ¬1
+Y	java:S125"<This block of commented-out lines of code should be removed.(¿·›8Ÿ€ûØ¬1
+W
+java:S1117¦"9Rename "frag" which hides the field declared at line 835.(åÀá8«€ûØ¬1
+Y	java:S125²"<This block of commented-out lines of code should be removed.(±İä×8­€ûØ¬1
+^	java:S125Ç"<This block of commented-out lines of code should be removed.(Øë–‰ûÿÿÿÿ8µ€ûØ¬1
+Y	java:S125Ğ"<This block of commented-out lines of code should be removed.(ì‘òŠ8¶€ûØ¬1
+^	java:S125Ó"<This block of commented-out lines of code should be removed.(ªíªøÿÿÿÿ8¶€ûØ¬1
+Y	java:S125è"<This block of commented-out lines of code should be removed.(ĞÕ™±8¸€ûØ¬1
+u
+java:S3776õ"RRefactor this method to reduce its Cognitive Complexity from 25 to the 15 allowed.(‡ÙÖÃıÿÿÿÿ8º€ûØ¬1
+Y	java:S125‹"<This block of commented-out lines of code should be removed.(ı€Á8Á€ûØ¬1
+Y	java:S125 "<This block of commented-out lines of code should be removed.(¬›ÖÒ8Ä€ûØ¬1
+X	java:S125®"<This block of commented-out lines of code should be removed.(òÅÕ:8Æ€ûØ¬1
+Y	java:S125µ"<This block of commented-out lines of code should be removed.(ı€Á8Ç€ûØ¬1
+u
+java:S3776Æ"RRefactor this method to reduce its Cognitive Complexity from 51 to the 15 allowed.(³¹ŠŒúÿÿÿÿ8È€ûØ¬1
+Y	java:S125Ş"<This block of commented-out lines of code should be removed.(»‰–¨8Ï€ûØ¬1
+Y	java:S125à"<This block of commented-out lines of code should be removed.(Î†ÛŸ8Ï€ûØ¬1
+^	java:S125€	"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ8Ô€ûØ¬1
+^	java:S125º	"<This block of commented-out lines of code should be removed.(µ¡Öµşÿÿÿÿ8Ú€ûØ¬1
+Y	java:S125¿	"<This block of commented-out lines of code should be removed.(“¾ş¾8Ú€ûØ¬1
+Y	java:S125Å	"<This block of commented-out lines of code should be removed.(Ã–‡Ç8Ú€ûØ¬1
+\
+java:S1874‡
+"9Remove this use of "getDefaultDisplay"; it is deprecated.(Ä¸¬Ìıÿÿÿÿ8ç€ûØ¬1
+R
+java:S1874‰
+"/Remove this use of "getSize"; it is deprecated.(¯ÊÃÙøÿÿÿÿ8è€ûØ¬1
+X
+java:S1144Å"5Remove this unused private "loadFragmentsRes" method.(¬İúŸûÿÿÿÿ8í€ûØ¬1
+å
+java:S6541¢"ÆA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 124 to 64, Complexity from 34 to 14, Nesting Level from 7 to 2, Number of Variables from 21 to 6.(€ñîô8ñ€ûØ¬1

@@ -41,9 +41,9 @@ public class OFMyReceiver extends BroadcastReceiver {
     }
 
     private void sendEventsToAPI(){
-        //Helper.makeText(context,"sending event called from BR",0);
+        // sendEventsToAPI
     }
     private void sendServeyToAPI(){
-        //Helper.makeText(context,"sending survey called from BR",0);
+        // sendServeyToAPI
     }
 }

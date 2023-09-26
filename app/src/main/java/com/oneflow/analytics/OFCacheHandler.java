@@ -43,7 +43,6 @@ public class OFCacheHandler extends Thread {
         try {
 
             String apiUrl = "https://cdn.1flow.app/index-dev.js";//original url
-//            String apiUrl = "https://cdn-development.1flow.ai/js-sdk/filter.js";
             // Create a URL object with the API endpoint
             URL url = new URL(apiUrl);
 
@@ -58,20 +57,19 @@ public class OFCacheHandler extends Thread {
             File cacheFile = new File(context.getCacheDir(), OFConstants.cacheFileName);
 
             // Create an output stream to write data to the cache file
-            OutputStream outputStream = new FileOutputStream(cacheFile);
+            try (OutputStream outputStream = new FileOutputStream(cacheFile)) {
 
-            //Read the data from the input stream and write it to the cache file
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                //OFHelper.v(tag, new String(buffer,0,bytesRead));
-                outputStream.write(buffer, 0, bytesRead);
+                //Read the data from the input stream and write it to the cache file
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
 
+                }
+
+                // Close the streams
+                inputStream.close();
             }
-
-            // Close the streams
-            inputStream.close();
-            outputStream.close();
 
             OFHelper.v(tag, "Data downloaded and cached successfully.");
             OFOneFlowSHP.getInstance(context).storeValue(OFConstants.SHP_CACHE_FILE_UPDATE_TIME, System.currentTimeMillis());
@@ -99,10 +97,10 @@ public class OFCacheHandler extends Thread {
                 // You can perform read/write operations on the cache file here
 
                 // Example: Write data to the cache file
-                FileWriter writer = new FileWriter(cacheFile);
-                writer.write(fileData);
-                writer.flush();
-                writer.close();
+                try (FileWriter writer = new FileWriter(cacheFile)) {
+                    writer.write(fileData);
+                    writer.flush();
+                }
                 OFHelper.v(tag, "1Flow CacheHandler cache file content written[" + cacheFile.length() + "]");
             } else {
                 // File creation failed
@@ -111,7 +109,6 @@ public class OFCacheHandler extends Thread {
 
             }
         } catch (IOException e) {
-           // e.printStackTrace();
             // Handle the exception
         }
     }

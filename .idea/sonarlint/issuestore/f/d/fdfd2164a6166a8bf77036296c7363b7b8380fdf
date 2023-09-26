@@ -1,0 +1,11 @@
+
+r	java:S117T"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‹¯¶Äıÿÿÿÿ8œ‹Ş¾¬1
+m	java:S117\"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÁÇÕ8œ‹Ş¾¬1
+r	java:S117d"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©şÿÿÿÿ8œ‹Ş¾¬1
+m	java:S117l"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ú¬“³8œ‹Ş¾¬1
+m	java:S117t"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æò¤8œ‹Ş¾¬1
+u	java:S116"YRename this field "show_watermark" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ƒ¦¸‘8 ‹Ş¾¬1
+{	java:S116"ZRename this field "resurvey_option" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(®•Òÿÿÿÿÿ8 ‹Ş¾¬1
+o	java:S116%"NRename this field "_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(í—ø¨ıÿÿÿÿ8 ‹Ş¾¬1
+}	java:S116'"\Rename this field "frequency_capping" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(öë‘úÿÿÿÿ8 ‹Ş¾¬1
+y	java:S116)"XRename this field "retake_survey" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(À’Ûûÿÿÿÿ8 ‹Ş¾¬1

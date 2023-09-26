@@ -1,0 +1,23 @@
+
+m	java:S117x"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Â¹¾™8ÖæÛ¾¬1
+s	java:S117€"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(•¼à÷ùÿÿÿÿ8ÖæÛ¾¬1
+s	java:S117 "QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ùá–Øıÿÿÿÿ8ÖæÛ¾¬1
+n	java:S117¨"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÎš8ÖæÛ¾¬1
+s	java:S117°"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©şÿÿÿÿ8ÖæÛ¾¬1
+n	java:S117¸"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¬ë”Ñ8ÖæÛ¾¬1
+s	java:S117Ğ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ãìºÿÿÿÿÿ8ÖæÛ¾¬1
+s	java:S117Ø"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÒáÉúÿÿÿÿ8ÖæÛ¾¬1
+n	java:S117à"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Õ×á´8ÖæÛ¾¬1
+s	java:S117è"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(„“Äóùÿÿÿÿ8ÖæÛ¾¬1
+n	java:S117ğ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(’­å¢8ÖæÛ¾¬1
+o	java:S116"NRename this field "_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(í—ø¨ıÿÿÿÿ8ãæÛ¾¬1
+t	java:S116""XRename this field "num_responses" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¢ù—„8ãæÛ¾¬1
+t	java:S116$"SRename this field "end_date" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ë÷ªøÿÿÿÿ8ãæÛ¾¬1
+v	java:S116,"URename this field "deleted_on" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´¾Ìëùÿÿÿÿ8ãæÛ¾¬1
+u	java:S116."YRename this field "schema_version" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œøæš8ãæÛ¾¬1
+v	java:S1160"URename this field "project_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÉŞÃ½ÿÿÿÿÿ8ãæÛ¾¬1
+~	java:S116:"]Rename this field "trigger_event_name" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(»ğ¾ôüÿÿÿÿ8ãæÛ¾¬1
+q	java:S116>"URename this field "start_date" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.( ¬‚Ø8ãæÛ¾¬1
+v	java:S116@"URename this field "created_on" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‹´›Õÿÿÿÿÿ8ãæÛ¾¬1
+v	java:S116B"URename this field "updated_on" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‚’óôúÿÿÿÿ8ãæÛ¾¬1
+j	java:S116D"NRename this field "__v" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Í‚ê8ãæÛ¾¬1

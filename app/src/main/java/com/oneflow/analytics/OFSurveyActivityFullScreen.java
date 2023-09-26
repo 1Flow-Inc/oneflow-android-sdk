@@ -71,18 +71,8 @@ public class OFSurveyActivityFullScreen extends OFSDKBaseActivity {
         WindowManager.LayoutParams wlp = window.getAttributes();
         OFHelper.v(tag, "OneFlow Window size width[" + window.getAttributes().width + "]height[" + window.getAttributes().height + "]");
 
-        double[] data = OFHelper.getScreenSize(this);
-
-       // wlp.gravity = Gravity.BOTTOM;
-       /* if (data[0] > 3) {
-            wlp.width = 1000;
-        } else {*/
-           // wlp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        //}
-        //wlp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         wlp.flags &= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
 
-       // window.setAttributes(wlp);
         handleWaterMarkStyle();
     }
 
@@ -96,46 +86,41 @@ public class OFSurveyActivityFullScreen extends OFSDKBaseActivity {
 
         try {
 
-                if (!sdkTheme.getRemove_watermark()) {
+            boolean waterMark = sdkTheme.getRemove_watermark();
+                if (!waterMark) {
                     waterMarkLayout.setVisibility(View.GONE);
                 } else {
                     waterMarkLayout.setVisibility(View.VISIBLE);
                 }
                 int colorAlpha = OFHelper.manipulateColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), 0.1f);
                 GradientDrawable gd = (GradientDrawable) waterMarkLayout.getBackground();
-                waterMarkLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String waterMark = "https://1flow.app/?utm_source=1flow-android-sdk&utm_medium=watermark&utm_campaign=real-time+feedback+powered+by+1flow";//https://www.notion.so/Powered-by-1Flow-logo-should-link-to-website-c186fca5220e41d19f420dd871f9696d";
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(waterMark));
-                        startActivity(browserIntent);
-                    }
+                waterMarkLayout.setOnClickListener(v -> {
+                    String waterMark1 = "https://1flow.app/?utm_source=1flow-android-sdk&utm_medium=watermark&utm_campaign=real-time+feedback+powered+by+1flow";
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(waterMark1));
+                    startActivity(browserIntent);
                 });
-                waterMarkLayout.setOnTouchListener(new View.OnTouchListener() {
+                waterMarkLayout.setOnTouchListener((v, event) -> {
 
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
 
-                        switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            gd.setColor(colorAlpha);
+                            break;
 
-                            case MotionEvent.ACTION_DOWN:
-                                gd.setColor(colorAlpha);
-                                break;
+                        case MotionEvent.ACTION_MOVE:
+                            // touch move code
+                            break;
 
-                            case MotionEvent.ACTION_MOVE:
-                                // touch move code
-                                //Helper.makeText(mContext,"Moved",1);
-                                break;
+                        case MotionEvent.ACTION_UP:
 
-                            case MotionEvent.ACTION_UP:
-
-                                gd.setColor(null);
+                            gd.setColor(null);
 
 
-                                break;
-                        }
-                        return false;
+                            break;
+                        default:
+                            break;
                     }
+                    return false;
                 });
 
         } catch (Exception ex) {

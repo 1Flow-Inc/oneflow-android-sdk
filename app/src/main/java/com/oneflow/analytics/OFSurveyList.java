@@ -31,6 +31,7 @@ import com.oneflow.analytics.sdkdb.OFOneFlowSHP;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class OFSurveyList extends OFSDKBaseActivity {
@@ -44,8 +45,8 @@ public class OFSurveyList extends OFSDKBaseActivity {
 
         listOfSurvey = (RecyclerView) findViewById(R.id.list_of_survey);
 
-        ArrayList<OFGetSurveyListResponse> slr = OFOneFlowSHP.getInstance(this).getSurveyList();
-        OFSurveyListAdapter addb = new OFSurveyListAdapter(this, slr, clickListener);
+        List<OFGetSurveyListResponse> slr = OFOneFlowSHP.getInstance(this).getSurveyList();
+        OFSurveyListAdapter addb = new OFSurveyListAdapter(slr, clickListener);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         listOfSurvey.setLayoutManager(linearLayoutManager);
         listOfSurvey.setAdapter(addb);
@@ -54,22 +55,15 @@ public class OFSurveyList extends OFSDKBaseActivity {
 
     }
 
-    View.OnClickListener clickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            String tag = (String) v.getTag();
+    View.OnClickListener clickListener = v -> {
+        String tag = (String) v.getTag();
 
 
 
-            HashMap<String,String> mapvalues = new HashMap<String, String>();
-            mapvalues.put("testKey1","testValue1");
-            mapvalues.put("testKey2","testValue2");
-            mapvalues.put("testKey3","testValue3");
-            OneFlow.recordEvents(tag,mapvalues);
-
-            /*Intent intent = new Intent(SurveyList.this, SurveyActivity.class);
-            intent.putExtra("SurveyType", surveyItem);
-            startActivity(intent);*/
-        }
+        HashMap<String,String> mapvalues = new HashMap<>();
+        mapvalues.put("testKey1","testValue1");
+        mapvalues.put("testKey2","testValue2");
+        mapvalues.put("testKey3","testValue3");
+        OneFlow.recordEvents(tag,mapvalues);
     };
 }

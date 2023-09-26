@@ -45,10 +45,9 @@ import com.oneflow.analytics.utils.OFConstants;
 @TypeConverters({OFMapConverter.class, OFDataConverterLocation.class, OFDataConverterDevice.class, OFSurveyUserResponseChildConverter.class})
 public abstract class OFSDKDB extends RoomDatabase {
 
-    private static volatile OFSDKDB sdkdb;
+    private static OFSDKDB sdkdb;
 
-    //TODO convert this to private ASAP
-    public OFSDKDB() {
+    protected OFSDKDB() {
 
     }
 

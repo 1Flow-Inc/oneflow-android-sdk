@@ -56,7 +56,6 @@ import java.util.concurrent.CompletableFuture;
 
 public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResponseHandlerOneFlow {
     WebView wv;
-    //OFGetSurveyListResponse surveyItem;
     String triggerEventName;
     String eventData;
     String tag = this.getClass().getName();
@@ -68,10 +67,6 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        //getSupportActionBar().hide();
-
-
-        //wv = findViewById(R.id.webview_contents_lander);
 
         eventData = this.getIntent().getStringExtra("eventData");
 
@@ -88,7 +83,7 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
             OFHelper.v(tag, "1Flow webmethod called [" + eventMapArray.get(0) + "]");
 
         } catch (JSONException je) {
-           // je.printStackTrace();
+           // error
         }
 
 
@@ -113,7 +108,6 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
 
         if (jsCode != null) {
             OFHelper.v(tag, "1Flow webmethod 12[" + jsCode.length() + "]");
-            //String jsCode = "function oneFlowFilterSurvey(survey,event){alert(\"I am js alert\");}";
         }
         if (jsCode == null) {
             jsCode = getFileContentsFromLocal1(OFConstants.cacheFileName);
@@ -121,16 +115,12 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
 
         if (jsCode != null) {
             StringBuilder jsFunction = new StringBuilder();
-            OFOneFlowSHP shp = OFOneFlowSHP.getInstance(OFFirstLanderActivity.this);
             try {
-
                 jsFunction = new StringBuilder("oneFlowFilterSurvey(" + new Gson().toJson(filteredList) + "," + eventData + ")");
 
             } catch (Exception ex) {
                 OFHelper.e(tag, "1Flow error[" + ex.getMessage() + "]");
             }
-
-            //OFHelper.v(tag, "1Flow webmethod called2[" + OFHelper.formatedDate(System.currentTimeMillis(), "dd-MM-yyyy hh:mm:ss") + "]");
 
             StringBuilder jsCallerMethod = new StringBuilder("function oneFlowCallBack(survey){ console.log(\"reached at callback method\"); android.onResultReceived(JSON.stringify(survey));}");
             StringBuilder finalCode = new StringBuilder(jsCode.toString() + "\n\n" + jsFunction.toString() + "\n\n" + jsCallerMethod.toString());
@@ -159,11 +149,8 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
                 }
             });
 
-            wv.evaluateJavascript(finalCode.toString(), new ValueCallback<String>() {
-                @Override
-                public void onReceiveValue(String result) {
-
-                }
+            wv.evaluateJavascript(finalCode.toString(), result -> {
+                // onReceiveValue
             });
 
         } else {
@@ -214,7 +201,7 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
                             msg.setData(bundle);
                             handler.sendMessage(msg);
                         } catch (JSONException je) {
-
+                            // error
                         }
                     } else {
                         OFFirstLanderActivity.this.finish();
@@ -223,6 +210,8 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
                     OFFirstLanderActivity.this.finish();
                 }
 
+                break;
+            default:
                 break;
         }
     }
@@ -243,7 +232,7 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
 
 
         public MyJavaScriptInterface() {
-
+            // Constructor
         }
 
         @JavascriptInterface
@@ -266,9 +255,7 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
                             msg.setData(bundle);
                             handler.sendMessage(msg);
 
-                            //checkWebviewFunction(eventMapArray.get(counter).toString());
                         } catch (JSONException je) {
-                          //  je.printStackTrace();
                             OFFirstLanderActivity.this.finish();
                         }
                     } else {
@@ -334,8 +321,6 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
                         // check in submitted survey list locally if this survey has been submitted then false
                         new OFLogUserDBRepoKT().findLastSubmittedSurveyID(OFFirstLanderActivity.this, this, OFConstants.ApiHitType.lastSubmittedSurvey, triggerEventName, surveyToInit);
 
-//                                                        new OFMyDBAsyncTask(mContext,this, OFConstants.ApiHitType.lastSubmittedSurvey,false).execute();
-
                     }else{
                         OFFirstLanderActivity.this.finish();
                     }
@@ -358,7 +343,6 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
         } else {
             surveyIntent = new Intent(getApplicationContext(), activityName.get(surveyToInit.getSurveySettings().getSdkTheme().getWidgetPosition()));
         }
-        //surveyIntent = new Intent(getApplicationContext(), OFFirstLanderActivity.class);
 
         OFOneFlowSHP ofs1 = OFOneFlowSHP.getInstance(this);
 
@@ -388,9 +372,6 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
             OFHelper.v(tag, "1Flow throttling config null");
         }
 
-        // resetting counter for similar type of event name
-        //ofs1.storeValue(OFConstants.SHP_SURVEY_SEARCH_POSITION, 0);
-
         surveyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         surveyIntent.putExtra("SurveyType", surveyToInit);
         surveyIntent.putExtra("eventName", triggerEventName);
@@ -399,30 +380,21 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
 
         if (!OFSDKBaseActivity.isActive) {
 
-            if (surveyToInit.getSurveyTimeInterval() != null) {
+            if (surveyToInit.getSurveyTimeInterval() != null && surveyToInit.getSurveyTimeInterval().getType().equalsIgnoreCase("show_after")) {
 
-                if (surveyToInit.getSurveyTimeInterval().getType().equalsIgnoreCase("show_after")) {
-
-                    try {
-                        delayDuration = surveyToInit.getSurveyTimeInterval().getValue() * 1000;
-                    } catch (Exception ex) {
-                       // ex.printStackTrace();
-                    }
-                    OFHelper.v("1Flow", "1Flow activity waiting duration[" + delayDuration + "]");
-
-
-                    ContextCompat.getMainExecutor(this).execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            OFDelayedSurveyCountdownTimer delaySurvey = OFDelayedSurveyCountdownTimer.getInstance(OFFirstLanderActivity.this, delayDuration, 1000l, surveyIntent);
-                            delaySurvey.start();
-                        }
-                    });
-
-
-                } else {
-                    startActivity(surveyIntent);
+                try {
+                    delayDuration = surveyToInit.getSurveyTimeInterval().getValue() * 1000;
+                } catch (Exception ex) {
+                    // error
                 }
+                OFHelper.v("1Flow", "1Flow activity waiting duration[" + delayDuration + "]");
+
+
+                ContextCompat.getMainExecutor(this).execute(() -> {
+                    OFDelayedSurveyCountdownTimer delaySurvey = OFDelayedSurveyCountdownTimer.getInstance(OFFirstLanderActivity.this, delayDuration, 1000l, surveyIntent);
+                    delaySurvey.start();
+                });
+
 
             } else {
                 startActivity(surveyIntent);
@@ -439,9 +411,7 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
         OFHelper.v(tag, "1Flow deactivate called ");
         OFThrottlingConfig config = OFOneFlowSHP.getInstance(this).getThrottlingConfig();
         OFHelper.v(tag, "1Flow deactivate called config activated[" + config.isActivated() + "]globalTime[" + config.getGlobalTime() + "]activatedBy[" + config.getActivatedById() + "]");
-        //OFMyCountDownTimerThrottling.getInstance(mContext,0l,0l).cancel();
         if (config.getGlobalTime() != null && config.getGlobalTime() > 0) {
-            //OFMyCountDownTimerThrottling.getInstance(mContext, config.getGlobalTime() * 1000, ((Long) (config.getGlobalTime() * 1000) / 2)).start();
             setThrottlingAlarm(config);
         } else {
             OFHelper.v(tag, "1Flow deactivate called at else");
@@ -462,91 +432,37 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
 
     }
 
-    private String getCacheFileContents(String cacheFileName) {
-        String fileContents = "";
-        try {
-            String cacheFilePath = getCacheDir().getPath() + File.separator + cacheFileName;
-            FileInputStream fileInputStream = new FileInputStream(cacheFilePath);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileInputStream));
-
-            StringBuilder stringBuilder = new StringBuilder();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-
-                stringBuilder.append(line);
-            }
-
-            fileContents = stringBuilder.toString();
-            OFHelper.v(tag, fileContents);
-            // Do something with the file contents
-            // For example, parse JSON or display the text
-
-            bufferedReader.close();
-            fileInputStream.close();
-        } catch (IOException e) {
-           // e.printStackTrace();
-        }
-        return fileContents;
-    }
-
-    private String getFileContents(String fileName) {
-        try {
-
-            FileInputStream is = new FileInputStream(fileName);
-
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            return new String(buffer, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            //e.printStackTrace();
-            return null;
-        }
-    }
-
     private StringBuilder getFileContents1(String fileName) {
         try {
 
-            FileInputStream is = new FileInputStream(fileName);
+            byte[] buffer;
+            try (FileInputStream is = new FileInputStream(fileName)) {
 
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
+                int size = is.available();
+                buffer = new byte[size];
+                if(is.read(buffer) > 0){
+                    // read
+                }
+            }
             return new StringBuilder(new String(buffer, StandardCharsets.UTF_8));
         } catch (IOException e) {
-           // e.printStackTrace();
-            return null;
-        }
-    }
-
-    private String getFileContentsFromLocal(String fileName) {
-        try {
-            InputStream is = getAssets().open(fileName);
-
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            return new String(buffer, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-          //  e.printStackTrace();
             return null;
         }
     }
 
     private StringBuilder getFileContentsFromLocal1(String fileName) {
         try {
-            InputStream is = getAssets().open(fileName);
+            byte[] buffer;
+            try (InputStream is = getAssets().open(fileName)) {
 
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
+                int size = is.available();
+                buffer = new byte[size];
+                if (is.read(buffer) > 0){
+                    // read
+                }
+            }
             return new StringBuilder(new String(buffer, StandardCharsets.UTF_8));
         } catch (IOException e) {
-           // e.printStackTrace();
             return null;
         }
     }

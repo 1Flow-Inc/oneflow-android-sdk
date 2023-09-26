@@ -19,13 +19,12 @@ import com.oneflow.analytics.utils.OFHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-//import com.oneflow.analytics.OneFlow;
-
 public class OFSecondActivity extends AppCompatActivity {
 
     String tag = this.getClass().getName();
 
-    OFCustomTextView initSurvey, addMore;
+    OFCustomTextView initSurvey;
+    OFCustomTextView addMore;
     OFCustomEditText eventName;
     LinearLayout listOfParams;
     ArrayList<com.oneflow.analytics.model.survey.OFGetSurveyListResponse> slr;
@@ -45,14 +44,11 @@ public class OFSecondActivity extends AppCompatActivity {
 
 
         slr = new ArrayList<>();
-        addMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(validateFirst()) {
-                    addMoreToParams();
-                }else{
-                    OFHelper.makeText(OFSecondActivity.this,"Please fill all the fields",1);
-                }
+        addMore.setOnClickListener(view -> {
+            if(validateFirst()) {
+                addMoreToParams();
+            }else{
+                OFHelper.makeText(OFSecondActivity.this,"Please fill all the fields",1);
             }
         });
 
@@ -72,7 +68,7 @@ public class OFSecondActivity extends AppCompatActivity {
                 return false;
             }
         }catch(Exception ex){
-
+            // error
         }
         return true;
     }
@@ -137,13 +133,5 @@ public class OFSecondActivity extends AppCompatActivity {
 
         }
     };
-
-
-
-        @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
 
 }

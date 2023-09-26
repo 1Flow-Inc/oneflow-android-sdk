@@ -20,10 +20,11 @@ package com.oneflow.analytics.model.events;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.HashMap;
+import java.io.Serializable;
+import java.util.Map;
 
 
-public class OFRecordEventsTabToAPI {
+public class OFRecordEventsTabToAPI implements Serializable {
 
     @SerializedName("name")
     private String eventName;
@@ -35,7 +36,7 @@ public class OFRecordEventsTabToAPI {
     private String _id;
 
     @SerializedName("parameters")
-    private HashMap<String,Object> dataMap;
+    private transient Map<String,Object> dataMap;
 
     @SerializedName("time")
     private Long time;
@@ -83,11 +84,11 @@ public class OFRecordEventsTabToAPI {
         this.eventName = eventName;
     }
 
-    public HashMap<String,Object> getDataMap() {
+    public Map<String,Object> getDataMap() {
         return dataMap;
     }
 
-    public void setDataMap(HashMap<String,Object> dataMap) {
+    public void setDataMap(Map<String,Object> dataMap) {
         this.dataMap = dataMap;
     }
 

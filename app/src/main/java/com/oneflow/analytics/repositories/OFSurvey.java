@@ -41,6 +41,9 @@ import retrofit2.Response;
 
 public class OFSurvey {
 
+    private OFSurvey() {
+    }
+
     static String tag = "Survey";
 
     public static void getSurvey(String headerKey, OFMyResponseHandlerOneFlow mrh, OFConstants.ApiHitType type, String userId, String versionName) {
@@ -54,7 +57,6 @@ public class OFSurvey {
 
         try {
             Call<OFGenericResponse<ArrayList<OFGetSurveyListResponse>>> responseCall = null;
-            //String url = "https://us-west-2.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/1flow-wslxs/service/survey/incoming_webhook/get-surveys";
 
             responseCall = connectAPI.getSurvey(headerKey,  userId,  language, "android", versionName);//,OFConstants.MODE);// platform added as asked by namit on 09-Mar-2023
 
@@ -75,7 +77,7 @@ public class OFSurvey {
 
                             throttling = gson.toJson(response.body().getThrottlingConfig());
                         }catch(Exception e){
-
+                            // error
                         }
 
 
@@ -83,7 +85,6 @@ public class OFSurvey {
 
                             mrh.onResponseReceived(type, response.body().getResult(), 0l, throttling,null,null);
                         } catch (Exception ex) {
-                           // ex.printStackTrace();
                             mrh.onResponseReceived(type, "", 0l, "",null,null);
                         }
 
@@ -104,7 +105,7 @@ public class OFSurvey {
                 }
             });
         } catch (Exception ex) {
-           // ex.printStackTrace();
+           // error
         }
     }
 
@@ -112,40 +113,17 @@ public class OFSurvey {
         OFApiInterface connectAPI = OFRetroBaseService.getClient().create(OFApiInterface.class);
         try {
             Call<OFGenericResponse> responseCall = null;
-            String url = "https://us-west-2.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/1flow-wslxs/service/survey/incoming_webhook/add_survey_response";
-            responseCall = connectAPI.submitSurveyUserResponse(headerKey, sur);//, url);
+            responseCall = connectAPI.submitSurveyUserResponse(headerKey, sur);
 
             responseCall.enqueue(new Callback<OFGenericResponse>() {
                 @Override
                 public void onResponse(Call<OFGenericResponse> call, Response<OFGenericResponse> response) {
 
-
-                    //OFHelper.v(tag, "OneFlow reached success[" + response.isSuccessful() + "]");
-                    //OFHelper.v(tag, "OneFlow reached success raw[" + response.raw() + "]");
-
-                    //OFHelper.makeText(context.getApplicationContext(),"Survey submit status["+response.isSuccessful()+"]",1);
-
                     if (response.isSuccessful()) {
-                        //OFHelper.v(tag, "OneFlow response[" + response.body().getSuccess() + "]");
-                        //OFHelper.v(tag, "OneFlow response message[" + response.body().getMessage() + "]");
 
                         handler.onResponseReceived(type, sur, 0l, "",null,null);
-                        /*AsyncTask.execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                Helper.v(tag,"OneFlow inserting data ["+sur.getSurvey_id()+"]");
-                                SubmittedSurveysTab sst = new SubmittedSurveysTab();
-                                sst.setSurveyId(sur.getSurvey_id());
-                                SDKDB.getInstance(context).submittedSurveyDAO().insertSubmittedSurvey(sst);
-                                Helper.v(tag,"OneFlow inserted data");
-                            }
-                        });*/
 
                     } else {
-                        //mrh.onResponseReceived(response.body(), type);
-                        // OFHelper.v(tag, "OneFlow response 0[" + response.body() + "]");
-                        /*Helper.v(tag, "OneFlow response 1[" + response.body().getMessage() + "]");
-                        Helper.v(tag, "OneFlow response 2[" + response.body().getSuccess() + "]");*/
                         handler.onResponseReceived(type, null, 0l, "",null,null);
                     }
 
@@ -160,7 +138,7 @@ public class OFSurvey {
                 }
             });
         } catch (Exception ex) {
-
+            // error
         }
     }
 
@@ -168,8 +146,7 @@ public class OFSurvey {
         OFApiInterface connectAPI = OFRetroBaseService.getClient().create(OFApiInterface.class);
         try {
             Call<OFGenericResponse> responseCall = null;
-            String url = "https://us-west-2.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/1flow-wslxs/service/survey/incoming_webhook/add_survey_response";
-            responseCall = connectAPI.submitSurveyUserResponse(OFOneFlowSHP.getInstance(context).getStringValue(OFConstants.APPIDSHP), sur);//, url);
+            responseCall = connectAPI.submitSurveyUserResponse(OFOneFlowSHP.getInstance(context).getStringValue(OFConstants.APPIDSHP), sur);
 
             responseCall.enqueue(new Callback<OFGenericResponse>() {
                 @Override
@@ -183,25 +160,10 @@ public class OFSurvey {
 
 
                     if (response.isSuccessful()) {
-                        //  OFHelper.v(tag, "OneFlow response[" + response.body().getSuccess() + "]");
-                        // OFHelper.v(tag, "OneFlow response message[" + response.body().getMessage() + "]");
                         mrh.onResponseReceived(type, sur, 0l, "",null,null);
-                        /*AsyncTask.execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                Helper.v(tag,"OneFlow inserting data ["+sur.getSurvey_id()+"]");
-                                SubmittedSurveysTab sst = new SubmittedSurveysTab();
-                                sst.setSurveyId(sur.getSurvey_id());
-                                SDKDB.getInstance(context).submittedSurveyDAO().insertSubmittedSurvey(sst);
-                                Helper.v(tag,"OneFlow inserted data");
-                            }
-                        });*/
 
                     } else {
-                        //mrh.onResponseReceived(response.body(), type);
                         OFHelper.v(tag, "OneFlow response 0[" + response.body() + "]");
-                        /*Helper.v(tag, "OneFlow response 1[" + response.body().getMessage() + "]");
-                        Helper.v(tag, "OneFlow response 2[" + response.body().getSuccess() + "]");*/
                     }
 
                 }
@@ -215,7 +177,7 @@ public class OFSurvey {
                 }
             });
         } catch (Exception ex) {
-
+            // error
         }
     }
     public static void getSurveyWithoutCondition(Context context, OFMyResponseHandlerOneFlow mrh,String surveyId, OFConstants.ApiHitType type, String userId, String minVersion) {
@@ -229,7 +191,6 @@ public class OFSurvey {
 
         try {
             Call<OFGenericResponse<OFGetSurveyListResponse>> responseCall = null;
-            //String url = "";
             responseCall = connectAPI.getSurveyWithoutCondition(OFOneFlowSHP.getInstance(context).getStringValue(OFConstants.APPIDSHP), surveyId,userId,language,"android",minVersion);
 
             responseCall.enqueue(new Callback<OFGenericResponse<OFGetSurveyListResponse>>() {
@@ -244,15 +205,9 @@ public class OFSurvey {
 
 
                     if (response.isSuccessful()) {
-                        // OFHelper.v(tag, "OneFlow response[" + response.body().getSuccess() + "]");
-                        // OFHelper.v(tag, "OneFlow response message[" + response.body().getMessage() + "]");
                         mrh.onResponseReceived(type, response.body().getResult(), 0l, "",null,null);
-
                     } else {
-                        //mrh.onResponseReceived(response.body(), type);
                         OFHelper.v(tag, "OneFlow response 0[" + response.body() + "]");
-                        /*Helper.v(tag, "OneFlow response 1[" + response.body().getMessage() + "]");
-                        Helper.v(tag, "OneFlow response 2[" + response.body().getSuccess() + "]");*/
                     }
 
                 }
@@ -266,7 +221,7 @@ public class OFSurvey {
                 }
             });
         } catch (Exception ex) {
-
+            // error
         }
     }
 }

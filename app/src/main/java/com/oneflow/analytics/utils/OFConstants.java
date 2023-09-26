@@ -20,8 +20,8 @@ package com.oneflow.analytics.utils;
 
 public interface OFConstants {
 
-    String currentVersion = "2023.09.19";//2023.07.14;
-    String MODE = "prod";//"dev";//"beta";//
+    String currentVersion = "2023.09.17";//2023.07.14;
+    String MODE = "dev";//"prod";//"beta";//
 
     String cacheFileName = "logic-engine.js";
     String DBNAME = "one_flow_db";
@@ -31,8 +31,6 @@ public interface OFConstants {
     String USERUNIQUEIDSHP = "one_flow_user_unique_id_key";
     String LOGUSERREQUESTSHP = "one_flow_log_user_detail_key";
     String USERLOCATIONDETAILSHP = "one_flow_user_location_detail_key";
-    //String SESSIONDETAIL_IDSHP = "one_flow_session_detail_id_key";
-    //String SESSIONDETAIL_SYSTEM_IDSHP = "one_flow_session_detail_system_key";
     String SURVEYLISTSHP = "one_flow_survey_list_key";
     String SURVEYCLOSEDLISTSHP = "one_flow_survey_closed_list_key";
     String SDKVERSIONSHP = "sdk_version_key";
@@ -72,7 +70,14 @@ public interface OFConstants {
     String SHP_EVENTS_DELETE_PENDING = "survey_events_delete_pending";
     String SHP_CACHE_FILE_UPDATE_TIME = "shp_cache_file_update_time";
 
+    String PASS_THEME = "theme";
+    String PASS_THEME_COLOR = "themeColor";
 
+    String STR_RATING_EMOJI = "rating-emojis";
+    String STR_CHECKBOX = "checkbox";
+    String STR_RATING_NUMERICAL = "rating-numerical";
+    String STR_RATING_FIVE_START = "rating-5-star";
+    String STR_RATING = "rating";
 
     String surveyDetail = "surveyDetail";
 

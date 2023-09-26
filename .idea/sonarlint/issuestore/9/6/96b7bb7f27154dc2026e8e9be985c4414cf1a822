@@ -1,0 +1,37 @@
+
+m	java:S1178"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ı¶œ×8€ÆÌ¾¬1
+m	java:S117H"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.( Íğ×8€ÆÌ¾¬1
+l	java:S117`"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(­‡Õ^8€ÆÌ¾¬1
+r	java:S117h"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Íòöïûÿÿÿÿ8€ÆÌ¾¬1
+m	java:S117p"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(É¤¹€8€ÆÌ¾¬1
+r	java:S117x"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ã²ú†úÿÿÿÿ8€ÆÌ¾¬1
+s	java:S117€"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ç¦å÷ÿÿÿÿÿ8€ÆÌ¾¬1
+s	java:S117ˆ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(©…Ğ¹şÿÿÿÿ8€ÆÌ¾¬1
+s	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©şÿÿÿÿ8€ÆÌ¾¬1
+o	java:S116"NRename this field "_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(½›Ê÷ûÿÿÿÿ8…ÆÌ¾¬1
+p	java:S116"TRename this field "system_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ë ´€8…ÆÌ¾¬1
+z	java:S116!"YRename this field "location_check" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(•º³çşÿÿÿÿ8…ÆÌ¾¬1
+w	java:S116'"VRename this field "app_version" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(§™âºûÿÿÿÿ8…ÆÌ¾¬1
+|	java:S116)"[Rename this field "app_build_number" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ŞîÆ„ÿÿÿÿÿ8…ÆÌ¾¬1
+x	java:S116+"WRename this field "library_name" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Óıü×øÿÿÿÿ8…ÆÌ¾¬1
+{	java:S116-"ZRename this field "library_version" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(èÜ•„úÿÿÿÿ8…ÆÌ¾¬1
+x	java:S116/"WRename this field "api_endpoint" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(İ­°øüÿÿÿÿ8…ÆÌ¾¬1
+w	java:S1161"VRename this field "api_version" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(çîîóşÿÿÿÿ8…ÆÌ¾¬1
+o	java:S1004"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÜáØ¸øÿÿÿÿ8‡ÆÌ¾¬1
+j	java:S1008"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ı¶œ×8‡ÆÌ¾¬1
+o	java:S100D"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¶ÁèÜûÿÿÿÿ8ˆÆÌ¾¬1
+j	java:S100H"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.( Íğ×8ˆÆÌ¾¬1
+o	java:S100\"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(íÉÆÇşÿÿÿÿ8‰ÆÌ¾¬1
+i	java:S100`"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(­‡Õ^8‰ÆÌ¾¬1
+o	java:S100d"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(µ‚ĞÍûÿÿÿÿ8‰ÆÌ¾¬1
+o	java:S100h"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Íòöïûÿÿÿÿ8‰ÆÌ¾¬1
+j	java:S100l"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¬¹8ŠÆÌ¾¬1
+j	java:S100p"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(É¤¹€8ŠÆÌ¾¬1
+o	java:S100t"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Òƒ¨’ùÿÿÿÿ8ŠÆÌ¾¬1
+o	java:S100x"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ã²ú†úÿÿÿÿ8ŠÆÌ¾¬1
+j	java:S100|"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«ºËí8ŠÆÌ¾¬1
+p	java:S100€"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ç¦å÷ÿÿÿÿÿ8‹ÆÌ¾¬1
+p	java:S100„"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Û¾Ş§ûÿÿÿÿ8‹ÆÌ¾¬1
+p	java:S100ˆ"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(©…Ğ¹şÿÿÿÿ8‹ÆÌ¾¬1
+k	java:S100Œ"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡˜¨–8‹ÆÌ¾¬1
+p	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êÓ ©şÿÿÿÿ8ŒÆÌ¾¬1

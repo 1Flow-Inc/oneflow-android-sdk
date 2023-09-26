@@ -71,10 +71,6 @@ public class OFMyCountDownTimerThrottling extends CountDownTimer {
 
 
             }
-        } else {
-            config.setActivated(false);
-            config.setActivatedById(null);
-            OFOneFlowSHP.getInstance(mContext).setThrottlingConfig(config);
         }
     }
 }

@@ -44,7 +44,6 @@ public class OFDynamicSquareLayout extends RelativeLayout{
     @Override public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, widthMeasureSpec);
 
-        //int size = MeasureSpec.getSize(widthMeasureSpec);
         setMeasuredDimension(widthMeasureSpec, widthMeasureSpec);
     }
 

@@ -12,17 +12,16 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 class OFEventDBRepoKT {
-    fun insertEvents(context: Context, eventName: String?, data: HashMap<String?, Any?>?, value: Int, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?) {
+    fun insertEvents(context: Context, eventName: String?, data: Map<String?, Any?>?, value: Int, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?) {
         OFHelper.v("EventDBRepoKT.insertEvents", "1Flow reached at insertEvent method")
 
         val job = Job()
 
         val scope = CoroutineScope(job)
         scope.launch {
-            //val sdkdb: OFSDKKOTDB = OFSDKKOTDB.getDatabase(context,scope)
             val sdkdb = OFSDKDB.getInstance(context)
             val ret = OFRecordEventsTab()
-            ret.uuid = OFHelper.mongoObjectId();//UUID.randomUUID().toString();
+            ret.uuid = OFHelper.mongoObjectId();
             ret.eventName = eventName
             ret.dataMap = data
             ret.value = value.toString()
@@ -38,19 +37,6 @@ class OFEventDBRepoKT {
 
     }
 
-    /*fun deleteEvents(context: Context, ids: Array<Int?>?, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?) {
-        OFHelper.v("EventDBRepoKT.DeleteEvents", "1Flow reached at delete method")
-
-        val job = Job()
-
-        val scope = CoroutineScope(job)
-        scope.launch {
-            val sdkdb = OFSDKKOTDB.getDatabase(context,scope)
-            val deleted = sdkdb.eventDAO()?.deleteSyncedEvents(ids)
-            mrh.onResponseReceived(type, deleted, 0L, "", null, null)
-        }
-    }*/
-
     fun deleteEvents(context: Context, ids: Array<Int?>?, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?) {
         OFHelper.v("EventDBRepoKT.DeleteEvents", "1Flow reached at delete method")
 
@@ -64,23 +50,6 @@ class OFEventDBRepoKT {
         }
     }
 
-
-    /*fun fetchEvents(context: Context, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?) {
-        OFHelper.v("EventDBRepoKT.fetchEvents", "1Flow reached at fetchEvents method")
-
-        val job = Job()
-
-        val scope = CoroutineScope(job)
-        scope.launch {
-            val sdkdb: OFSDKKOTDB = OFSDKKOTDB.getDatabase(context,scope)
-            OFHelper.v("EventDBRepoKT", "1Flow fetching events from db ")
-            val recordEvents = sdkdb.eventDAO()?.getAllUnsyncedEvents()
-            OFHelper.v("EventDBRepoKT", "1Flow fetching events from db ["+recordEvents?.size+"]")
-            mrh.onResponseReceived(type, recordEvents, 0L, "", null, null)
-        }
-
-
-    }*/
     fun fetchEvents(context: Context, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?) {
         OFHelper.v("EventDBRepoKT.fetchEvents", "1Flow reached at fetchEvents method")
 
@@ -98,20 +67,6 @@ class OFEventDBRepoKT {
 
     }
 
-
-    /*fun fetchEventsBeforeSurvey(context: Context, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?) {
-        OFHelper.v("EventDBRepoKT.fetchEventsBeforeSurvey", "1Flow reached at fetchEventsBeforeSurvey method")
-
-        val job = Job()
-
-        val scope = CoroutineScope(job)
-        scope.launch {
-            val sdkdb: OFSDKKOTDB = OFSDKKOTDB.getDatabase(context, scope)
-            val beforeSurveyEvent = sdkdb.eventDAO()?.getEventBeforeSurvey3Sec(Calendar.getInstance().timeInMillis - 3000) // -3000 added for before 3sec logic
-            mrh.onResponseReceived(type, beforeSurveyEvent, 0L, "", null, null)
-        }
-
-    }*/
     fun fetchEventsBeforeSurvey(context: Context, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?) {
         OFHelper.v("EventDBRepoKT.fetchEventsBeforeSurvey", "1Flow reached at fetchEventsBeforeSurvey method")
 
@@ -122,7 +77,6 @@ class OFEventDBRepoKT {
             val sdkdb = OFSDKDB.getInstance(context)
             //val beforeSurveyEvent = sdkdb.eventDAO()?.getEventBeforeSurvey3Sec(Calendar.getInstance().timeInMillis - 10000) // -3000 added for before 3sec logic, changed to 10 sec as new requirement on 30-01-23
 
-            //val beforeSurveyEvent = sdkdb.eventDAO()?.getEventBeforeSurveyFetched(Calendar.getInstance().timeInMillis) // -3000 added for before 3sec logic, changed to 10 sec as new requirement on 30-01-23
             val beforeSurveyEvent = sdkdb.eventDAO()?.getEventBeforeSurveyFetched(Calendar.getInstance().timeInMillis - (1000 * 30), Calendar.getInstance().timeInMillis) // now passing range of time to tackle with orphan event which has not been deleted
 
             mrh.onResponseReceived(type, beforeSurveyEvent, 0L, "", null, null)

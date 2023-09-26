@@ -20,7 +20,6 @@ public class OFDelayedSurveyCountdownTimer extends CountDownTimer{
         super(duration, interval);
         this.mContext = context;
         this.intent1 = delayedIntent;
-       // OFHelper.v("OFLogCountdownTimer", "OneFlow LogApi Constructor called");
     }
     @Override
     public void onTick(long millisUntilFinished) {

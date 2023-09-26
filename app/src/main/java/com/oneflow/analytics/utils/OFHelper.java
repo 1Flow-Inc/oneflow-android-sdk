@@ -61,6 +61,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -74,25 +75,9 @@ public class OFHelper {
 
     public static String headerKey = "";
 
-    public static String gpsProviderInfo;
+    public static final Random random = new Random();
 
-
-    public static <T> ArrayList<T> fromJsonToArrayList(String rawData, Class<T> model) {
-        Gson gson = new GsonBuilder().create();
-        T gfromat = null;
-        ArrayList<T> localArrayList = new ArrayList<>();
-        try {
-            JSONArray jsonInner = new JSONArray(rawData);
-            int i = 0;
-            while (i < jsonInner.length()) {
-                gfromat = new Gson().fromJson(jsonInner.get(i).toString(), model);
-                localArrayList.add(gfromat);
-                i++;
-            }
-        } catch (Exception ex) {
-
-        }
-        return localArrayList;
+    private OFHelper() {
     }
 
     public static String getJSONValues(String contents) {
@@ -110,7 +95,7 @@ public class OFHelper {
 
             }
         } catch (JSONException j) {
-
+            // error
         }
 
         return sb.toString();
@@ -119,18 +104,10 @@ public class OFHelper {
     public static String mongoObjectId() {
         String time = Long.toHexString(Calendar.getInstance().getTimeInMillis()/1000);
 
-        String machine = String.format("%06d", new Random().nextInt(999999 - 100000 + 1) + 100000);
-        String pid = String.format("%04d", new Random().nextInt(9999 - 1000 + 1) + 1000);
-        String counter = String.format("%06d", new Random().nextInt(999999 - 100000 + 1) + 100000);
+        String machine = String.format("%06d", random.nextInt(999999 - 100000 + 1) + 100000);
+        String pid = String.format("%04d", random.nextInt(9999 - 1000 + 1) + 1000);
+        String counter = String.format("%06d", random.nextInt(999999 - 100000 + 1) + 100000);
         return time + machine + pid + counter;
-    }
-
-    public static String getGpsProviderInfo() {
-        return gpsProviderInfo;
-    }
-
-    public static void setGpsProviderInfo(String gpsProviderInfo) {
-        gpsProviderInfo = gpsProviderInfo;
     }
 
     static int printCharLimit = 4000;
@@ -141,11 +118,10 @@ public class OFHelper {
 
         int printRange = 4000;
 
-        if (commanLogEnable) {//OFConstants.MODE.equalsIgnoreCase("dev")) {
+        if (commanLogEnable) {
 
             if (msg.length() > printRange) {
                 long range = msg.length() / printRange;
-                //       Log.v(tag,"OneAxis length range["+range+"]");
                 for (int k = 0; k <= range; k++) {
                     if (k == range) {
                         Log.v(tag, "continueLast::" + msg.substring((k * printRange)));
@@ -160,7 +136,7 @@ public class OFHelper {
     }
 
     public static void d(String tag, String msg, boolean shouldPrint) {
-        if (commanLogEnable) {//OFConstants.MODE.equalsIgnoreCase("dev")) {
+        if (commanLogEnable) {
             if (msg.length() > 4075) {
                 Log.d(tag, msg.substring(0, 4075));
                 Log.d("continue", msg.substring(4076, msg.length()));
@@ -171,7 +147,7 @@ public class OFHelper {
     }
 
     public static void i(String tag, String msg, boolean shouldPrint) {
-        if (commanLogEnable) {//OFConstants.MODE.equalsIgnoreCase("dev")) {
+        if (commanLogEnable) {
             if (msg.length() > 4075) {
                 Log.i(tag, msg.substring(0, 4075));
                 Log.i("continue", msg.substring(4076, msg.length()));
@@ -182,7 +158,7 @@ public class OFHelper {
     }
 
     public static void e(String tag, String msg) {
-        if (commanLogEnable) {//OFConstants.MODE.equalsIgnoreCase("dev")) {
+        if (commanLogEnable) {
             if (msg.length() > 4075) {
                 Log.e(tag, msg.substring(0, 4075));
                 Log.e("continue", msg.substring(4076, msg.length()));
@@ -240,26 +216,21 @@ public class OFHelper {
         OFOneFlowSHP shp = OFOneFlowSHP.getInstance(context);
         deviceId = shp.getStringValue(OFConstants.SHP_DEVICE_UNIQUE_ID);
 
-        // v("Helper", "OneFlow DeviceId 0[" + deviceId + "]");
         if (deviceId.equalsIgnoreCase("NA")) {
-            deviceId = UUID.randomUUID().toString().replace("-", "").substring(0, 24);//getDeviceNewId();
-            // v("Helper", "OneFlow DeviceId 1[" + deviceId + "]");
+            deviceId = UUID.randomUUID().toString().replace("-", "").substring(0, 24);
             shp.storeValue(OFConstants.SHP_DEVICE_UNIQUE_ID, deviceId);
         }
-
-
-        //v("Helper", "OneFlow DeviceId 2[" + deviceId + "]");
         return deviceId;
     }
 
 
     public static void hideKeyboard(Activity mActivity, EditText edt) {
-        InputMethodManager inputManager = (InputMethodManager) mActivity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputManager = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(edt.getWindowToken(), 0);
     }
 
     public static void showKeyboard(Activity mActivity, EditText edt) {
-        InputMethodManager inputManager = (InputMethodManager) mActivity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputManager = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.showSoftInput(edt, 0);
     }
 
@@ -274,11 +245,7 @@ public class OFHelper {
             NetworkInfo netInfo = mgr.getActiveNetworkInfo();
 
             if (netInfo != null) {
-                if (netInfo.isConnected()) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return netInfo.isConnected();
             } else {
                 return false;
             }
@@ -287,19 +254,12 @@ public class OFHelper {
         }
     }
 
-    public static void showAlert1(Context context, String titleStr, String message) {//, View.OnClickListener listenter) {
+    public static void showAlert1(Context context, String message) {
         final AlertDialog.Builder dialog = new AlertDialog.Builder(context);
         dialog.setMessage(message);
-        dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        dialog.setPositiveButton("OK", (dialog1, which) -> dialog1.dismiss());
 
         dialog.show();
-
-
     }
 
     public static void showAlert(Context context, String titleStr, String message) {
@@ -307,58 +267,46 @@ public class OFHelper {
     }
 
     public static void showAlert1(final Context context, String titleStr, String message,
-                                  final boolean shouldClose) {//, View.OnClickListener listenter) {
+                                  final boolean shouldClose) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.custom_alert_dialog);
         OFCustomTextView title = (OFCustomTextView) dialog.findViewById(R.id.selected_title);
         OFCustomTextView msg = (OFCustomTextView) dialog.findViewById(R.id.response_msg);
         OFCustomTextView okBtn = (OFCustomTextView) dialog.findViewById(R.id.submit_btn);
-        okBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-                if (shouldClose) {
-                    ((Activity) context).finish();
-                }
+        okBtn.setOnClickListener(v -> {
+            dialog.cancel();
+            if (shouldClose) {
+                ((Activity) context).finish();
             }
         });
         msg.setText(message);
         title.setText(titleStr);
-        /*if(!titleStr.trim().equalsIgnoreCase("")){
-            title.setVisibility(View.VISIBLE);
-        }*/
 
         dialog.show();
     }
 
     public static void showAlertWithIntent(final Context context, String titleStr, String
-            message, final boolean shouldClose, final Intent intent) {//, View.OnClickListener listenter) {
+            message, final boolean shouldClose, final Intent intent) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.custom_alert_dialog);
         OFCustomTextView title = (OFCustomTextView) dialog.findViewById(R.id.selected_title);
         OFCustomTextView msg = (OFCustomTextView) dialog.findViewById(R.id.response_msg);
         OFCustomTextView okBtn = (OFCustomTextView) dialog.findViewById(R.id.submit_btn);
-        okBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-                if (shouldClose) {
-                    ((Activity) context).startActivity(intent);
-                    ((Activity) context).finish();
-                }
+        okBtn.setOnClickListener(v -> {
+            dialog.cancel();
+            if (shouldClose) {
+                ((Activity) context).startActivity(intent);
+                ((Activity) context).finish();
             }
         });
         msg.setText(message);
         title.setText(titleStr);
-        /*if(!titleStr.trim().equalsIgnoreCase("")){
-            title.setVisibility(View.VISIBLE);
-        }*/
 
         dialog.show();
     }
 
     public static void showAlertWithIntent2(final Context context, String titleStr, String
-            message, final boolean shouldClose, final Intent intent) {//, View.OnClickListener listenter) {
+            message, final boolean shouldClose, final Intent intent) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.custom_alert_dialog);
         OFCustomTextView title = (OFCustomTextView) dialog.findViewById(R.id.selected_title);
@@ -367,21 +315,15 @@ public class OFHelper {
 
         dialog.setCancelable(false);
 
-        okBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-                if (shouldClose) {
-                    ((Activity) context).startActivity(intent);
-                    ((Activity) context).finish();
-                }
+        okBtn.setOnClickListener(v -> {
+            dialog.cancel();
+            if (shouldClose) {
+                ((Activity) context).startActivity(intent);
+                ((Activity) context).finish();
             }
         });
         msg.setText(message);
         title.setText(titleStr);
-        /*if(!titleStr.trim().equalsIgnoreCase("")){
-            title.setVisibility(View.VISIBLE);
-        }*/
 
         dialog.show();
     }
@@ -389,22 +331,18 @@ public class OFHelper {
 
     public static void showAlertWithCancelListener(final Context context, String
             titleStr, String message, final boolean shouldClose, DialogInterface.
-                                                           OnCancelListener cancelListener) {//, View.OnClickListener listenter) {
+                                                           OnCancelListener cancelListener) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.custom_alert_dialog);
         OFCustomTextView title = (OFCustomTextView) dialog.findViewById(R.id.selected_title);
         OFCustomTextView msg = (OFCustomTextView) dialog.findViewById(R.id.response_msg);
         OFCustomTextView okBtn = (OFCustomTextView) dialog.findViewById(R.id.submit_btn);
 
-        //dialog.setCancelable(false);
         dialog.setOnCancelListener(cancelListener);
-        okBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-                if (shouldClose) {
-                    ((Activity) context).finish();
-                }
+        okBtn.setOnClickListener(v -> {
+            dialog.cancel();
+            if (shouldClose) {
+                ((Activity) context).finish();
             }
         });
         msg.setText(message);
@@ -414,7 +352,7 @@ public class OFHelper {
 
     public static void showAlertWithCancelListener2(final Context context, String
             titleStr, String message, final boolean shouldClose, DialogInterface.
-                                                            OnCancelListener cancelListener) {//, View.OnClickListener listenter) {
+                                                            OnCancelListener cancelListener) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.custom_alert_dialog);
         OFCustomTextView title = (OFCustomTextView) dialog.findViewById(R.id.selected_title);
@@ -423,45 +361,18 @@ public class OFHelper {
 
         dialog.setCancelable(false);
         dialog.setOnCancelListener(cancelListener);
-        okBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-                if (shouldClose) {
-                    ((Activity) context).finish();
-                }
+        okBtn.setOnClickListener(v -> {
+            dialog.cancel();
+            if (shouldClose) {
+                ((Activity) context).finish();
             }
         });
         msg.setText(message);
         title.setText(titleStr);
         dialog.show();
     }
-
-    public static void showAlertClose(final Context context, String titleStr, String message,
-                                      final boolean shouldClose) {//, View.OnClickListener listenter) {
-        final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.custom_alert_dialog);
-        OFCustomTextView title = (OFCustomTextView) dialog.findViewById(R.id.selected_title);
-        OFCustomTextView msg = (OFCustomTextView) dialog.findViewById(R.id.response_msg);
-        OFCustomTextView okBtn = (OFCustomTextView) dialog.findViewById(R.id.submit_btn);
-        okBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.cancel();
-                if (shouldClose) {
-                    ((Activity) context).finish();
-                }
-            }
-        });
-        msg.setText(message);
-        title.setText(titleStr);
-
-        dialog.show();
-    }
-
 
     public static boolean validateEmail(String email) {
-        //final String EMAIL_REGEX = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
         final String EMAIL_REGEX = "^(.+)@(.+)$";
 
         Pattern pattern;
@@ -557,9 +468,7 @@ public class OFHelper {
             date = format.parse(dateInString);
 
         } catch (ParseException e) {
-            if (BuildConfig.DEBUG) {
-                //e.printStackTrace();
-            }
+            // error
         }
         return date;
     }
@@ -572,17 +481,15 @@ public class OFHelper {
             SimpleDateFormat sdfNewThemeDate = new SimpleDateFormat(format);
             formattedDate = sdfNewThemeDate.format(dateValue);
         } catch (Exception e) {
-            if (BuildConfig.DEBUG) {
-                // e.printStackTrace();
-            }
+            // error
         }
 
         return formattedDate;
     }
 
 
-    public static StringBuilder sb;
-    public static int counter = 1;
+    static StringBuilder sb;
+    static int counter = 1;
 
     public static String getJSONAllValues(String jsonRaw) {
         try {
@@ -591,8 +498,6 @@ public class OFHelper {
             JSONArray jName = outerMost.names();
 
 
-            boolean more = false;
-            /*do{*/
             for (int i = 0; i < jName.length(); i++) {
 
                 if (outerMost.get(jName.get(i).toString()) instanceof JSONObject) {
@@ -617,9 +522,7 @@ public class OFHelper {
             }
 
         } catch (JSONException je) {
-            if (BuildConfig.DEBUG) {
-               // je.printStackTrace();
-            }
+            je.printStackTrace();
         }
         return sb.toString();
     }
@@ -636,13 +539,14 @@ public class OFHelper {
 
                 if (folderOuter.exists()) {
                     File logFile = new File(folderOuter, "log.txt");
-                    logFile.createNewFile();
+                    if(!logFile.createNewFile()){
+                        // failed
+                    }
                     fl = logFile;
                 }
             }
         } catch (Exception ue) {
-            if (BuildConfig.DEBUG){}
-               // ue.printStackTrace();
+            // error
         }
         return fl;
     }
@@ -655,23 +559,19 @@ public class OFHelper {
             if (!BuildConfig.DEBUG)
                 return "";
             File fl = createLogFile();
-            if (fl.exists()) {
+            if (fl != null && fl.exists()) {
 
-                BufferedWriter writer = new BufferedWriter(
+                try (BufferedWriter writer = new BufferedWriter(
                         new FileWriter(fl, true)  //Set true for append mode
-                );
-                writer.newLine();   //Add new line
-                writer.write(writeText);
-                writer.close();
-
+                )) {
+                    writer.newLine();   //Add new line
+                    writer.write(writeText);
+                }
 
             }
 
         } catch (Exception e) {
-
-            if (BuildConfig.DEBUG) {
-            //    e.printStackTrace();
-            }
+            e.printStackTrace();
         }
         return body;
     }
@@ -705,12 +605,10 @@ public class OFHelper {
      * @param map
      * @return
      */
-    public static HashMap<String, Object> checkDateInHashMap(HashMap<String, Object> map) {
+    public static Map<String, Object> checkDateInHashMap(Map<String, Object> map) {
 
         Gson gson = new Gson();
         gson.toJson(map);
-        //OFHelper.v("OneFlow", "OneFlow date object before[" + gson.toJson(map) + "]");
-        // System.out.println("OneFlow date object before[" + gson.toJson(map) + "]");
 
         for (String key : map.keySet()) {
             if (map.get(key) instanceof Date || map.get(key) instanceof java.sql.Date) {
@@ -718,33 +616,27 @@ public class OFHelper {
                 map.put(key, dt.getTime() / 1000);
             }
         }
-        // OFHelper.v("OneFlow", "OneFlow date object after[" + gson.toJson(map) + "]");
-        // System.out.println("OneFlow date object after[" + gson.toJson(map) + "]");
         return map;
     }
 
     public static String getAlphaHexColor(String color, int per) {
-        String mainColor = "", hex = "";
+        String mainColor = "";
+        String hex = "";
         String returnColor = "";
-        //v("Helper", "OneFlow colors alpha in["+color+"]");
         if (color.length() > 0) {
             mainColor = color.substring(color.length() - 6);
 
             hex = Integer.toHexString(getAlphaNumber(per)).toUpperCase();
 
-            //v("Helper", "OneFlow colors alpha in["+mainColor+"]alpha["+getAlphaNumber(per)+"]["+hex+"]");
-
             returnColor = "#" + hex + mainColor.toUpperCase();
         } else {
             returnColor = "NA";
         }
-        //v("Helper", "OneFlow colors alpha out["+returnColor+"]");
         return returnColor;
     }
 
     public static String handlerColor(String color) {
         String colorNew = "";
-        // v("Helper", "OneFlow colors transparancy in[" + color + "]");
         try {
 
             String tranparancy = "";
@@ -767,12 +659,8 @@ public class OFHelper {
             }
 
             colorNew = "#" + tranparancy + tempColor;
-           /* if (!color.startsWith("#")) {
-                colorNew = "#" +colorNew;//color;
-            }*/
-            // v("Helper", "OneFlow colors transparancy out [" + tranparancy + "]tempColor[" + tempColor + "]colorNew[" + colorNew + "]");
         } catch (Exception ex) {
-            //styleColor=""+getResources().getColor(R.color.colorPrimaryDark);
+            // error
         }
 
 
@@ -780,7 +668,7 @@ public class OFHelper {
     }
 
     public static int getAlphaNumber(int percentage) {
-        return Math.round((255 * percentage) / 100);
+        return Math.round((float)(255 * percentage) / 100);
     }
 
     public static int manipulateColor(int color, float factor) {
@@ -791,9 +679,7 @@ public class OFHelper {
 
     public static int manipulateColorNew(int color, int factor) {
 
-        int blendedColor = ColorUtils.setAlphaComponent(color, factor);
-        //v("Helper", "1Flow color in helper factor[" + blendedColor + "]");
-        return blendedColor;
+        return ColorUtils.setAlphaComponent(color, factor);
     }
 
 

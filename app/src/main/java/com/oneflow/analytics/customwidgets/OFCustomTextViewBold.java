@@ -53,7 +53,6 @@ public class OFCustomTextViewBold extends AppCompatTextView {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public OFCustomTextViewBold(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        //super(context, attrs, defStyleAttr, defStyleRes);
         super(context,attrs,defStyleAttr);
         init();
     }
