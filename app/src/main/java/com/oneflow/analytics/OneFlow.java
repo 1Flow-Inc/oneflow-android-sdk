@@ -431,7 +431,7 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
      * @param eventName   : to recognize event and start survey if have any
      * @param eventValues : will accept HashMap<String,Object>
      */
-    public static void recordEvents(String eventName, Map eventValues) {
+    public static void recordEvents(String eventName, HashMap eventValues) {
 
         try {
             if (!OFHelper.validateString(eventName.trim()).equalsIgnoreCase("NA")) {
@@ -478,7 +478,7 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
      * @param uniqueId   : to identify user uniquely, it could be e-mail id or any thing.
      * @param userDetail : data related to user.
      */
-    public static void logUser(String uniqueId, Map<String, Object> userDetail) {
+    public static void logUser(String uniqueId, HashMap<String, Object> userDetail) {
         OFHelper.v("1Flow", "1Flow logUser data stored 0");
         // User id must not be empty
         if (OFHelper.validateString(uniqueId).equalsIgnoreCase("NA")) {

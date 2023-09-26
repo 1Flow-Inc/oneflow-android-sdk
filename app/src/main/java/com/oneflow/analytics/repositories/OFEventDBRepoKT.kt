@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 class OFEventDBRepoKT {
-    fun insertEvents(context: Context, eventName: String?, data: Map<String?, Any?>?, value: Int, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?) {
+    fun insertEvents(context: Context, eventName: String?, data: HashMap<String?, Any?>?, value: Int, mrh: OFMyResponseHandlerOneFlow, type: ApiHitType?) {
         OFHelper.v("EventDBRepoKT.insertEvents", "1Flow reached at insertEvent method")
 
         val job = Job()

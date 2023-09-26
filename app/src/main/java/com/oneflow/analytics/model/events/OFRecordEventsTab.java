@@ -26,6 +26,7 @@ import androidx.room.TypeConverters;
 import com.google.gson.annotations.SerializedName;
 import com.oneflow.analytics.sdkdb.convertes.OFMapConverter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Entity (tableName = "RecordEvents")
@@ -47,7 +48,7 @@ public class OFRecordEventsTab {
     @TypeConverters(OFMapConverter.class)
     @ColumnInfo(name = "parameters")
     @SerializedName("parameters")
-    private Map<String,Object> dataMap;
+    private HashMap<String,Object> dataMap;
 
     @ColumnInfo(name = "time")
     @SerializedName("time")
@@ -113,11 +114,11 @@ public class OFRecordEventsTab {
         this.eventName = eventName;
     }
 
-    public Map<String,Object> getDataMap() {
+    public HashMap<String,Object> getDataMap() {
         return dataMap;
     }
 
-    public void setDataMap(Map<String,Object> dataMap) {
+    public void setDataMap(HashMap<String,Object> dataMap) {
         this.dataMap = dataMap;
     }
 

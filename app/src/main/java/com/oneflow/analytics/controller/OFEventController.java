@@ -53,7 +53,7 @@ public class OFEventController implements OFMyResponseHandlerOneFlow {
         this.mContext = mContext;
     }
 
-    public void storeEventsInDB(String eventName, Map<String, Object> eventValue, int value) {
+    public void storeEventsInDB(String eventName, HashMap<String, Object> eventValue, int value) {
 
         OFHelper.v(tag, "Oneflow records inserted [" + eventName + "]value[" + eventValue + "]");
         new OFEventDBRepoKT().insertEvents(mContext, eventName, eventValue, value, this, OFConstants.ApiHitType.insertEventsInDB);

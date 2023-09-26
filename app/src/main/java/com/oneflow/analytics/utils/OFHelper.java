@@ -605,7 +605,7 @@ public class OFHelper {
      * @param map
      * @return
      */
-    public static Map<String, Object> checkDateInHashMap(Map<String, Object> map) {
+    public static HashMap<String, Object> checkDateInHashMap(HashMap<String, Object> map) {
 
         Gson gson = new Gson();
         gson.toJson(map);

@@ -27,7 +27,7 @@ import java.util.Map;
 public class OFLogUserRequest extends OFBaseModel {
 
     @SerializedName("parameters")
-    private transient Map<String,Object> parameters;
+    private transient HashMap<String,Object> parameters;
     @SerializedName("anonymous_user_id")
     private String anonymous_user_id;
     @SerializedName("user_id")
@@ -47,7 +47,7 @@ public class OFLogUserRequest extends OFBaseModel {
         return parameters;
     }
 
-    public void setParameters(Map<String,Object> parameters) {
+    public void setParameters(HashMap<String,Object> parameters) {
         this.parameters = parameters;
     }
 
