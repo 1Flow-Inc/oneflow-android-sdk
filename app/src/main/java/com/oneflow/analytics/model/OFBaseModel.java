@@ -21,13 +21,5 @@ package com.oneflow.analytics.model;
 import java.io.Serializable;
 
 public class OFBaseModel implements Serializable {
-   /* @SerializedName("mode") String mode = OFConstants.MODE;//"dev";//""prod" ;
 
-    public String getMode() {
-        return mode;
-    }
-
-    public void setMode(String mode) {
-        this.mode = mode;
-    }*/
 }

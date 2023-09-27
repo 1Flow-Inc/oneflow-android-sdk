@@ -38,11 +38,11 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ProcessLifecycleOwner;
 
-import com.android.billingclient.api.BillingClient;
-import com.android.billingclient.api.BillingClientStateListener;
-import com.android.billingclient.api.BillingResult;
-import com.android.billingclient.api.Purchase;
-import com.android.billingclient.api.PurchasesUpdatedListener;
+//import com.android.billingclient.api.BillingClient;
+//import com.android.billingclient.api.BillingClientStateListener;
+//import com.android.billingclient.api.BillingResult;
+//import com.android.billingclient.api.Purchase;
+//import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.google.gson.Gson;
 import com.oneflow.analytics.controller.OFEventController;
 import com.oneflow.analytics.controller.OFSurveyController;
@@ -94,7 +94,7 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
     private static Long duration = 1000 * 60 * 60 * 12L;
     private static Long interval = 1000 * 100L; //100L L FOR LONG
 
-    static BillingClient bcFake;
+//    static BillingClient bcFake;
 
     OFConfigCallback configCallback;
     HashMap<String, Class> activityName;
@@ -178,31 +178,31 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
 
     private static void configureLocal(Context mContext, String projectKey) {
         final OneFlow fc = new OneFlow(mContext);
-        bcFake = BillingClient.newBuilder(mContext)
-                .setListener((billingResult, purchases) -> {
-                    OFHelper.v("InAppPurchase", "1Flow InAppPurchase Called");
-
-                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK
-                            && purchases != null) {
-                        HashMap<String, String> eventValues = new HashMap<>();
-
-                        eventValues.put("productID", purchases.get(0).getOrderId());
-                        eventValues.put("quantity", String.valueOf(purchases.get(0).getQuantity()));
-                        eventValues.put("price", "NA");
-                        eventValues.put("subscriptionPeriod", "NA");
-                        eventValues.put("subscriptionUnit", "NA");
-                        eventValues.put("localCurrencyPrice", "NA");
-                        eventValues.put("transactionIdentifier", purchases.get(0).getSignature());
-                        eventValues.put("transactionDate", OFHelper.formatedDate(purchases.get(0).getPurchaseTime(), "MM/dd/YYYY"));
-                        recordEvents(OFConstants.AUTOEVENT_INAPP_PURCHASE, eventValues);
-                    }
-
-                })
-                .enablePendingPurchases()
-                .build();
-
-
-        fc.connectBillingClient();
+//        bcFake = BillingClient.newBuilder(mContext)
+//                .setListener((billingResult, purchases) -> {
+//                    OFHelper.v("InAppPurchase", "1Flow InAppPurchase Called");
+//
+//                    if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK
+//                            && purchases != null) {
+//                        HashMap<String, String> eventValues = new HashMap<>();
+//
+//                        eventValues.put("productID", purchases.get(0).getOrderId());
+//                        eventValues.put("quantity", String.valueOf(purchases.get(0).getQuantity()));
+//                        eventValues.put("price", "NA");
+//                        eventValues.put("subscriptionPeriod", "NA");
+//                        eventValues.put("subscriptionUnit", "NA");
+//                        eventValues.put("localCurrencyPrice", "NA");
+//                        eventValues.put("transactionIdentifier", purchases.get(0).getSignature());
+//                        eventValues.put("transactionDate", OFHelper.formatedDate(purchases.get(0).getPurchaseTime(), "MM/dd/YYYY"));
+//                        recordEvents(OFConstants.AUTOEVENT_INAPP_PURCHASE, eventValues);
+//                    }
+//
+//                })
+//                .enablePendingPurchases()
+//                .build();
+//
+//
+//        fc.connectBillingClient();
 
 
         final OFOneFlowSHP ofs = OFOneFlowSHP.getInstance(mContext);
@@ -284,26 +284,26 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
         }
     }
 
-    public void connectBillingClient() {
-        bcFake.startConnection(new BillingClientStateListener() {
-            @Override
-            public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
-
-                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
-                    // The BillingClient is ready. You can query purchases here.
-
-                }
-
-            }
-
-            @Override
-            public void onBillingServiceDisconnected() {
-
-                OFHelper.v("FakeBillingClass", "1Flow payment billing disconnected");
-            }
-        });
-
-    }
+//    public void connectBillingClient() {
+//        bcFake.startConnection(new BillingClientStateListener() {
+//            @Override
+//            public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
+//
+//                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+//                    // The BillingClient is ready. You can query purchases here.
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onBillingServiceDisconnected() {
+//
+//                OFHelper.v("FakeBillingClass", "1Flow payment billing disconnected");
+//            }
+//        });
+//
+//    }
 
 
     private OFAddUserReq createRequest() {
@@ -649,6 +649,7 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
                     HashMap<String, Object> mapValueSession = new HashMap<>();
                     mapValueSession.put("library_version", OFConstants.currentVersion);
                     mapValueSession.put("app_version", appVer);
+                    mapValueSession.put("platform", OFConstants.PLATFORM);
 
                     ec.storeEventsInDB(OFConstants.AUTOEVENT_SESSIONSTART, mapValueSession, 0);
 

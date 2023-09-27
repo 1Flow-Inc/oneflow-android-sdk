@@ -42,25 +42,8 @@ public interface OFApiInterface {
 
    // @POST("add-user")
     @POST("v3/user")
-    Call<OFGenericResponse<OFAddUserResponse>> addUserComman(@Header("one_flow_key") String headerKey, @Body OFAddUserReq aur);//, @Url String url);
+    Call<OFGenericResponse<OFAddUserResponse>> addUserComman(@Header("one_flow_key") String headerKey, @Body OFAddUserReq aur);
 
-   /* @POST("add-session")
-    Call<OFGenericResponse<OFCreateSessionResponse>> createSession(@Header("one_flow_key") String headerKey, @Body OFCreateSessionRequest aur);//, @Url String url);
-*/
-/*
-@Url String url,
- @Query("mode") String mode
-*
-* */
-   // @GET("surveys")
-
-//    @Header("one_flow_key") String headerKey,
-//
-//    @Query("platform") String platform,
-//    @Query("user_id") String userId,
-//    @Query("session_id") String sessionId,
-//    @Query("language_code") String languageCode,
-//    @Query("min_version") String minVersion
     @GET("v3/survey")
     Call<OFGenericResponse<ArrayList<OFGetSurveyListResponse>>> getSurvey(@Header("one_flow_key") String headerKey,
                                                                           @Query("user_id") String userId,
@@ -77,7 +60,7 @@ public interface OFApiInterface {
 
    // @POST("add-responses")
     @POST("v3/response")
-    Call<OFGenericResponse> submitSurveyUserResponse(@Header("one_flow_key") String headerKey, @Body OFSurveyUserInput aur);//, @Url String url);
+    Call<OFGenericResponse> submitSurveyUserResponse(@Header("one_flow_key") String headerKey, @Body OFSurveyUserInput aur);
 
     //@POST("v3/identify")
     @GET("v3/survey/{survey_id}")
@@ -94,18 +77,12 @@ public interface OFApiInterface {
     ///@POST("v1/2021-06-15/events/bulk")
     //@POST("events")
     @POST("v3/track")
-    Call<OFGenericResponse> uploadAllUnSyncedEvents(@Header("one_flow_key") String headerKey, @Body OFEventAPIRequest ear);//, @Url String url);
-
-    /*@GET("v1/2021-06-15/keys/{project_id}")
-    Call<String> fetchProjectDetails(@Header("one_flow_key") String headerKey,@Path("project_id") String projectKey);*/
+    Call<OFGenericResponse> uploadAllUnSyncedEvents(@Header("one_flow_key") String headerKey, @Body OFEventAPIRequest ear);
 
    // @POST("log-user")
     @POST("v3/identify")
-    Call<OFGenericResponse<OFLogUserResponse>> logUser(@Header("one_flow_key") String headerKey, @Body OFLogUserRequest request);//, @Url String url);
+    Call<OFGenericResponse<OFLogUserResponse>> logUser(@Header("one_flow_key") String headerKey, @Body OFLogUserRequest request);
 
-
-   /* @POST("v1/2021-06-15/json")
-    Call<GenericResponse<AddUserResponse>> uploadFile(@Body AddUserRequest aur);*/
 
     @GET
     Call<String> getJSMethod(@Url String url);

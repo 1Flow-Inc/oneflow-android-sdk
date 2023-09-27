@@ -8,7 +8,6 @@ import com.oneflow.analytics.sdkdb.OFOneFlowSHP;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class OFFilterSurveys extends Thread {
     Context context;

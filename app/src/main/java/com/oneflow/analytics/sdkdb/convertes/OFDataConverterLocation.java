@@ -27,7 +27,6 @@ import com.oneflow.analytics.model.adduser.OFLocationDetails;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 
 //@ProvidedTypeConverter

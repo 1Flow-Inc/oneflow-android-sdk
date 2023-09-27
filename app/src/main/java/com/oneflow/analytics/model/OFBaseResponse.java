@@ -21,7 +21,7 @@ package com.oneflow.analytics.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class OFBaseResponse {//implements Serializable {
+public class OFBaseResponse {
     @SerializedName("success")
     @Expose
     private int success;

@@ -1,7 +1,7 @@
 
 ‰
-java:S1319!"mThe return type of this method should be an interface such as "Map" rather than the implementation "HashMap".(‡™îe8äŒë‡­1
+java:S1319!"mThe return type of this method should be an interface such as "Map" rather than the implementation "HashMap".(‡™îe8Î…ö’­1
 ‚
-java:S1319&"`The type of "map" should be an interface such as "Map" rather than the implementation "HashMap".(ÓÀå‹ûÿÿÿÿ8ž¸ë‡­1
+java:S1319&"`The type of "map" should be an interface such as "Map" rather than the implementation "HashMap".(ÓÀå‹ûÿÿÿÿ8Î…ö’­1
 L
-java:S1128"*Remove this unused import 'java.util.Map'.(¼è½Òþÿÿÿÿ8§¸ë‡­1
+java:S1128"*Remove this unused import 'java.util.Map'.(¼è½Òþÿÿÿÿ8×…ö’­1

@@ -2,8 +2,6 @@ package com.oneflow.analytics;
 
 import android.content.Context;
 
-import com.oneflow.analytics.model.OFApiInterface;
-import com.oneflow.analytics.model.OFRetroBaseService;
 import com.oneflow.analytics.sdkdb.OFOneFlowSHP;
 import com.oneflow.analytics.utils.OFConstants;
 import com.oneflow.analytics.utils.OFHelper;
@@ -16,10 +14,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class OFCacheHandler extends Thread {
     Context context;

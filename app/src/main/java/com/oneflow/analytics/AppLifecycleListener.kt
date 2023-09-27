@@ -37,6 +37,7 @@ class AppLifecycleListener : LifecycleObserver {
         val mapvalues = HashMap<String, Any>()
         mapvalues.put("library_version", OFConstants.currentVersion)
         mapvalues.put("app_version", appVer)
+        mapvalues.put("platform", OFConstants.PLATFORM)
 
         //added this condition to avoid storing start_session twice once alread being called from add user response
         if(!shp.getBooleanValue(OFConstants.AUTOEVENT_SESSIONSTART, false)) {
