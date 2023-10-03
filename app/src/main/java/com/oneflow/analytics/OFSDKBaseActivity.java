@@ -375,6 +375,7 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
 //                OFSDKBaseActivity.this.finish();
 
                 surveyFinishList = new ArrayList<>();
+                surveyResponseChildren = new ArrayList<>();
                 OFHelper.v(tag, "1Flow input found submitting1");
                 prepareAndSubmitUserResposneNew();
             }
@@ -395,6 +396,7 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
 //            OFSDKBaseActivity.this.finish();
 
             surveyFinishList = new ArrayList<>();
+            surveyResponseChildren = new ArrayList<>();
             OFHelper.v(tag, "1Flow input found submitting2");
             prepareAndSubmitUserResposneNew();
         }
