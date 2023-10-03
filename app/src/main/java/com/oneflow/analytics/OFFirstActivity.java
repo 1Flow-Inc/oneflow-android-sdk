@@ -180,7 +180,7 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
                 OFHelper.v(tag, "OneFlow reached receiver 0[" + slr + "]msg[" + intent.getStringExtra("msg") + "]");
                 if (slr != null) {
 
-                    if (slr.size() > 0) {
+                    if (!slr.isEmpty()) {
                         listOfSurvey.setVisibility(View.VISIBLE);
                         addb.notifyMyList(slr);
                     } else {
@@ -291,7 +291,7 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
 
     }
     @Override
-    public void onResponseReceived(OFConstants.ApiHitType hitType, Object obj, Long reserve, String reserved, Object Obj2, Object obj3) {
+    public void onResponseReceived(OFConstants.ApiHitType hitType, Object obj, Long reserve, String reserved, Object obj2, Object obj3) {
         OFHelper.v(tag, "1Flow reached onResponseEvent["+hitType+"]obj["+obj+"]");
         if (hitType == OFConstants.ApiHitType.fetchEventsFromDB) {
             if (obj != null) {

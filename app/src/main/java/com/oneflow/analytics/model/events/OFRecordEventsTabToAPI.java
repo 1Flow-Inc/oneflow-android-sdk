@@ -22,7 +22,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Map;
 
 
 public class OFRecordEventsTabToAPI implements Serializable {

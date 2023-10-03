@@ -38,15 +38,8 @@ public class OFFontSetup {
         return typeface;
     }
 
-   /* public void setTypeface(Typeface typeface) {
-        this.typeface = typeface;
-    }*/
-
     public Float getFontSize() {
         return fontSize;
     }
 
-    /*public void setFontSize(Float fontSize) {
-        this.fontSize = fontSize;
-    }*/
 }

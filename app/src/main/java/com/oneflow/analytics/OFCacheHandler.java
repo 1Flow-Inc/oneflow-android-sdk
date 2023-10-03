@@ -48,7 +48,7 @@ public class OFCacheHandler extends Thread {
             InputStream inputStream = connection.getInputStream();
 
             // Create a cache file
-            File cacheFile = new File(context.getCacheDir(), OFConstants.cacheFileName);
+            File cacheFile = new File(context.getCacheDir(), OFConstants.CACHE_FILE_NAME);
 
             // Create an output stream to write data to the cache file
             try (OutputStream outputStream = new FileOutputStream(cacheFile)) {
@@ -79,7 +79,7 @@ public class OFCacheHandler extends Thread {
         File cacheDir = context.getCacheDir();
 
         // Create a file within the cache directory
-        String fileName = OFConstants.cacheFileName;
+        String fileName = OFConstants.CACHE_FILE_NAME;
         File cacheFile = new File(cacheDir, fileName);
 
         try {

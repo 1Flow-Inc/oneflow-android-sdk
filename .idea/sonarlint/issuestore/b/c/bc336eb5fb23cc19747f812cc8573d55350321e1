@@ -1,6 +1,0 @@
-
-
-java:S1319("pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(é¡ŞÂ8ˆÌÖ¾¬1
-
-java:S1319,"dThe type of "data" should be an interface such as "List" rather than the implementation "ArrayList".(¹ã³8ˆÌÖ¾¬1
-r	java:S117$"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‡Ú´Ÿøÿÿÿÿ8ˆÌÖ¾¬1

@@ -25,7 +25,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Map;
 
 //@ProvidedTypeConverter
 public class OFMapConverter implements Serializable {

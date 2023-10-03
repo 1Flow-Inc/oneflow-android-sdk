@@ -20,11 +20,11 @@ package com.oneflow.analytics.utils;
 
 public interface OFConstants {
 
-    String currentVersion = "2023.09.26";//2023.07.14;
+    String currentVersion = "2023.09.20";//2023.07.14;
     String MODE = "prod";//"dev";//"beta";//
 
     String PLATFORM = "Android";
-    String cacheFileName = "logic-engine.js";
+    String CACHE_FILE_NAME = "logic-engine.js";
     String DBNAME = "one_flow_db";
     String APPKEYSHP = "one_flow_config_key";
     String APPIDSHP = "one_flow_app_id_key";
@@ -93,9 +93,6 @@ public interface OFConstants {
         filterSurveys,
         fetchSurveysFromAPI,fetchEventsBeforSurveyFetched,fetchSubmittedSurvey,checkResurveyNSubmission,updateSurveyIds,
         surveySubmited,lastSubmittedSurvey,updateSubmittedSurveyLocally, directSurvey
-    }
-    enum BRActionType{
-        submitEvents,submitSurveys
     }
 
     String userInputValueTemp = "";

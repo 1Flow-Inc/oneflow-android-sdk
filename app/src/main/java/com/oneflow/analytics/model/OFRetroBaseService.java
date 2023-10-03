@@ -30,24 +30,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class OFRetroBaseService {
 
-    private static Retrofit retrofit = null;
-
-    public static String urlPrefix = "https://";
+    static String urlPrefix = "https://";
 
 
-    public static String baseDomainDev = "dev-sdk.1flow.app/api/2021-06-15/";
-    //public static String baseDomainDev = "api-sdk.1flow.app";
-   // public static String baseDomainProd = "1flow.app/api/";
-    //public static String baseDomainProd = "api.1flow.app/";
-    //public static String baseDomainProd = "api.1flow.app/";
-    //public static String baseDomainProd = "y33xx6sddf.eu-west-1.awsapprunner.com/api/2021-06-15/";
-    public static String baseDomainBeta = "beta-sdk.1flow.app/api/2021-06-15/";
-    public static String baseDomainProd = "api-sdk.1flow.app/api/2021-06-15/";
+    static String baseDomainDev = "dev-sdk.1flow.app/api/2021-06-15/";
+    static String baseDomainBeta = "beta-sdk.1flow.app/api/2021-06-15/";
+    static String baseDomainProd = "api-sdk.1flow.app/api/2021-06-15/";
 
-    public static String BASE_URL;// = urlPrefix+ (OFConstants.MODE.equalsIgnoreCase("dev") ?baseDomainDev:baseDomainProd);
-    public static HashMap<String, String> baseUrl = new HashMap<>();
+    static String BASE_URL;
+    protected static HashMap<String, String> baseUrl = new HashMap<>();
+
+    private OFRetroBaseService() {
+        // Constructor
+    }
 
     public static Retrofit getClient() {
+        Retrofit retrofit = null;
 
         baseUrl.put("dev",urlPrefix+baseDomainDev);
         baseUrl.put("beta",urlPrefix+baseDomainBeta);
@@ -58,35 +56,10 @@ public class OFRetroBaseService {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-
-       /* if(!OFHelper.commanLogEnable) {
-
-            interceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
-        }*/
-
-
-        //.readTimeout(120, TimeUnit.SECONDS)
-        //.addInterceptor(interceptor)
-
-        /*OkHttpClient clientDev = new OkHttpClient.Builder()
-
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .addInterceptor(interceptor)
-                .build();*/
-
-
-//.addInterceptor(interceptor)
         OkHttpClient clientProd = new OkHttpClient.Builder()
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .build();
-
-
-
-
-
-        //OFConstants.MODE.equalsIgnoreCase("prod")?clientProd:clientDev
 
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)

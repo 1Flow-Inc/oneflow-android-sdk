@@ -21,9 +21,9 @@ java:S1104É"TMake position a static final constant or non-public and provide a
 Q
 java:S1444³".Make this "public static isActive" field final(ŒáÿÎûÿÿÿÿ8øıš†­1
 g
-java:S2259"IA "NullPointerException" could be thrown; "answerValue" is nullable here.(‡üú¹8ÈÑ’­1
-g
 java:S2259³"IA "NullPointerException" could be thrown; "answerValue" is nullable here.(‡üú¹8ÈÑ’­1
+g
+java:S2259"IA "NullPointerException" could be thrown; "answerValue" is nullable here.(‡üú¹8ÈÑ’­1
 g
 java:S2259È"IA "NullPointerException" could be thrown; "answerValue" is nullable here.(‡üú¹8ÈÑ’­1
 \

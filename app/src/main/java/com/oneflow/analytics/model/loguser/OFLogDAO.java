@@ -46,12 +46,4 @@ public interface OFLogDAO {
     @Query("update SurveyUserInput set user_id = (:userId) where user_id = 'NA'")
     int updateUserID(String userId);
 
-    /*@Query("select * from SurveyUserInput")
-    ArrayList<SurveyUserInput> getOfflineUserInputList();*/
-
-    /*@Query("Delete from SurveyUserInput where _id in (:idList)")
-    Integer deleteSurvey(Integer[] idList);*/
-
-
-
 }

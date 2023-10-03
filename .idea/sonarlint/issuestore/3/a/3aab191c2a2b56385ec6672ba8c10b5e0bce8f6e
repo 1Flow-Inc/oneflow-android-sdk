@@ -1,59 +1,61 @@
 
 Q
-java:S3740d"/Provide the parametrized type for this generic.(Á»òéùÿÿÿÿ8ù€±†­1
+java:S3740d"/Provide the parametrized type for this generic.(Á»òéùÿÿÿÿ8š×Ú«­1
 R
-java:S3740²"/Provide the parametrized type for this generic.(‡ïù×üÿÿÿÿ8ú€±†­1
+java:S3740²"/Provide the parametrized type for this generic.(‡ïù×üÿÿÿÿ8š×Ú«­1
 ‹
-java:S1319²"hThe type of "eventValues" should be an interface such as "Map" rather than the implementation "HashMap".(‡ïù×üÿÿÿÿ8§ùÑ‡­1
+java:S1319²"hThe type of "eventValues" should be an interface such as "Map" rather than the implementation "HashMap".(‡ïù×üÿÿÿÿ8 ×Ú«­1
 Š
-java:S1319á"gThe type of "userDetail" should be an interface such as "Map" rather than the implementation "HashMap".(´íð©þÿÿÿÿ8µóÒ‡­1
+java:S1319á"gThe type of "userDetail" should be an interface such as "Map" rather than the implementation "HashMap".(´íð©þÿÿÿÿ8 ×Ú«­1
 w
-java:S1104j"UMake titleFace a static final constant or non-public and provide accessors if needed.(Ýþ†¨úÿÿÿÿ8þ€±†­1
+java:S1104j"UMake titleFace a static final constant or non-public and provide accessors if needed.(Ýþ†¨úÿÿÿÿ8£×Ú«­1
 u
-java:S1104k"XMake subTitleFace a static final constant or non-public and provide accessors if needed.(Ç–Ï€8þ€±†­1
+java:S1104k"XMake subTitleFace a static final constant or non-public and provide accessors if needed.(Ç–Ï€8¤×Ú«­1
 u
-java:S1104•"WMake fontNameStr a static final constant or non-public and provide accessors if needed.(¨äý“8þ€±†­1
+java:S1104•"WMake fontNameStr a static final constant or non-public and provide accessors if needed.(¨äý“8¤×Ú«­1
 Q
-java:S1444j"/Make this "public static titleFace" field final(Ýþ†¨úÿÿÿÿ8þ€±†­1
+java:S1444j"/Make this "public static titleFace" field final(Ýþ†¨úÿÿÿÿ8¤×Ú«­1
 O
-java:S1444k"2Make this "public static subTitleFace" field final(Ç–Ï€8þ€±†­1
+java:S1444k"2Make this "public static subTitleFace" field final(Ç–Ï€8¤×Ú«­1
 O
-java:S1444•"1Make this "public static fontNameStr" field final(¨äý“8þ€±†­1
+java:S1444•"1Make this "public static fontNameStr" field final(¨äý“8¤×Ú«­1
+X	java:S125)"<This block of commented-out lines of code should be removed.(ô‘¤É8÷¬Ö¬­1
+X	java:S125a"<This block of commented-out lines of code should be removed.(ä€·8±ÓÖ¬­1
 G
-java:S3010g"%Remove this assignment of "mContext".(åúý´ýÿÿÿÿ8â±†­1
-u
-java:S3776³"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(Ýé„šøÿÿÿÿ8ç±†­1
+java:S3010g"%Remove this assignment of "mContext".(åúý´ýÿÿÿÿ8ÃØÚ«­1
+Y	java:S125¶"<This block of commented-out lines of code should be removed.(àþîÞ8¶×¬­1
 ^
-java:S1874Ü";Remove this use of "CONNECTIVITY_ACTION"; it is deprecated.(—¿ë þÿÿÿÿ8í±†­1
+java:S1874Ü";Remove this use of "CONNECTIVITY_ACTION"; it is deprecated.(—¿ë þÿÿÿÿ8ÜØÚ«­1
+^	java:S125Ÿ"<This block of commented-out lines of code should be removed.(©Ää»ÿÿÿÿÿ8ÅèØ¬­1
 V
-java:S1874É"3Remove this use of "versionCode"; it is deprecated.(ˆç¶¤üÿÿÿÿ8ô±†­1
+java:S1874É"3Remove this use of "versionCode"; it is deprecated.(ˆç¶¤üÿÿÿÿ8ðØÚ«­1
 \
-java:S1874å"9Remove this use of "getDefaultDisplay"; it is deprecated.(ÿïÎÿúÿÿÿÿ8õ±†­1
+java:S1874å"9Remove this use of "getDefaultDisplay"; it is deprecated.(ÿïÎÿúÿÿÿÿ8õØÚ«­1
 P
-java:S1874ç"2Remove this use of "getMetrics"; it is deprecated.(ò¨–©8ö±†­1
+java:S1874ç"2Remove this use of "getMetrics"; it is deprecated.(ò¨–©8öØÚ«­1
 u
-java:S3776Ç"RRefactor this method to reduce its Cognitive Complexity from 90 to the 15 allowed.(‡ÙÖÃýÿÿÿÿ8»„À†­1
+java:S3776Ç"RRefactor this method to reduce its Cognitive Complexity from 90 to the 15 allowed.(‡ÙÖÃýÿÿÿÿ8›ÙÚ«­1
 Y
-java:S2696Ÿ"6Make the enclosing method "static" or remove this set.(Óûßáúÿÿÿÿ8Á„À†­1
+java:S2696 "6Make the enclosing method "static" or remove this set.(Óûßáúÿÿÿÿ8¯ÙÚ«­1
 Y
-java:S2696©"6Make the enclosing method "static" or remove this set.(ªœæøÿÿÿÿ8¤œö’­1
+java:S2696ª"6Make the enclosing method "static" or remove this set.(ªœæøÿÿÿÿ8Œ¡ã¬­1
 Y
-java:S2696š"6Make the enclosing method "static" or remove this set.(Óûßáúÿÿÿÿ8È„À†­1
+java:S2696›"6Make the enclosing method "static" or remove this set.(Óûßáúÿÿÿÿ8ÅÙÚ«­1
 V
-java:S1874Ü"3Remove this use of "NetworkInfo"; it is deprecated.(Õ¥—ãùÿÿÿÿ8Ê„À†­1
+java:S1874Ý"3Remove this use of "NetworkInfo"; it is deprecated.(Õ¥—ãùÿÿÿÿ8ÒÙÚ«­1
 _
-java:S1874Ü"<Remove this use of "getActiveNetworkInfo"; it is deprecated.(Õ¥—ãùÿÿÿÿ8Ê„À†­1
+java:S1874Ý"<Remove this use of "getActiveNetworkInfo"; it is deprecated.(Õ¥—ãùÿÿÿÿ8ÒÙÚ«­1
 M
-java:S1874ä"/Remove this use of "getType"; it is deprecated.(ïæñ¨8Ê„À†­1
+java:S1874å"/Remove this use of "getType"; it is deprecated.(ïæñ¨8ÔÙÚ«­1
 O
-java:S1874ä"1Remove this use of "TYPE_WIFI"; it is deprecated.(ïæñ¨8Ë„À†­1
+java:S1874å"1Remove this use of "TYPE_WIFI"; it is deprecated.(ïæñ¨8ÕÙÚ«­1
 R
-java:S1874ç"/Remove this use of "getType"; it is deprecated.(ÈÜøäþÿÿÿÿ8Ë„À†­1
+java:S1874è"/Remove this use of "getType"; it is deprecated.(ÈÜøäþÿÿÿÿ8ÕÙÚ«­1
 V
-java:S1874ç"3Remove this use of "TYPE_MOBILE"; it is deprecated.(ÈÜøäþÿÿÿÿ8Ë„À†­1
+java:S1874è"3Remove this use of "TYPE_MOBILE"; it is deprecated.(ÈÜøäþÿÿÿÿ8ÖÙÚ«­1
 u
-java:S3776´"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(òÎ¯—ýÿÿÿÿ8Ð„À†­1
+java:S3776µ"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(òÎ¯—ýÿÿÿÿ8æÙÚ«­1
 T
-java:S1144Š"7Remove this unused private "shouldReturnSurvey" method.(ñòÊJ8×„À†­1
+java:S1144Š"7Remove this unused private "shouldReturnSurvey" method.(ñòÊJ8‡ÚÚ«­1
 ê
-java:S6541Ç"ÆA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 211 to 64, Complexity from 37 to 14, Nesting Level from 4 to 2, Number of Variables from 41 to 6.(‡ÙÖÃýÿÿÿÿ8×„À†­1
+java:S6541Ç"ÆA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 212 to 64, Complexity from 37 to 14, Nesting Level from 4 to 2, Number of Variables from 41 to 6.(‡ÙÖÃýÿÿÿÿ8ˆÚÚ«­1

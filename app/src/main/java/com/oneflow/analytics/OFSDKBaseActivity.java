@@ -359,36 +359,44 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
                 OFHelper.v(tag, "1Flow input found submitting");
                 prepareAndSubmitUserResposneNew();
             } else {
-                OFHelper.v(tag, "1Flow no input no submit");
+//                OFHelper.v(tag, "1Flow no input no submit");
+//                surveyFinishList = new ArrayList<>();
+//                Intent intent = new Intent("survey_finished");
+//
+//                OFFinishCallBack finishData = new OFFinishCallBack();
+//                finishData.setStatus(surveyClosingStatus);
+//                finishData.setSurveyId(selectedSurveyId);
+//                finishData.setSurveyName(surveyName);
+//                finishData.setTriggerName(triggerEventName);
+//                finishData.setScreens(prepareFinishCallback());
+//
+//                intent.putExtra(OFConstants.surveyDetail, new Gson().toJson(finishData));
+//                sendBroadcast(intent);
+//                OFSDKBaseActivity.this.finish();
+
                 surveyFinishList = new ArrayList<>();
-                Intent intent = new Intent("survey_finished");
-
-                OFFinishCallBack finishData = new OFFinishCallBack();
-                finishData.setStatus(surveyClosingStatus);
-                finishData.setSurveyId(selectedSurveyId);
-                finishData.setSurveyName(surveyName);
-                finishData.setTriggerName(triggerEventName);
-                finishData.setScreens(prepareFinishCallback());
-
-                intent.putExtra(OFConstants.surveyDetail, new Gson().toJson(finishData));
-                sendBroadcast(intent);
-                OFSDKBaseActivity.this.finish();
+                OFHelper.v(tag, "1Flow input found submitting1");
+                prepareAndSubmitUserResposneNew();
             }
         } else {
-            OFHelper.v(tag, "1Flow no input no submit");
+//            OFHelper.v(tag, "1Flow no input no submit");
+//            surveyFinishList = new ArrayList<>();
+//            Intent intent = new Intent("survey_finished");
+//
+//            OFFinishCallBack finishData = new OFFinishCallBack();
+//            finishData.setStatus(surveyClosingStatus);
+//            finishData.setSurveyId(selectedSurveyId);
+//            finishData.setSurveyName(surveyName);
+//            finishData.setTriggerName(triggerEventName);
+//            finishData.setScreens(prepareFinishCallback());
+//
+//            intent.putExtra(OFConstants.surveyDetail, new Gson().toJson(finishData));
+//            sendBroadcast(intent);
+//            OFSDKBaseActivity.this.finish();
+
             surveyFinishList = new ArrayList<>();
-            Intent intent = new Intent("survey_finished");
-
-            OFFinishCallBack finishData = new OFFinishCallBack();
-            finishData.setStatus(surveyClosingStatus);
-            finishData.setSurveyId(selectedSurveyId);
-            finishData.setSurveyName(surveyName);
-            finishData.setTriggerName(triggerEventName);
-            finishData.setScreens(prepareFinishCallback());
-
-            intent.putExtra(OFConstants.surveyDetail, new Gson().toJson(finishData));
-            sendBroadcast(intent);
-            OFSDKBaseActivity.this.finish();
+            OFHelper.v(tag, "1Flow input found submitting2");
+            prepareAndSubmitUserResposneNew();
         }
 
     }

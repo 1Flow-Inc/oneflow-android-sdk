@@ -69,7 +69,6 @@ public class OFEventController implements OFMyResponseHandlerOneFlow {
                 if (reserved.equalsIgnoreCase(OFConstants.AUTOEVENT_SURVEYIMPRESSION)) {
                     OFHelper.v(tag, "Oneflow found survey impression[" + (obj) + "]");
                     new OFEventDBRepoKT().fetchEvents(mContext, this, OFConstants.ApiHitType.fetchEventsFromDB);
-
                 }
                 break;
             case fetchEventsFromDB:

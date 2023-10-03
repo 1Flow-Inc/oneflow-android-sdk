@@ -35,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 
+import androidx.core.content.ContextCompat;
 import androidx.core.widget.CompoundButtonCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -63,7 +64,7 @@ public class OFSurveyOptionsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private Integer[] emojis = new Integer[]{R.string.smileyHtml1, R.string.smileyHtml2, R.string.smileyHtml3, R.string.smileyHtml4, R.string.smileyHtml5};
 
     public class RatingsViewHolder extends RecyclerView.ViewHolder {
-        public OFCustomTextView title;
+        OFCustomTextView title;
 
 
         public RatingsViewHolder(View view) {
@@ -73,7 +74,7 @@ public class OFSurveyOptionsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public class TextViewHolder extends RecyclerView.ViewHolder {
-        public OFCustomTextView title;
+        OFCustomTextView title;
         RelativeLayout innerView;
         View viewLocal;
         OFCustomTextView txtFestivalName;
@@ -89,10 +90,10 @@ public class OFSurveyOptionsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public class MCQRadioViewHolder extends RecyclerView.ViewHolder {
-        public RadioButton title;
-        public OFCustomEditText othersEditText;
-        public LinearLayout otherLayout;
-        public OFCustomTextViewBold otherSubmit;
+        RadioButton title;
+        OFCustomEditText othersEditText;
+        LinearLayout otherLayout;
+        OFCustomTextViewBold otherSubmit;
 
         public MCQRadioViewHolder(View view) {
             super(view);
@@ -106,10 +107,10 @@ public class OFSurveyOptionsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public class MCQCheckBoxViewHolder extends RecyclerView.ViewHolder {
-        public CheckBox title;
-        public OFCustomEditText othersEditText;
-        public LinearLayout otherLayout;
-        public OFCustomTextViewBold otherSubmit;
+        CheckBox title;
+        OFCustomEditText othersEditText;
+        LinearLayout otherLayout;
+        OFCustomTextViewBold otherSubmit;
 
         public MCQCheckBoxViewHolder(View view) {
             super(view);
@@ -121,7 +122,7 @@ public class OFSurveyOptionsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public class RatingsStar extends RecyclerView.ViewHolder {
-        public ImageView stars;
+        ImageView stars;
 
         public RatingsStar(View view) {
             super(view);
@@ -130,7 +131,7 @@ public class OFSurveyOptionsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     }
 
     public class RatingsEmojis extends RecyclerView.ViewHolder {
-        public OFCustomTextView emojis;
+        OFCustomTextView emojis;
 
         public RatingsEmojis(View view) {
             super(view);
@@ -139,7 +140,8 @@ public class OFSurveyOptionsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
     String themeTextColor;
-    int colorAlpha10,colorAlpha50;
+    int colorAlpha10;
+    int colorAlpha50;
     public OFSurveyOptionsAdapter(Context mContext, OFSurveyInputs surveyInputs, OFGenericClickHandler onClickListener, String themeColor,String themeTextColor) {
         this.mInflater = LayoutInflater.from(mContext);
         this.mContext = mContext;
@@ -255,8 +257,8 @@ public class OFSurveyOptionsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
 
 
-        int statesRadio[][] = {{android.R.attr.state_checked}, {}};
-        int colorsRadio[] = {Color.parseColor(themeColor), mContext.getResources().getColor(R.color.ratings_focused)};
+        int[][] statesRadio = {{android.R.attr.state_checked}, {}};
+        int[] colorsRadio = {Color.parseColor(themeColor), ContextCompat.getColor(mContext,R.color.ratings_focused)};
         try {
             switch (viewType) {
                 case 0:
@@ -266,41 +268,38 @@ public class OFSurveyOptionsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                     GradientDrawable gd = (GradientDrawable) ((RelativeLayout) (((RatingsViewHolder) holder).title).getParent()).getBackground();
 
-                    ((RatingsViewHolder) holder).title.setOnTouchListener(new View.OnTouchListener() {
+                    ((RatingsViewHolder) holder).title.setOnTouchListener((v, event) -> {
 
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
+                        switch (event.getAction()) {
 
-                            switch (event.getAction()) {
+                            case MotionEvent.ACTION_DOWN:
+                                gd.setColor(colorAlpha50);
+                                break;
 
-                                case MotionEvent.ACTION_DOWN:
-                                    gd.setColor(colorAlpha50);
-                                    break;
+                            case MotionEvent.ACTION_MOVE:
+                                // touch move code
+                                break;
+                            case MotionEvent.ACTION_CANCEL:
+                                OFHelper.v(tag,"1Flow action canceled");
+                                gd.setColor(colorAlpha10);
+                                ((RatingsViewHolder) holder).title.setTextColor(Color.parseColor(themeTextColor));
+                                break;
+                            case MotionEvent.ACTION_UP:
 
-                                case MotionEvent.ACTION_MOVE:
-                                    // touch move code
-                                    break;
-                                case MotionEvent.ACTION_CANCEL:
-                                    OFHelper.v(tag,"1Flow action canceled");
-                                    gd.setColor(colorAlpha10);
-                                    ((RatingsViewHolder) holder).title.setTextColor(Color.parseColor(themeTextColor));
-                                    break;
-                                case MotionEvent.ACTION_UP:
+                                gd.setColor(Color.parseColor(themeColor));
+                                ((RatingsViewHolder) holder).title.setTextColor(ContextCompat.getColor(mContext,R.color.txtwhite));
 
-                                    gd.setColor(Color.parseColor(themeColor));
-                                    ((RatingsViewHolder) holder).title.setTextColor(mContext.getResources().getColor(R.color.txtwhite));
-
-                                    break;
-                                default:
-                                    break;
-                            }
-                            return false;
+                                break;
+                            default:
+                                break;
                         }
+                        return false;
                     });
 
-                    if (surveyInputs.getRatingsList().get(position).getSelected()) {
+                    boolean selected = surveyInputs.getRatingsList().get(position).getSelected();
+                    if (selected) {
                         gd.setColor(Color.parseColor(themeColor));
-                        ((RatingsViewHolder) holder).title.setTextColor(mContext.getResources().getColor(R.color.txtwhite));
+                        ((RatingsViewHolder) holder).title.setTextColor(ContextCompat.getColor(mContext,R.color.txtwhite));
                     } else {
                         gd.setColor(colorAlpha10);
                         ((RatingsViewHolder) holder).title.setTextColor(Color.parseColor(themeTextColor));
@@ -312,13 +311,10 @@ public class OFSurveyOptionsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         ((RatingsViewHolder) holder).title.setOnTouchListener(null);
                     }
 
-                    ((RatingsViewHolder) holder).title.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            clickedPosition=position;
-                            notifyDataSetChanged();
-                            gch.itemClicked(v, null, "");
-                        }
+                    ((RatingsViewHolder) holder).title.setOnClickListener(v -> {
+                        clickedPosition=position;
+                        notifyDataSetChanged();
+                        gch.itemClicked(v, null, "");
                     });
                     break;
                 case 1:
@@ -330,15 +326,12 @@ public class OFSurveyOptionsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     ((MCQRadioViewHolder) holder).title.setTextColor(Color.parseColor(themeTextColor));
 
                     ((MCQRadioViewHolder) holder).title.setTag(surveyInputs.getChoices().get(position).getId() == null ? String.valueOf(position) : surveyInputs.getChoices().get(position).getId());
-                    ((MCQRadioViewHolder) holder).title.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+                    ((MCQRadioViewHolder) holder).title.setOnClickListener(v -> {
 
 
-                            if (!surveyInputs.getOtherOption().equalsIgnoreCase(surveyInputs.getChoices().get(position).getId())) {
+                        if (!surveyInputs.getOtherOption().equalsIgnoreCase(surveyInputs.getChoices().get(position).getId())) {
 
-                                gch.itemClicked(v, null, "");
-                            }
+                            gch.itemClicked(v, null, "");
                         }
                     });
 
@@ -352,111 +345,104 @@ public class OFSurveyOptionsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                     ((MCQRadioViewHolder) holder).othersEditText.setHintTextColor(OFHelper.manipulateColor(Color.parseColor(themeTextColor),0.3f));
                     ((MCQRadioViewHolder) holder).othersEditText.setTextColor(OFHelper.manipulateColor(Color.parseColor(themeTextColor),1.0f));
-                    ((MCQRadioViewHolder) holder).otherSubmit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            OFHelper.hideKeyboard((Activity) mContext, ((MCQRadioViewHolder) holder).othersEditText);
-                            if (((MCQRadioViewHolder) holder).othersEditText.getText().toString().isEmpty()) {
-                                gdRadio.setStroke(strokeWidth, colorAlpha10);
-                                gdRadio.setColor(colorAlpha10);
-                                ((MCQRadioViewHolder) holder).otherLayout.setVisibility(View.GONE);
-                                ((MCQRadioViewHolder) holder).title.setText(surveyInputs.getChoices().get(position).getTitle());
-                                ((MCQRadioViewHolder) holder).title.setTextColor(Color.parseColor(themeTextColor));
-                                ((MCQRadioViewHolder) holder).title.setChecked(false);
-                            } else {
+                    ((MCQRadioViewHolder) holder).otherSubmit.setOnClickListener(v -> {
+                        OFHelper.hideKeyboard((Activity) mContext, ((MCQRadioViewHolder) holder).othersEditText);
+                        if (((MCQRadioViewHolder) holder).othersEditText.getText().toString().isEmpty()) {
+                            gdRadio.setStroke(strokeWidth, colorAlpha10);
+                            gdRadio.setColor(colorAlpha10);
+                            ((MCQRadioViewHolder) holder).otherLayout.setVisibility(View.GONE);
+                            ((MCQRadioViewHolder) holder).title.setText(surveyInputs.getChoices().get(position).getTitle());
+                            ((MCQRadioViewHolder) holder).title.setTextColor(Color.parseColor(themeTextColor));
+                            ((MCQRadioViewHolder) holder).title.setChecked(false);
+                        } else {
 
-                                gdRadio.setStroke(strokeWidth, Color.parseColor(themeColor));
-                                gdRadio.setColor(Color.parseColor(themeColor));
-                                ((MCQRadioViewHolder) holder).title.setTextColor(Color.parseColor(themeTextColor));
-                                ((MCQRadioViewHolder) holder).otherLayout.setVisibility(View.GONE);
-                                ((MCQRadioViewHolder) holder).title.setText(((MCQRadioViewHolder) holder).othersEditText.getText());
-                                gch.itemClicked(v, ((MCQRadioViewHolder) holder).title.getText().toString(), "");
-                            }
-                            //onClickListener.onClick(v); // handling final submit for radio
-
+                            gdRadio.setStroke(strokeWidth, Color.parseColor(themeColor));
+                            gdRadio.setColor(Color.parseColor(themeColor));
+                            ((MCQRadioViewHolder) holder).title.setTextColor(Color.parseColor(themeTextColor));
+                            ((MCQRadioViewHolder) holder).otherLayout.setVisibility(View.GONE);
+                            ((MCQRadioViewHolder) holder).title.setText(((MCQRadioViewHolder) holder).othersEditText.getText());
+                            gch.itemClicked(v, ((MCQRadioViewHolder) holder).title.getText().toString(), "");
                         }
+                        //onClickListener.onClick(v); // handling final submit for radio
+
                     });
 
 
-                    ((MCQRadioViewHolder) holder).title.setOnTouchListener(new View.OnTouchListener() {
+                    ((MCQRadioViewHolder) holder).title.setOnTouchListener((v, event) -> {
+                        RadioButton rb = (RadioButton) v;
+                        switch (event.getAction()) {
 
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            RadioButton rb = (RadioButton) v;
-                            switch (event.getAction()) {
+                            case MotionEvent.ACTION_DOWN:
 
-                                case MotionEvent.ACTION_DOWN:
+                                int[] colorsRadioAlpha = {Color.parseColor(themeColor), colorAlpha50};
+                                CompoundButtonCompat.setButtonTintList(((MCQRadioViewHolder) holder).title, new ColorStateList(statesRadio, colorsRadioAlpha));
+                                gdRadio.setStroke(strokeWidth, colorAlpha50);
+                                break;
 
-                                    int colorsRadioAlpha[] = {Color.parseColor(themeColor), colorAlpha50};
-                                    CompoundButtonCompat.setButtonTintList(((MCQRadioViewHolder) holder).title, new ColorStateList(statesRadio, colorsRadioAlpha));
-                                    gdRadio.setStroke(strokeWidth, colorAlpha50);
-                                    break;
+                            case MotionEvent.ACTION_MOVE:
+                                // touch move code
+                                break;
+                            case MotionEvent.ACTION_CANCEL:
+                                OFHelper.v(tag,"1Flow radio action canceled");
+                                gdRadio.setStroke(0, colorAlpha10);
+                                gdRadio.setColor(colorAlpha10);
+                                break;
+                            case MotionEvent.ACTION_UP:
 
-                                case MotionEvent.ACTION_MOVE:
-                                    // touch move code
-                                    break;
-                                case MotionEvent.ACTION_CANCEL:
-                                    OFHelper.v(tag,"1Flow radio action canceled");
+                                if (lastChecked == null) {
+                                    lastChecked = rb;
+                                } else {
+
+                                    OFHelper.v(tag, "1Flow radio visibility[" + otherLayoutGlobal + "]");
+                                    if (otherLayoutGlobal != null) {
+                                        OFHelper.v(tag, "1Flow radio visibility[" + otherLayoutGlobal.getVisibility() + "]");
+                                        if (otherLayoutGlobal.getVisibility() == View.VISIBLE) {
+                                            otherLayoutGlobal.setVisibility(View.GONE);
+                                            lastChecked.setText(otherLayoutGlobal.getTag().toString());
+                                            gdRadio.setStroke(strokeWidth, ContextCompat.getColor(mContext,R.color.ratings_focused));
+
+                                        }
+                                    }
+                                    lastChecked.setChecked(false);
+                                    lastChecked = rb;
+
+                                }
+
+                                // touch release code
+                                CompoundButtonCompat.setButtonTintList(((MCQRadioViewHolder) holder).title, new ColorStateList(statesRadio, colorsRadio));
+                                if (!rb.isChecked()) {
+
+                                    gdRadio.setStroke(strokeWidth, Color.parseColor(themeColor));
+
+                                    rb.setTextColor(ContextCompat.getColor(mContext,R.color.txtwhite));
+                                    if (surveyInputs.getOtherOption().equalsIgnoreCase(surveyInputs.getChoices().get(position).getId())) {
+                                        rb.setText("");
+                                        otherLayoutGlobal = ((MCQRadioViewHolder) holder).otherLayout;
+                                        otherLayoutGlobal.setTag(surveyInputs.getChoices().get(position).getTitle());
+                                        ((MCQRadioViewHolder) holder).otherLayout.setVisibility(View.VISIBLE);
+                                        ((MCQRadioViewHolder) holder).othersEditText.requestFocus();
+                                        OFHelper.showKeyboard((Activity) mContext, ((MCQRadioViewHolder) holder).othersEditText);
+
+                                        gdRadio.setColor(colorAlpha10);
+                                    } else {
+                                        gdRadio.setColor(Color.parseColor(themeColor));
+                                    }
+
+                                } else {
+
                                     gdRadio.setStroke(0, colorAlpha10);
                                     gdRadio.setColor(colorAlpha10);
-                                    break;
-                                case MotionEvent.ACTION_UP:
-
-                                    if (lastChecked == null) {
-                                        lastChecked = rb;
-                                    } else {
-
-                                        OFHelper.v(tag, "1Flow radio visibility[" + otherLayoutGlobal + "]");
-                                        if (otherLayoutGlobal != null) {
-                                            OFHelper.v(tag, "1Flow radio visibility[" + otherLayoutGlobal.getVisibility() + "]");
-                                            if (otherLayoutGlobal.getVisibility() == View.VISIBLE) {
-                                                otherLayoutGlobal.setVisibility(View.GONE);
-                                                lastChecked.setText(otherLayoutGlobal.getTag().toString());
-                                                gdRadio.setStroke(strokeWidth, mContext.getResources().getColor(R.color.ratings_focused));
-
-                                            }
-                                        }
-                                        lastChecked.setChecked(false);
-                                        lastChecked = rb;
-
+                                    if (((MCQRadioViewHolder) holder).otherLayout.getVisibility() == View.VISIBLE) {
+                                        otherLayoutGlobal = null;
+                                        rb.setText(surveyInputs.getChoices().get(position).getTitle());
+                                        ((MCQRadioViewHolder) holder).otherLayout.setVisibility(View.GONE);
                                     }
-
-                                    // touch release code
-                                    CompoundButtonCompat.setButtonTintList(((MCQRadioViewHolder) holder).title, new ColorStateList(statesRadio, colorsRadio));
-                                    if (!rb.isChecked()) {
-
-                                        gdRadio.setStroke(strokeWidth, Color.parseColor(themeColor));
-
-                                        rb.setTextColor(mContext.getResources().getColor(R.color.txtwhite));
-                                        if (surveyInputs.getOtherOption().equalsIgnoreCase(surveyInputs.getChoices().get(position).getId())) {
-                                            rb.setText("");
-                                            otherLayoutGlobal = ((MCQRadioViewHolder) holder).otherLayout;
-                                            otherLayoutGlobal.setTag(surveyInputs.getChoices().get(position).getTitle());
-                                            ((MCQRadioViewHolder) holder).otherLayout.setVisibility(View.VISIBLE);
-                                            ((MCQRadioViewHolder) holder).othersEditText.requestFocus();
-                                            OFHelper.showKeyboard((Activity) mContext, ((MCQRadioViewHolder) holder).othersEditText);
-
-                                            gdRadio.setColor(colorAlpha10);
-                                        } else {
-                                            gdRadio.setColor(Color.parseColor(themeColor));
-                                        }
-
-                                    } else {
-
-                                        gdRadio.setStroke(0, colorAlpha10);
-                                        gdRadio.setColor(colorAlpha10);
-                                        if (((MCQRadioViewHolder) holder).otherLayout.getVisibility() == View.VISIBLE) {
-                                            otherLayoutGlobal = null;
-                                            rb.setText(surveyInputs.getChoices().get(position).getTitle());
-                                            ((MCQRadioViewHolder) holder).otherLayout.setVisibility(View.GONE);
-                                        }
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
-                            return false;
+                                }
+                                break;
+                            default:
+                                break;
                         }
+                        return false;
                     });
                     break;
                 case 2:
@@ -472,17 +458,14 @@ public class OFSurveyOptionsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     ((MCQCheckBoxViewHolder) holder).othersEditText.setHintTextColor(OFHelper.manipulateColor(Color.parseColor(themeTextColor),0.3f));
                     ((MCQCheckBoxViewHolder) holder).othersEditText.setTextColor(OFHelper.manipulateColor(Color.parseColor(themeTextColor),1.0f));
                     ((MCQCheckBoxViewHolder) holder).title.setTag(surveyInputs.getChoices().get(position).getId() == null ? String.valueOf(position) : surveyInputs.getChoices().get(position).getId());
-                    ((MCQCheckBoxViewHolder) holder).title.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+                    ((MCQCheckBoxViewHolder) holder).title.setOnClickListener(v -> {
 
-                            if (!surveyInputs.getOtherOption().equalsIgnoreCase(surveyInputs.getChoices().get(position).getId())) {
-                                handleCheckboxFromOutside();
+                        if (!surveyInputs.getOtherOption().equalsIgnoreCase(surveyInputs.getChoices().get(position).getId())) {
+                            handleCheckboxFromOutside();
+                            gch.itemClicked(v, null, "");
+                        } else {
+                            if(!OFHelper.validateString(((MCQCheckBoxViewHolder) holder).title.getText().toString()).equalsIgnoreCase("na")) {
                                 gch.itemClicked(v, null, "");
-                            } else {
-                                if(!OFHelper.validateString(((MCQCheckBoxViewHolder) holder).title.getText().toString()).equalsIgnoreCase("na")) {
-                                    gch.itemClicked(v, null, "");
-                                }
                             }
                         }
                     });
@@ -494,90 +477,83 @@ public class OFSurveyOptionsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     submitGradient.setColor(Color.parseColor(themeColor));
 
                     ((MCQCheckBoxViewHolder) holder).otherSubmit.setTag(surveyInputs.getChoices().get(position).getId() == null ? String.valueOf(position) : surveyInputs.getChoices().get(position).getId());
-                    ((MCQCheckBoxViewHolder) holder).otherSubmit.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            OFHelper.hideKeyboard((Activity) mContext, ((MCQCheckBoxViewHolder) holder).othersEditText);
-                            if (((MCQCheckBoxViewHolder) holder).othersEditText.getText().toString().isEmpty()) {
-                                ((MCQCheckBoxViewHolder) holder).otherLayout.setVisibility(View.GONE);
-                                ((MCQCheckBoxViewHolder) holder).title.setText(surveyInputs.getChoices().get(position).getTitle());
-                                ((MCQCheckBoxViewHolder) holder).title.setChecked(false);
-                                gch.itemClicked(v, false, ((MCQCheckBoxViewHolder) holder).othersEditText.getText().toString());
+                    ((MCQCheckBoxViewHolder) holder).otherSubmit.setOnClickListener(v -> {
+                        OFHelper.hideKeyboard((Activity) mContext, ((MCQCheckBoxViewHolder) holder).othersEditText);
+                        if (((MCQCheckBoxViewHolder) holder).othersEditText.getText().toString().isEmpty()) {
+                            ((MCQCheckBoxViewHolder) holder).otherLayout.setVisibility(View.GONE);
+                            ((MCQCheckBoxViewHolder) holder).title.setText(surveyInputs.getChoices().get(position).getTitle());
+                            ((MCQCheckBoxViewHolder) holder).title.setChecked(false);
+                            gch.itemClicked(v, false, ((MCQCheckBoxViewHolder) holder).othersEditText.getText().toString());
 
-                                gdCheckbox.setStroke(strokeWidth, colorAlpha10);
-                                gdCheckbox.setColor(colorAlpha10);
-                            } else {
+                            gdCheckbox.setStroke(strokeWidth, colorAlpha10);
+                            gdCheckbox.setColor(colorAlpha10);
+                        } else {
 
-                                gdCheckbox.setStroke(strokeWidth, Color.parseColor(themeColor));
-                                gdCheckbox.setColor(colorAlpha10);
-                                
-                                ((MCQCheckBoxViewHolder) holder).otherLayout.setVisibility(View.GONE);
-                                ((MCQCheckBoxViewHolder) holder).title.setText(((MCQCheckBoxViewHolder) holder).othersEditText.getText());
-                                gch.itemClicked(v, true, ((MCQCheckBoxViewHolder) holder).othersEditText.getText().toString());
+                            gdCheckbox.setStroke(strokeWidth, Color.parseColor(themeColor));
+                            gdCheckbox.setColor(colorAlpha10);
 
-                            }
+                            ((MCQCheckBoxViewHolder) holder).otherLayout.setVisibility(View.GONE);
+                            ((MCQCheckBoxViewHolder) holder).title.setText(((MCQCheckBoxViewHolder) holder).othersEditText.getText());
+                            gch.itemClicked(v, true, ((MCQCheckBoxViewHolder) holder).othersEditText.getText().toString());
 
                         }
+
                     });
-                    ((MCQCheckBoxViewHolder) holder).title.setOnTouchListener(new View.OnTouchListener() {
+                    ((MCQCheckBoxViewHolder) holder).title.setOnTouchListener((v, event) -> {
+                        CheckBox cb = (CheckBox) v;
+                        switch (event.getAction()) {
+                            case MotionEvent.ACTION_DOWN:
+                                // touch down code
 
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            CheckBox cb = (CheckBox) v;
-                            switch (event.getAction()) {
-                                case MotionEvent.ACTION_DOWN:
-                                    // touch down code
+                                int[] colorsRadioAlpha = {Color.parseColor(themeColor), colorAlpha50};
+                                CompoundButtonCompat.setButtonTintList(((MCQCheckBoxViewHolder) holder).title, new ColorStateList(statesRadio, colorsRadioAlpha));
+                                gdCheckbox.setStroke(strokeWidth, colorAlpha50);
+                                break;
 
-                                    int colorsRadioAlpha[] = {Color.parseColor(themeColor), colorAlpha50};
-                                    CompoundButtonCompat.setButtonTintList(((MCQCheckBoxViewHolder) holder).title, new ColorStateList(statesRadio, colorsRadioAlpha));
-                                    gdCheckbox.setStroke(strokeWidth, colorAlpha50);
-                                    break;
+                            case MotionEvent.ACTION_MOVE:
+                                // touch move code
+                                break;
+                            case MotionEvent.ACTION_CANCEL:
+                                OFHelper.v(tag,"1Flow checkbox action canceled");
 
-                                case MotionEvent.ACTION_MOVE:
-                                    // touch move code
-                                    break;
-                                case MotionEvent.ACTION_CANCEL:
-                                    OFHelper.v(tag,"1Flow checkbox action canceled");
+                                gdCheckbox.setStroke(0,colorAlpha10 );
+                                cb.setChecked(false);
+                                gch.itemClicked(v, null, "");
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                // touch up code
+                                CompoundButtonCompat.setButtonTintList(((MCQCheckBoxViewHolder) holder).title, new ColorStateList(statesRadio, colorsRadio));
+                                if (!cb.isChecked()) {
+
+                                    gdCheckbox.setStroke(strokeWidth, Color.parseColor(themeColor));
+                                    gdCheckbox.setColor(colorAlpha10);
+                                    // others logic
+                                    if (surveyInputs.getOtherOption().equalsIgnoreCase(surveyInputs.getChoices().get(position).getId())) {
+                                        cbGlobal = cb;
+                                        cb.setText("");
+                                        ((MCQCheckBoxViewHolder) holder).otherLayout.setVisibility(View.VISIBLE);
+                                        ((MCQCheckBoxViewHolder) holder).othersEditText.requestFocus();
+                                        OFHelper.showKeyboard((Activity) mContext, ((MCQCheckBoxViewHolder) holder).othersEditText);
+                                        otherLayoutGlobal = ((MCQCheckBoxViewHolder) holder).otherLayout;
+                                        otherLayoutGlobal.setTag(surveyInputs.getChoices().get(position).getTitle());
+                                    }
+
+                                } else {
 
                                     gdCheckbox.setStroke(0,colorAlpha10 );
-                                    cb.setChecked(false);
-                                    gch.itemClicked(v, null, "");
-                                    break;
-                                case MotionEvent.ACTION_UP:
-                                    // touch up code
-                                    CompoundButtonCompat.setButtonTintList(((MCQCheckBoxViewHolder) holder).title, new ColorStateList(statesRadio, colorsRadio));
-                                    if (!cb.isChecked()) {
 
-                                        gdCheckbox.setStroke(strokeWidth, Color.parseColor(themeColor));
-                                        gdCheckbox.setColor(colorAlpha10);
-                                        // others logic
-                                        if (surveyInputs.getOtherOption().equalsIgnoreCase(surveyInputs.getChoices().get(position).getId())) {
-                                            cbGlobal = cb;
-                                            cb.setText("");
-                                            ((MCQCheckBoxViewHolder) holder).otherLayout.setVisibility(View.VISIBLE);
-                                            ((MCQCheckBoxViewHolder) holder).othersEditText.requestFocus();
-                                            OFHelper.showKeyboard((Activity) mContext, ((MCQCheckBoxViewHolder) holder).othersEditText);
-                                            otherLayoutGlobal = ((MCQCheckBoxViewHolder) holder).otherLayout;
-                                            otherLayoutGlobal.setTag(surveyInputs.getChoices().get(position).getTitle());
-                                        }
-
-                                    } else {
-
-                                        gdCheckbox.setStroke(0,colorAlpha10 );
-
-                                        if (((MCQCheckBoxViewHolder) holder).otherLayout.getVisibility() == View.VISIBLE) {
-                                            cb.setText(surveyInputs.getChoices().get(position).getTitle());
-                                            ((MCQCheckBoxViewHolder) holder).otherLayout.setVisibility(View.GONE);
-                                            otherLayoutGlobal = null;
-                                        }
-
+                                    if (((MCQCheckBoxViewHolder) holder).otherLayout.getVisibility() == View.VISIBLE) {
+                                        cb.setText(surveyInputs.getChoices().get(position).getTitle());
+                                        ((MCQCheckBoxViewHolder) holder).otherLayout.setVisibility(View.GONE);
+                                        otherLayoutGlobal = null;
                                     }
-                                    break;
-                                default:
-                                    break;
-                            }
-                            return false;
+
+                                }
+                                break;
+                            default:
+                                break;
                         }
+                        return false;
                     });
                     break;
                 case 4:
@@ -589,33 +565,30 @@ public class OFSurveyOptionsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     GradientDrawable gdEmojis = (GradientDrawable) ((OFDynamicSquareLayout) ((((RatingsEmojis) holder).emojis).getParent()).getParent()).getBackground();
 
 
-                    ((RatingsEmojis) holder).emojis.setOnTouchListener(new View.OnTouchListener() {
+                    ((RatingsEmojis) holder).emojis.setOnTouchListener((v, event) -> {
 
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
+                        switch (event.getAction()) {
+                            case MotionEvent.ACTION_DOWN:
+                                gdEmojis.setColor(colorAlpha50);
+                                break;
 
-                            switch (event.getAction()) {
-                                case MotionEvent.ACTION_DOWN:
-                                    gdEmojis.setColor(colorAlpha50);
-                                    break;
-
-                                case MotionEvent.ACTION_MOVE:
-                                    // touch move code
-                                    break;
-                                case MotionEvent.ACTION_CANCEL:
-                                    gdEmojis.setColor(null);
-                                    break;
-                                case MotionEvent.ACTION_UP:
-                                    gdEmojis.setColor(Color.parseColor(themeColor));
-                                    break;
-                                default:
-                                    break;
-                            }
-                            return false;
+                            case MotionEvent.ACTION_MOVE:
+                                // touch move code
+                                break;
+                            case MotionEvent.ACTION_CANCEL:
+                                gdEmojis.setColor(null);
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                gdEmojis.setColor(Color.parseColor(themeColor));
+                                break;
+                            default:
+                                break;
                         }
+                        return false;
                     });
 
-                    if (surveyInputs.getRatingsList().get(position).getSelected()) {
+                    boolean selected1 = surveyInputs.getRatingsList().get(position).getSelected();
+                    if (selected1) {
                         gdEmojis.setColor(Color.parseColor(themeColor));
                     } else {
                         gdEmojis.setColor(null);
@@ -629,22 +602,20 @@ public class OFSurveyOptionsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     }
 
                     ((RatingsEmojis) holder).emojis.setTag(position);
-                    ((RatingsEmojis) holder).emojis.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+                    ((RatingsEmojis) holder).emojis.setOnClickListener(v -> {
 
-                            clickedPosition = position;
-                            notifyDataSetChanged();
-                            gch.itemClicked(v, null, "");
-                        }
+                        clickedPosition = position;
+                        notifyDataSetChanged();
+                        gch.itemClicked(v, null, "");
                     });
                     break;
                 case 5:
 
-                    if (surveyInputs.getRatingsList().get(position).getSelected()) {
-                        ((RatingsStar) holder).stars.setImageDrawable(mContext.getResources().getDrawable(R.drawable.selected_star));
+                    boolean selected2 = surveyInputs.getRatingsList().get(position).getSelected();
+                    if (selected2) {
+                        ((RatingsStar) holder).stars.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.selected_star));
                     } else {
-                        ((RatingsStar) holder).stars.setImageDrawable(mContext.getResources().getDrawable(R.drawable.unselected_star));
+                        ((RatingsStar) holder).stars.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.unselected_star));
                     }
 
                     if(clickedPosition>0){
@@ -653,13 +624,10 @@ public class OFSurveyOptionsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     }
 
                     ((RatingsStar) holder).stars.setTag(position);
-                    ((RatingsStar) holder).stars.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            clickedPosition = position;
-                            notifyDataSetChanged();
-                            gch.itemClicked(v, null, "");
-                        }
+                    ((RatingsStar) holder).stars.setOnClickListener(v -> {
+                        clickedPosition = position;
+                        notifyDataSetChanged();
+                        gch.itemClicked(v, null, "");
                     });
                     break;
                 default:

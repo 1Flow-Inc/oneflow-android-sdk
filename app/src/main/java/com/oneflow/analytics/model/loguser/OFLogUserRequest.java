@@ -22,7 +22,6 @@ import com.google.gson.annotations.SerializedName;
 import com.oneflow.analytics.model.OFBaseModel;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class OFLogUserRequest extends OFBaseModel {
 

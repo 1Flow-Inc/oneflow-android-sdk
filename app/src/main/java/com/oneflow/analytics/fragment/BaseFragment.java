@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.oneflow.analytics.OFSDKBaseActivity;
@@ -32,17 +33,17 @@ import com.oneflow.analytics.utils.OFHelper;
 import java.lang.ref.WeakReference;
 
 public class BaseFragment extends Fragment {
-    public boolean isActive = false;
-    public GradientDrawable gdSubmit;
-    public View webLayout;
-    public ProgressBar pBar;
-    public OFCustomeWebView webContent;
+    boolean isActive = false;
+    GradientDrawable gdSubmit;
+    View webLayout;
+    ProgressBar pBar;
+    OFCustomeWebView webContent;
     LinearLayout waterMarkLayout;
     LinearLayout infoWebLayout;
-    public OFSurveyScreens surveyScreens;
-    public OFSDKSettingsTheme sdkTheme;
-    public String themeColor;
-    public String tag = this.getClass().getName();
+    OFSurveyScreens surveyScreens;
+    OFSDKSettingsTheme sdkTheme;
+    String themeColor;
+    String tag = this.getClass().getName();
 
     WeakReference<OFSDKBaseActivity> weakReference;
 
@@ -98,7 +99,7 @@ public class BaseFragment extends Fragment {
 
     }
 
-    public int thisViewHeight = 0;
+    int thisViewHeight = 0;
 
     public void setThisViewHeight(int newHeight) {
         if (newHeight > thisViewHeight) {
@@ -179,8 +180,8 @@ public class BaseFragment extends Fragment {
                 colorFrom = OFHelper.manipulateColorNew(Color.parseColor(weakReference.get().themeColor), OFConstants.buttonActiveValue);
                 colorTo = Color.parseColor(weakReference.get().themeColor);
             } else {
-                colorFrom = getActivity().getResources().getColor(R.color.btn_pressed);
-                colorTo = getActivity().getResources().getColor(R.color.btn_normal);
+                colorFrom = ContextCompat.getColor(getActivity(),R.color.btn_pressed);
+                colorTo = ContextCompat.getColor(getActivity(),R.color.btn_normal);
             }
             ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
             colorAnimation.setDuration(250); // milliseconds
@@ -200,8 +201,8 @@ public class BaseFragment extends Fragment {
                 colorFrom = OFHelper.manipulateColorNew(Color.parseColor(weakReference.get().themeColor), OFConstants.buttonActiveValue);
                 colorTo = Color.parseColor(weakReference.get().themeColor);
             } else {
-                colorFrom = getActivity().getResources().getColor(R.color.btn_pressed);
-                colorTo = getActivity().getResources().getColor(R.color.btn_normal);
+                colorFrom = ContextCompat.getColor(getActivity(),R.color.btn_pressed);
+                colorTo = ContextCompat.getColor(getActivity(),R.color.btn_normal);
             }
 
             ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);

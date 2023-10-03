@@ -9,7 +9,7 @@ public class OFSDKWidgetPosition implements Serializable {
     @SerializedName("is_enable")
     Boolean is_enabled = true;
     @SerializedName("mobile")
-    String mobile = "top-center";//"bottom-center";//""";//"fullscreen";//
+    String mobile = "top-center";
     @SerializedName("desktop")
     String desktop;
 

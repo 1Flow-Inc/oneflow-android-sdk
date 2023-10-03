@@ -23,7 +23,7 @@ import com.oneflow.analytics.model.survey.OFThrottlingConfig;
 
 import java.io.Serializable;
 
-public class OFGenericResponse<T> implements Serializable {// extends BaseResponse{
+public class OFGenericResponse<T> implements Serializable {
 
 
     @SerializedName("result")

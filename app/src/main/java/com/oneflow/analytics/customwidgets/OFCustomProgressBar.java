@@ -19,23 +19,27 @@
 package com.oneflow.analytics.customwidgets;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.widget.ProgressBar;
 
+import androidx.core.content.ContextCompat;
+
 import com.oneflow.analytics.R;
+import com.oneflow.analytics.utils.OFHelper;
 
 
 public class OFCustomProgressBar extends ProgressBar{
     public OFCustomProgressBar(Context context) {
         super(context);
         this.setIndeterminate(true);
-        this.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.colorPrimaryDark), PorterDuff.Mode.MULTIPLY);
+        OFHelper.setColorFilterMultiple(this.getIndeterminateDrawable(),ContextCompat.getColor(context,R.color.colorPrimaryDark));
     }
 
     public OFCustomProgressBar(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.colorPrimaryDark), PorterDuff.Mode.MULTIPLY);
+        OFHelper.setColorFilterMultiple(this.getIndeterminateDrawable(),ContextCompat.getColor(context,R.color.colorPrimaryDark));
     }
 
     public OFCustomProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {

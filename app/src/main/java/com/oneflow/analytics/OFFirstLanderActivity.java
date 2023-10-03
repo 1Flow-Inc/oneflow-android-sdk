@@ -1,6 +1,5 @@
 package com.oneflow.analytics;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,13 +8,9 @@ import android.os.Message;
 import android.view.Window;
 import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
-import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,7 +19,6 @@ import androidx.core.content.ContextCompat;
 
 import com.google.gson.Gson;
 import com.oneflow.analytics.controller.OFEventController;
-import com.oneflow.analytics.customwidgets.OFCustomeWebView;
 import com.oneflow.analytics.model.survey.OFGetSurveyListResponse;
 import com.oneflow.analytics.model.survey.OFSurveyUserInput;
 import com.oneflow.analytics.model.survey.OFThrottlingConfig;
@@ -40,19 +34,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResponseHandlerOneFlow {
     WebView wv;
@@ -87,7 +76,7 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
         }
 
 
-        new OFFilterSurveys(OFFirstLanderActivity.this, OFFirstLanderActivity.this, OFConstants.ApiHitType.Config.filterSurveys, triggerEventName).start();
+        new OFFilterSurveys(OFFirstLanderActivity.this, OFFirstLanderActivity.this, OFConstants.ApiHitType.filterSurveys, triggerEventName).start();
 
         setUpHashForActivity();
 
@@ -104,13 +93,13 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
 
 
 
-        jsCode = getFileContents1(getCacheDir().getPath() + File.separator + OFConstants.cacheFileName);
+        jsCode = getFileContents1(getCacheDir().getPath() + File.separator + OFConstants.CACHE_FILE_NAME);
 
         if (jsCode != null) {
             OFHelper.v(tag, "1Flow webmethod 12[" + jsCode.length() + "]");
         }
         if (jsCode == null) {
-            jsCode = getFileContentsFromLocal1(OFConstants.cacheFileName);
+            jsCode = getFileContentsFromLocal1(OFConstants.CACHE_FILE_NAME);
         }
 
         if (jsCode != null) {
@@ -190,7 +179,7 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
 
                     OFHelper.v("1Flow", "1Flow filterSurvey came back size[" + filteredList.size() + "]");
 
-                    if (filteredList.size() > 0) {
+                    if (!filteredList.isEmpty()) {
                         try {
                             String dataLocal ="";
                             dataLocal = eventMapArray.get(0).toString();
@@ -308,8 +297,8 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
 
             OFHelper.v(tag, "1Flow globalThrottling[" + surveyToInit.getSurveySettings().getOverrideGlobalThrottling() + "]throttlingConfig isActivated[" + throttlingConfig.isActivated() + "]");
 
-
-            if (surveyToInit.getSurveySettings().getOverrideGlobalThrottling()) {
+            boolean globalThrottling = surveyToInit.getSurveySettings().getOverrideGlobalThrottling();
+            if (globalThrottling) {
 
                 launchSurvey(surveyToInit);
             } else {

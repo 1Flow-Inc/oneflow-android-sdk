@@ -171,7 +171,7 @@ public class CustomFrag extends Fragment {
         Fragment frag = getFragment();
 
         if (frag != null) {
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            FragmentTransaction ft = getChildFragmentManager().beginTransaction();
             if (position == 0) {
                 ft.add(R.id.fragment_view, frag).commit();
             } else {
@@ -276,7 +276,7 @@ public class CustomFrag extends Fragment {
         mainChildForBackground.setBackgroundColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getBackground_color())));
 
         Drawable closeIcon = closeBtn.getDrawable();
-        closeIcon.setColorFilter(OFHelper.manipulateColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), 0.6f), PorterDuff.Mode.SRC_ATOP);
+        OFHelper.setColorFilter(closeIcon,OFHelper.manipulateColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getText_color())), 0.6f));
 
         surveyResponseChildren = new ArrayList<>();
 

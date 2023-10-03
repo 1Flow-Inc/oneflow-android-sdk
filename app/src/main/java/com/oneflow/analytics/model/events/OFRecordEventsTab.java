@@ -27,7 +27,6 @@ import com.google.gson.annotations.SerializedName;
 import com.oneflow.analytics.sdkdb.convertes.OFMapConverter;
 
 import java.util.HashMap;
-import java.util.Map;
 
 @Entity (tableName = "RecordEvents")
 public class OFRecordEventsTab {

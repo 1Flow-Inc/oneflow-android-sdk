@@ -37,7 +37,7 @@ public class OFCustomeWebView extends WebView {
     String appCachePath;
 
     private WebChromeClient.CustomViewCallback customViewCallback;
-    public View mCustomView;
+    View mCustomView;
 
     public OFCustomeWebView(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
