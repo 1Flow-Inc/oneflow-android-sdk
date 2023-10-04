@@ -904,11 +904,11 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
 
                     OFHelper.v(tag, "1Flow calling submit user surveyId[" + sur.getSurvey_id() + "]surID[" + sur.get_lid() + "] Resposne [" + sur.getAnswers() + "]");
 
-                    OFSurvey.submitUserResponse(OFOneFlowSHP.getInstance(this).getStringValue(OFConstants.APPIDSHP), sur, OFConstants.ApiHitType.surveySubmited, this);
+//                    OFSurvey.submitUserResponse(OFOneFlowSHP.getInstance(this).getStringValue(OFConstants.APPIDSHP), sur, OFConstants.ApiHitType.surveySubmited, this);
 
-//                    if (sur.getAnswers() != null && (!sur.getAnswers().isEmpty())) {
-//                        OFSurvey.submitUserResponse(OFOneFlowSHP.getInstance(this).getStringValue(OFConstants.APPIDSHP), sur, OFConstants.ApiHitType.surveySubmited, this);
-//                    }
+                    if (sur.getAnswers() != null && (!sur.getAnswers().isEmpty())) {
+                        OFSurvey.submitUserResponse(OFOneFlowSHP.getInstance(this).getStringValue(OFConstants.APPIDSHP), sur, OFConstants.ApiHitType.surveySubmited, this);
+                    }
                 } else {
 
                     OFHelper.v(tag, "1Flow no data connectivity available submit survey later[" + position + "][" + screens.size() + "]lastScreen[" + screens.get(screens.size() - 1).getInput().getInput_type() + "]");
