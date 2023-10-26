@@ -1,12 +1,12 @@
 
 ‹
-java:S1319&"iThe type of "arrayList" should be an interface such as "List" rather than the implementation "ArrayList".(ÄèÙêùÿÿÿÿ8üíœ´1
+java:S1319&"iThe type of "arrayList" should be an interface such as "List" rather than the implementation "ArrayList".(ÄèÙêùÿÿÿÿ8Ò™”è¶1
 
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ò³­«8öñı›´1
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ò³­«8Ö™”è¶1
 z
-java:S1450"XRemove the "itemsList" field and declare it as a local variable in the relevant methods.(‚éııÿÿÿÿ8ÿîœ´1
-]	java:S125#"<This block of commented-out lines of code should be removed.(¥¾èãøÿÿÿÿ8Œ¤íœ´1
+java:S1450"XRemove the "itemsList" field and declare it as a local variable in the relevant methods.(‚éııÿÿÿÿ8×™”è¶1
+]	java:S125#"<This block of commented-out lines of code should be removed.(¥¾èãøÿÿÿÿ8Ù™”è¶1
 O
-java:S1068"-Remove this unused "itemsList" private field.(‚éııÿÿÿÿ8ƒîœ´1
+java:S1068"-Remove this unused "itemsList" private field.(‚éııÿÿÿÿ8Û™”è¶1
 I
-java:S1068"'Remove this unused "gch" private field.(°Š˜ëıÿÿÿÿ8íœ´1
+java:S1068"'Remove this unused "gch" private field.(°Š˜ëıÿÿÿÿ8Û™”è¶1

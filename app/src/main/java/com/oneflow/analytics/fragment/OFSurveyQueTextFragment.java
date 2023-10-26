@@ -336,6 +336,10 @@ public class OFSurveyQueTextFragment extends BaseFragment implements View.OnClic
                 }
                 return false;
             });
+
+            if (surveyScreens.getInput().getInput_type().equalsIgnoreCase("text")) {
+                gdSubmit.setColor(colorAlpha);
+            }
         } catch (Exception ex) {
             // error
         }
