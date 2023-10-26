@@ -2936,3 +2936,7 @@ w
 G.idea/sonarlint/issuestore/0/2/02471dc8e92f1b942b5012c087e14f7b834bea2d,a/f/af1103574302299a2910975a04b9dfc099f27559
 w
 G.idea/sonarlint/issuestore/0/0/007569b9faaed8779ecdda97067f2803234264c3,e/9/e94122db9817293aa96b64f5e814dcd7764a2af2
+~
+Napp/src/main/java/com/oneflow/analytics/adapter/OFAnnouncementListAdapter.java,8/6/860a750c7e5cb68baca37ca2f967d02c4aefe7bb
+|
+Lapp/src/main/java/com/oneflow/analytics/fragment/OFAnnouncementFragment.java,3/2/32be9274937a18d595622fef9940c35550aa26a0

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:background="@color/graybordercolor"/>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="@dimen/of_field_padding"
+                android:paddingLeft="@dimen/of_field_padding"
+                android:orientation="horizontal">
+
+                <com.oneflow.analytics.customwidgets.OFCustomTextViewBold
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:background="@drawable/rounded_announc_title_rectangle"
+                    android:text="Improvement"
+                    android:gravity="center"
+                    android:paddingRight="@dimen/of_btn_left_right_padding"
+                    android:paddingLeft="@dimen/of_btn_left_right_padding"
+                    android:textStyle="bold"
+                    android:textColor="@color/graybordercolor"
+                    android:textSize="@dimen/of_page_sub_header_1" />
+
+                <com.oneflow.analytics.customwidgets.OFCustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="May 03, 2023"
+                    android:paddingTop="@dimen/of_field_padding"
+                    android:paddingBottom="@dimen/of_field_padding"
+                    android:paddingRight="@dimen/of_field_padding"
+                    android:paddingLeft="@dimen/of_field_padding"
+                    android:textColor="@color/txtlightgray"
+                    android:textSize="@dimen/of_page_sub_header_3" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.oneflow.analytics.customwidgets.OFCustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Announcing Feature X in 1Flow!"
+                android:paddingTop="@dimen/of_field_padding"
+                android:paddingBottom="@dimen/of_field_padding"
+                android:paddingRight="@dimen/of_field_padding"
+                android:paddingLeft="@dimen/of_field_padding"
+                android:textColor="@color/txtblack"
+                android:textSize="@dimen/of_page_sub_header_2" />
+
+            <com.oneflow.analytics.customwidgets.OFCustomTextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bolded"
+                android:paddingRight="@dimen/of_field_padding"
+                android:paddingLeft="@dimen/of_field_padding"
+                android:textStyle="bold"
+                android:textColor="@color/txtblack"
+                android:textSize="@dimen/of_page_sub_header_1" />
+
+            <com.oneflow.analytics.customwidgets.OFCustomTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Italic"
+                android:paddingTop="@dimen/of_field_padding"
+                android:paddingBottom="@dimen/of_field_padding"
+                android:paddingRight="@dimen/of_field_padding"
+                android:paddingLeft="@dimen/of_field_padding"
+                android:textStyle="italic"
+                android:textColor="@color/txtblack"
+                android:textSize="@dimen/of_page_sub_header_2" />
+
+            <include
+                android:id="@+id/weblayout"
+                layout="@layout/survey_webview_fragment"
+                android:visibility="visible" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.oneflow.analytics.customwidgets.OFCustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Call to action link"
+                    android:paddingTop="@dimen/of_field_padding"
+                    android:paddingBottom="@dimen/of_field_padding"
+                    android:paddingRight="@dimen/of_field_padding"
+                    android:paddingLeft="@dimen/of_field_padding"
+                    android:textColor="@color/graybordercolor"
+                    android:textSize="@dimen/of_page_sub_header_2" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="-8dp"
+                    android:padding="2dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_forward"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

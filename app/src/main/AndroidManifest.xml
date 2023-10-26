@@ -37,7 +37,14 @@
 
         <activity android:name="com.oneflow.analytics.OFSecondActivity"/>
 
-        <activity android:name="com.oneflow.analytics.OFFirstActivity">
+        <activity android:name="com.oneflow.analytics.OFFirstActivity"
+            android:exported="true"
+            android:theme="@style/AppDialog">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 
         <!--

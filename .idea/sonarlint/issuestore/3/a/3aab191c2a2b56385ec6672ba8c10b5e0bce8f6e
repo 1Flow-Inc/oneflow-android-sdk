@@ -38,6 +38,8 @@ java:S3776Η"RRefactor this method to reduce its Cognitive Complexity from 90 t
 Y
 java:S2696 "6Make the enclosing method "static" or remove this set.(Σϋίαϊÿÿÿÿ8―ΩΪ«­1
 Y
+java:S2696ª"6Make the enclosing method "static" or remove this set.(ªζψÿÿÿÿ8•¬κ΄1
+Y
 java:S2696›"6Make the enclosing method "static" or remove this set.(Σϋίαϊÿÿÿÿ8ΕΩΪ«­1
 V
 java:S1874έ"3Remove this use of "NetworkInfo"; it is deprecated.(Υ¥—γωÿÿÿÿ8ÒΩΪ«­1

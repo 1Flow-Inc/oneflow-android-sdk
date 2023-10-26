@@ -427,7 +427,7 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
 
         // event click only for welcome or info screen
 
-        if (screens.get(position).getInput().getInput_type().equalsIgnoreCase("welcome-screen")) {
+        if (position < screens.size() && screens.get(position).getInput().getInput_type().equalsIgnoreCase("welcome-screen")) {
             HashMap<String, Object> mapValue = new HashMap<>();
             mapValue.put("flow_id", selectedSurveyId);
             mapValue.put("step_id", screenID);
@@ -484,7 +484,7 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
         OFHelper.v(tag, "1Flow position after[" + position + "]");
 
         try {
-            if (screens.get(position - 1).getRules() != null) {
+            if (position < screens.size() && screens.get(position - 1).getRules() != null) {
                 preparePositionOnRule(screenID, answerIndex, answerValue);
             } else {
                 initFragment(1);
@@ -503,7 +503,7 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
         String type = "";
 
         OFHelper.v(tag, "1Flow condition rule[" + screenID + "]answerIndex[" + answerIndex + "][" + answerValue + "]");
-        if (screens.get(position - 1).getRules() != null && (screens.get(position - 1).getRules().getDataLogic() != null)) {
+        if (position < screens.size() && screens.get(position - 1).getRules() != null && (screens.get(position - 1).getRules().getDataLogic() != null)) {
                 for (OFDataLogic dataLogic : screens.get(position - 1).getRules().getDataLogic()) {
 
                     OFHelper.v(tag, "1Flow condition rule[" + new Gson().toJson(screens.get(position - 1).getRules()) + "]");
@@ -771,7 +771,9 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
             // event for all type of step visibility
             HashMap<String, Object> mapValue = new HashMap<>();
             mapValue.put("flow_id", selectedSurveyId);
-            mapValue.put("step_id", screens.get(position).get_id());
+            if(position < screens.size()){
+                mapValue.put("step_id", screens.get(position).get_id());
+            }
             OFEventController ec = OFEventController.getInstance(this);
 
             ec.storeEventsInDB(OFConstants.AUTOEVENT_FLOWSTEP_SEEN, mapValue, 0);
@@ -913,9 +915,13 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
 
                     OFHelper.v(tag, "1Flow no data connectivity available submit survey later[" + position + "][" + screens.size() + "]lastScreen[" + screens.get(screens.size() - 1).getInput().getInput_type() + "]");
                     try {
-                        if (!(screens.get(position - 1).getInput().getInput_type().equalsIgnoreCase("thank_you") ||
-                                screens.get(position - 1).getInput().getInput_type().equalsIgnoreCase("end-screen")
-                        )) {
+                        if(position < screens.size()){
+                            if (!(screens.get(position - 1).getInput().getInput_type().equalsIgnoreCase("thank_you") ||
+                                    screens.get(position - 1).getInput().getInput_type().equalsIgnoreCase("end-screen")
+                            )) {
+                                OFSDKBaseActivity.this.finish();
+                            }
+                        }else{
                             OFSDKBaseActivity.this.finish();
                         }
                     } catch (Exception ex) {
@@ -949,9 +955,13 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
                 }
                 surveyResponseChildren = null;
                 try {
-                    if (!(screens.get(position - 1).getInput().getInput_type().equalsIgnoreCase("thank_you") ||
-                            screens.get(position - 1).getInput().getInput_type().equalsIgnoreCase("end-screen")
-                    )) {
+                    if(position < screens.size()){
+                        if (!(screens.get(position - 1).getInput().getInput_type().equalsIgnoreCase("thank_you") ||
+                                screens.get(position - 1).getInput().getInput_type().equalsIgnoreCase("end-screen")
+                        )) {
+                            OFSDKBaseActivity.this.finish();
+                        }
+                    }else{
                         OFSDKBaseActivity.this.finish();
                     }
                 } catch (Exception ex) {
