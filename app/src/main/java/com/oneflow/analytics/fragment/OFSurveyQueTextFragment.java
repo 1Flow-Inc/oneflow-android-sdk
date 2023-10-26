@@ -310,9 +310,8 @@ public class OFSurveyQueTextFragment extends BaseFragment implements View.OnClic
     private void submitButtonBeautification() {
         try {
             gdSubmit = (GradientDrawable) (submitButton).getBackground();
-
+            gdSubmit.setColor(Color.parseColor(themeColor));
             int colorAlpha = OFHelper.manipulateColorNew(Color.parseColor(themeColor), OFConstants.buttonActiveValue);
-            gdSubmit.setColor(colorAlpha);
             submitButton.setTypeface(null, Typeface.BOLD);
 
             submitButton.setOnTouchListener((v, event) -> {
