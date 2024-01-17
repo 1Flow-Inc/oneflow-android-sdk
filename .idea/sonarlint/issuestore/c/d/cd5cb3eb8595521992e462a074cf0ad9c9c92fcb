@@ -1,0 +1,16 @@
+
+ 
+java:S13199"~The type of "getAnnouncementDetailResponses" should be an interface such as "List" rather than the implementation "ArrayList".(èæÁèøÿÿÿÿ8¦ß®ÁÑ1
+D
+java:S1604o"(Make this anonymous inner class a lambda( ì‹A8§ß®ÁÑ1
+E
+java:S1604”"(Make this anonymous inner class a lambda(ÿöìe8§ß®ÁÑ1
+K
+java:S1604‘"(Make this anonymous inner class a lambda(šêóßüÿÿÿÿ8§ß®ÁÑ1
+t
+java:S3776K"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(ËÄ•åûÿÿÿÿ8Şß®ÁÑ1
+T
+java:S1874Q"7Remove this use of "getSerializable"; it is deprecated.(¯ÿù8ßß®ÁÑ1
+X	java:S125W"<This block of commented-out lines of code should be removed.(Öá‚Ÿ8àß®ÁÑ1
+X	java:S125„"<This block of commented-out lines of code should be removed.(·Ş£n8êß®ÁÑ1
+^	java:S125¥"<This block of commented-out lines of code should be removed.(İî€ëıÿÿÿÿ8íß®ÁÑ1

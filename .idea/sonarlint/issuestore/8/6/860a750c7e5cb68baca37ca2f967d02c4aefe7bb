@@ -1,12 +1,23 @@
 
-‹
-java:S1319&"iThe type of "arrayList" should be an interface such as "List" rather than the implementation "ArrayList".(ÄèÙêùÿÿÿÿ8Ò™”è¶1
-
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ò³­«8Ö™”è¶1
-z
-java:S1450"XRemove the "itemsList" field and declare it as a local variable in the relevant methods.(‚éııÿÿÿÿ8×™”è¶1
-]	java:S125#"<This block of commented-out lines of code should be removed.(¥¾èãøÿÿÿÿ8Ù™”è¶1
-O
-java:S1068"-Remove this unused "itemsList" private field.(‚éııÿÿÿÿ8Û™”è¶1
+Œ
+java:S1319é"iThe type of "itemsList" should be an interface such as "List" rather than the implementation "ArrayList".(ÖĞ›¤ûÿÿÿÿ8¿»ŸÁÑ1
+Œ
+java:S1319ğ"iThe type of "arrayList" should be an interface such as "List" rather than the implementation "ArrayList".(Š¸¾áÿÿÿÿÿ8¿»ŸÁÑ1
+J
+java:S1604Q"(Make this anonymous inner class a lambda(ü‹ƒ°ûÿÿÿÿ8À»ŸÁÑ1
+D
+java:S1604z"(Make this anonymous inner class a lambda(ÿöìe8À»ŸÁÑ1
+J
+java:S1604w"(Make this anonymous inner class a lambda(šêóßüÿÿÿÿ8À»ŸÁÑ1
+Y
+java:S11179"7Rename "shp" which hides the field declared at line 43.(áóĞ‡ıÿÿÿÿ8‚¼ŸÁÑ1
+X	java:S125="<This block of commented-out lines of code should be removed.(Öá‚Ÿ8ï¨§ÁÑ1
+Y	java:S125…"<This block of commented-out lines of code should be removed.(îÇáÒ8“¼ŸÁÑ1
+^	java:S125"<This block of commented-out lines of code should be removed.(İî€ëıÿÿÿÿ8“¼ŸÁÑ1
+Y	java:S125•"<This block of commented-out lines of code should be removed.(õéå¾8”¼ŸÁÑ1
+^	java:S125™"<This block of commented-out lines of code should be removed.(êŒÛ¶úÿÿÿÿ8”¼ŸÁÑ1
+Y	java:S125¤"<This block of commented-out lines of code should be removed.(‰¨¾¿8•¼ŸÁÑ1
+Z
+java:S1117Ã"7Rename "shp" which hides the field declared at line 43.(áóĞ‡ıÿÿÿÿ8›¼ŸÁÑ1
 I
-java:S1068"'Remove this unused "gch" private field.(°Š˜ëıÿÿÿÿ8Û™”è¶1
+java:S1068)"'Remove this unused "gch" private field.(°Š˜ëıÿÿÿÿ8 ¼ŸÁÑ1

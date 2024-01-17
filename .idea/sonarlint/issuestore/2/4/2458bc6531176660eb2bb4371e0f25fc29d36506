@@ -1,0 +1,11 @@
+
+
+java:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(†¨…Ú8›™±ÌÆ1
+‚
+java:S1319"eThe type of "inbox" should be an interface such as "List" rather than the implementation "ArrayList".(¶¤–ı8›™±ÌÆ1
+’
+java:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(ĞšÌšøÿÿÿÿ8›™±ÌÆ1
+‚
+java:S1319 "eThe type of "inApp" should be an interface such as "List" rather than the implementation "ArrayList".(­¡«8›™±ÌÆ1
+M
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8Ÿ™±ÌÆ1

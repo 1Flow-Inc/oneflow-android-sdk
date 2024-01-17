@@ -21,10 +21,11 @@ package com.oneflow.analytics.utils;
 public interface OFConstants {
 
     String currentVersion = "2023.10.26";//2023.07.14;
-    String MODE = "prod";//"dev";//"beta";//
+    String MODE = "dev";//"beta";//"prod";//
 
     String PLATFORM = "Android";
     String CACHE_FILE_NAME = "logic-engine.js";
+    String ANN_FILE_NAME = "filter.js";
     String DBNAME = "one_flow_db";
     String APPKEYSHP = "one_flow_config_key";
     String APPIDSHP = "one_flow_app_id_key";
@@ -37,6 +38,10 @@ public interface OFConstants {
     String SDKVERSIONSHP = "sdk_version_key";
     String BRACTION_EVENTS = "one_flow_submit_events";
     String BRACTION_SURVEYS = "one_flow_submit_surveys";
+
+    String GETANNOUNCEMENTSHP = "one_flow_get_announcement_key";
+    String SEENINAPPANNOUNCEMENTSHP = "one_flow_seen_in_app_announcement_key";
+    String SEENINBOXANNOUNCEMENTSHP = "one_flow_seen_in_box_announcement_key";
 
     String AUTOEVENT_FIRSTOPEN = "first_open"; //Used for sharedpref also
     String AUTOEVENT_APPUPDATE = "app_updated";
@@ -84,7 +89,8 @@ public interface OFConstants {
 
     String os = "android";
 
-
+    String ANN_VIEWED = "announcement_viewed";
+    String ANN_CLICKED = "announcement_clicked";
 
     enum ApiHitType{
 
@@ -92,7 +98,7 @@ public interface OFConstants {
         deleteEventsFromDB,deleteEventsFromDBLastSession, submittingOfflineSurvey, logUser, insertSurveyInDB, fetchSurveysFromDB, deleteSurveyFromDB, fetchLocation,
         filterSurveys,
         fetchSurveysFromAPI,fetchEventsBeforSurveyFetched,fetchSubmittedSurvey,checkResurveyNSubmission,updateSurveyIds,
-        surveySubmited,lastSubmittedSurvey,updateSubmittedSurveyLocally, directSurvey
+        surveySubmited,lastSubmittedSurvey,updateSubmittedSurveyLocally, directSurvey, fetchAnnouncementFromAPI, fetchAnnouncementDetailFromAPI
     }
 
     String userInputValueTemp = "";

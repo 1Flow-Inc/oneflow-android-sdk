@@ -26,6 +26,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.oneflow.analytics.model.adduser.OFAddUserResponse;
+import com.oneflow.analytics.model.announcement.OFGetAnnouncementResponse;
 import com.oneflow.analytics.model.loguser.OFLogUserRequest;
 import com.oneflow.analytics.model.survey.OFGetSurveyListResponse;
 import com.oneflow.analytics.model.survey.OFThrottlingConfig;
@@ -174,6 +175,52 @@ public class OFOneFlowSHP {
 
     public ArrayList<String> getClosedSurveyList() {
         String json = pref.getString(OFConstants.SURVEYCLOSEDLISTSHP, null);
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
+        return gson.fromJson(json, type);
+    }
+
+    public OFGetAnnouncementResponse getAnnouncementResponse() {
+        String json = pref.getString(OFConstants.GETANNOUNCEMENTSHP, null);
+        OFGetAnnouncementResponse obj;
+        if (json != null) {
+            obj = gson.fromJson(json, OFGetAnnouncementResponse.class);
+        } else {
+            return null;
+        }
+        return obj;
+    }
+
+    public void setAnnouncementResponse(OFGetAnnouncementResponse obj) {
+        SharedPreferences.Editor prefsEditor = pref.edit();
+        String json = gson.toJson(obj);
+        prefsEditor.putString(OFConstants.GETANNOUNCEMENTSHP, json);
+        prefsEditor.apply();
+    }
+
+    public void setSeenInAppAnnounceList(ArrayList<String> list) {
+        SharedPreferences.Editor editor = pref.edit();
+        String json = gson.toJson(list);
+        editor.putString(OFConstants.SEENINAPPANNOUNCEMENTSHP, json);
+        editor.apply();     // This line is IMPORTANT !!!
+    }
+
+    public ArrayList<String> getSeenInAppAnnounceList() {
+        String json = pref.getString(OFConstants.SEENINAPPANNOUNCEMENTSHP, null);
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
+        return gson.fromJson(json, type);
+    }
+
+    public void setSeenInboxAnnounceList(ArrayList<String> list) {
+        SharedPreferences.Editor editor = pref.edit();
+        String json = gson.toJson(list);
+        editor.putString(OFConstants.SEENINBOXANNOUNCEMENTSHP, json);
+        editor.apply();     // This line is IMPORTANT !!!
+    }
+
+    public ArrayList<String> getSeenInboxAnnounceList() {
+        String json = pref.getString(OFConstants.SEENINBOXANNOUNCEMENTSHP, null);
         Type type = new TypeToken<ArrayList<String>>() {
         }.getType();
         return gson.fromJson(json, type);

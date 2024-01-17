@@ -28,6 +28,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Looper;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -44,6 +45,7 @@ import androidx.lifecycle.ProcessLifecycleOwner;
 //import com.android.billingclient.api.Purchase;
 //import com.android.billingclient.api.PurchasesUpdatedListener;
 import com.google.gson.Gson;
+import com.oneflow.analytics.controller.OFAnnouncementController;
 import com.oneflow.analytics.controller.OFEventController;
 import com.oneflow.analytics.controller.OFSurveyController;
 import com.oneflow.analytics.model.OFConnectivity;
@@ -52,6 +54,8 @@ import com.oneflow.analytics.model.adduser.OFAddUserContext;
 import com.oneflow.analytics.model.adduser.OFAddUserReq;
 import com.oneflow.analytics.model.adduser.OFAddUserResponse;
 import com.oneflow.analytics.model.adduser.OFDeviceDetails;
+import com.oneflow.analytics.model.announcement.OFAnnouncementIndex;
+import com.oneflow.analytics.model.announcement.OFGetAnnouncementDetailResponse;
 import com.oneflow.analytics.model.events.OFEventAPIRequest;
 import com.oneflow.analytics.model.events.OFRecordEventsTab;
 import com.oneflow.analytics.model.events.OFRecordEventsTabToAPI;
@@ -77,6 +81,7 @@ import com.oneflow.analytics.utils.OFMyResponseHandlerOneFlow;
 import com.oneflow.analytics.utils.OFNetworkChangeReceiver;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -433,6 +438,48 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
      */
     public static void recordEvents(String eventName, HashMap eventValues) {
 
+        OneFlow of1 = new OneFlow(mContext);
+
+        eventMap = new HashMap<>();
+        eventMap.put("name", eventName);
+        eventMap.put("parameters", eventValues);
+        eventMap.put("timestamp", System.currentTimeMillis() / 1000);
+
+        of1.checkAnnouncementAvailable(eventName, eventValues);
+
+//        try {
+//            if (!OFHelper.validateString(eventName.trim()).equalsIgnoreCase("NA")) {
+//                OneFlow of = new OneFlow(mContext);
+//                of.checkThrottlingLife();
+//                // this 'if' is for converting date object to second format(timestamp)
+//                if (eventValues != null) {
+//                    eventValues = OFHelper.checkDateInHashMap(eventValues);
+//                }
+//                OFHelper.v("1Flow", "1Flow recordEvents record called with[" + eventValues + "]");
+//                if (mContext != null) {
+//                    // storage, api call and check survey if available.
+//                    OFEventController ec = OFEventController.getInstance(mContext);
+//                    ec.storeEventsInDB(eventName, eventValues, 0);
+//
+//                    eventMap = new HashMap<>();
+//                    eventMap.put("name", eventName);
+//                    eventMap.put("parameters", eventValues);
+//                    eventMap.put("timestamp", System.currentTimeMillis() / 1000);
+//
+//                    of.triggerSurveyNew(eventName);
+//
+//                } else {
+//                    OFHelper.v("1Flow", "1Flow null context for event");
+//                }
+//            } else {
+//                OFHelper.v("1Flow", "1Flow empty event unable to trigger survey");
+//            }
+//        } catch (Exception ex) {
+//            // error
+//        }
+    }
+
+    private void recordEventAfterCheckAnnouncement(String eventName, HashMap eventValues){
         try {
             if (!OFHelper.validateString(eventName.trim()).equalsIgnoreCase("NA")) {
                 OneFlow of = new OneFlow(mContext);
@@ -511,6 +558,92 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
                     OFHelper.v("1Flow", "1Flow logUser not calling as config pending");
                 }
             }
+        }
+    }
+
+    public static void showInboxAnnouncement(){
+        OneFlow of = new OneFlow(mContext);
+        of.getInboxAnnouncement();
+    }
+
+    private void checkAnnouncementAvailable(String eventName, HashMap eventValues){
+        ArrayList<OFAnnouncementIndex> inAppList = new ArrayList<>();
+        OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
+        if(shp.getAnnouncementResponse() != null && shp.getAnnouncementResponse().getAnnouncements() != null){
+            for (int i = 0; i < shp.getAnnouncementResponse().getAnnouncements().getInApp().size(); i++) {
+
+                OFAnnouncementIndex announcementIndex = shp.getAnnouncementResponse().getAnnouncements().getInApp().get(i);
+
+                boolean isAvailable = false;
+                for (int i1 = 0; i1 < shp.getSeenInAppAnnounceList().size(); i1++) {
+                    if(shp.getSeenInAppAnnounceList().get(i1).equals(announcementIndex.getId())){
+                        isAvailable = true;
+                        break;
+                    }
+                }
+
+                if(announcementIndex.getStatus().equalsIgnoreCase("active") && !isAvailable){
+                    inAppList.add(announcementIndex);
+                }
+            }
+        }
+        if(!inAppList.isEmpty()){
+            triggerAnnouncement(inAppList);
+        }else{
+            recordEventAfterCheckAnnouncement(eventName, eventValues);
+        }
+    }
+
+    private void triggerAnnouncement(ArrayList<OFAnnouncementIndex> originalList){
+
+        JSONArray eventMapArray = new JSONArray();
+        eventMapArray.put(new JSONObject(eventMap));
+
+        final Intent surveyIntent = new Intent(mContext.getApplicationContext(), OFAnnouncementLanderActivity.class);
+
+        surveyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        surveyIntent.putExtra("listData", originalList);
+        try {
+            surveyIntent.putExtra("eventData", eventMapArray.get(0).toString());
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (!OFSDKBaseActivity.isActive) { // This to check if any survey is already running or not
+            mContext.getApplicationContext().startActivity(surveyIntent);
+        }
+    }
+
+    private void getInboxAnnouncement(){
+        ArrayList<OFAnnouncementIndex> inboxList = new ArrayList<>();
+        OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
+        if(shp.getAnnouncementResponse() != null && shp.getAnnouncementResponse().getAnnouncements() != null){
+            for (int i = 0; i < shp.getAnnouncementResponse().getAnnouncements().getInbox().size(); i++) {
+                OFAnnouncementIndex announcementIndex = shp.getAnnouncementResponse().getAnnouncements().getInbox().get(i);
+                if(announcementIndex.getStatus().equalsIgnoreCase("active")){
+                    inboxList.add(announcementIndex);
+                }
+            }
+
+            ArrayList<String> idArray = new ArrayList<>();
+            for (int i = 0; i < inboxList.size(); i++) {
+                idArray.add(inboxList.get(i).getId());
+            }
+
+            triggerInboxAnnouncement(idArray);
+//            OFAnnouncementController.getInstance(mContext.getApplicationContext()).getAnnouncementDetailFromAPI(TextUtils.join(",", idArray),"1");
+        }
+    }
+
+    private void triggerInboxAnnouncement(ArrayList<String> idArray){
+
+        final Intent surveyIntent = new Intent(mContext.getApplicationContext(), OFAnnouncementActivityFullScreen.class);
+
+        surveyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        surveyIntent.putExtra("announcementData", idArray);
+
+        if (!OFSDKBaseActivity.isActive) {
+            mContext.getApplicationContext().startActivity(surveyIntent);
         }
     }
 
@@ -676,6 +809,7 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
 
                     } else {
                         //calling fetch survey api on ADD USER success changed on 17-01-23
+                        OFAnnouncementController.getInstance(mContext).getAnnouncementFromAPI();
                         OFSurveyController.getInstance(mContext).getSurveyFromAPI();
                     }
                 } else {
@@ -828,6 +962,7 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
                 break;
             case updateSurveyIds:
                 if (OFOneFlowSHP.getInstance(mContext).getUserDetails() != null) {
+                    OFAnnouncementController.getInstance(mContext).getAnnouncementFromAPI();
                     long surveyFetchTimeDiff = (System.currentTimeMillis() - OFOneFlowSHP.getInstance(mContext).getLongValue(OFConstants.SHP_SURVEY_FETCH_TIME)) / 1000;
                     OFHelper.v("1Flow", "1Flow survey fetch time diff[" + surveyFetchTimeDiff + "]");
                     if (surveyFetchTimeDiff > 60) {

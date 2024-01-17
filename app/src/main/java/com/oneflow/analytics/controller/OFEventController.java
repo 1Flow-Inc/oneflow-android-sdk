@@ -66,7 +66,7 @@ public class OFEventController implements OFMyResponseHandlerOneFlow {
         switch (hitType) {
             case insertEventsInDB:
                 OFHelper.v(tag, "Oneflow records inserted [" + (obj) + "]");
-                if (reserved.equalsIgnoreCase(OFConstants.AUTOEVENT_SURVEYIMPRESSION)) {
+                if (reserved.equalsIgnoreCase(OFConstants.AUTOEVENT_SURVEYIMPRESSION) || reserved.equalsIgnoreCase(OFConstants.ANN_CLICKED) || reserved.equalsIgnoreCase(OFConstants.ANN_VIEWED)) {
                     OFHelper.v(tag, "Oneflow found survey impression[" + (obj) + "]");
                     new OFEventDBRepoKT().fetchEvents(mContext, this, OFConstants.ApiHitType.fetchEventsFromDB);
                 }

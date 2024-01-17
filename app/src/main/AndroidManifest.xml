@@ -1,52 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ /* Copyright 2021 1Flow, Inc.
-  ~
-  ~
-  ~  Licensed under the Apache License, Version 2.0 (the "License");
-  ~  you may not use this file except in compliance with the License.
-  ~  You may obtain a copy of the License at
-  ~
-  ~       http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~  Unless required by applicable law or agreed to in writing, software
-  ~  distributed under the License is distributed on an "AS IS" BASIS,
-  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~  See the License for the specific language governing permissions and
-  ~ limitations under the License.*/
-  ~
-  -->
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.oneflow.analytics">
-
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
-    <!--android:supportsRtl="true"
-    android:theme="@style/Theme.TrySkySDK"-->
-
-    <application
-
-        >
-
-        <activity android:name="com.oneflow.analytics.OFProjectSetup"></activity>
-
-        <activity android:name="com.oneflow.analytics.OFSecondActivity"/>
-
-        <activity android:name="com.oneflow.analytics.OFFirstActivity"
+    <application>
+        <activity android:name=".OFProjectSetup" />
+        <activity
+            android:name=".OFSecondActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TrySkySDK" />
+        <activity
+            android:name=".OFFirstActivity"
             android:exported="true"
-            android:theme="@style/AppDialog">
+            android:theme="@style/Theme.TrySkySDK">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
         </activity>
-
         <!--
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
@@ -54,54 +30,52 @@
         -->
         <!-- android:theme="@style/AppDialog" -->
         <activity
-            android:name="com.oneflow.analytics.OFSurveyActivityBottom"
-            android:theme="@style/CDialogThemeBottom"
-
-            ></activity> <!-- android:configChanges="orientation|keyboardHidden|screenSize" -->
+            android:name=".OFSurveyActivityBottom"
+            android:theme="@style/CDialogThemeBottom" /> <!-- android:configChanges="orientation|keyboardHidden|screenSize" -->
         <activity
-            android:name="com.oneflow.analytics.OFSurveyActivityCenter"
-            android:theme="@style/CDialogThemeCenter"
-
-            ></activity>
+            android:name=".OFSurveyActivityCenter"
+            android:theme="@style/CDialogThemeCenter" />
         <activity
-            android:name="com.oneflow.analytics.OFSurveyActivityBannerTop"
-            android:theme="@style/CDialogThemeBannerTop"
-
-            ></activity>
+            android:name=".OFSurveyActivityBannerTop"
+            android:theme="@style/CDialogThemeBannerTop" />
         <activity
-            android:name="com.oneflow.analytics.OFSurveyActivityBannerBottom"
-            android:theme="@style/CDialogThemeBottom"
-
-            ></activity>
+            android:name=".OFSurveyActivityBannerBottom"
+            android:theme="@style/CDialogThemeBottom" />
         <activity
-            android:name="com.oneflow.analytics.OFSurveyActivityTop"
-            android:theme="@style/CDialogThemeTop"
-
-            ></activity>
+            android:name=".OFSurveyActivityTop"
+            android:theme="@style/CDialogThemeTop" />
         <activity
-            android:name="com.oneflow.analytics.OFSurveyActivityFullScreen"
-            android:theme="@style/CDialogThemeFullScreen"
-
-            ></activity>
-
-
+            android:name=".OFSurveyActivityFullScreen"
+            android:theme="@style/CDialogThemeFullScreen" />
         <activity
-            android:name="com.oneflow.analytics.OFFirstLanderActivity"
-            android:theme="@style/Theme.OFTransparent"
-
-            ></activity>
-        <!--<receiver android:name=".utils.OFThrottlingAlarm"/>-->
-        <!--android:configChanges="orientation|keyboardHidden|screenSize"-->
-
-        <!--<service
-            android:name=".PushNotificationReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-                &lt;!&ndash;<action android:name="com.google.firebase.INSTANCE_ID_EVENT" />&ndash;&gt;
-            </intent-filter>
-        </service>-->
-
+            android:name=".OFAnnouncementActivityFullScreen"
+            android:theme="@style/CDialogThemeFullScreen" />
+        <activity
+            android:name=".OFFirstLanderActivity"
+            android:theme="@style/Theme.OFTransparent" />
+        <activity
+            android:name=".OFAnnouncementLanderActivity"
+            android:theme="@style/Theme.OFTransparent" />
+        <activity
+            android:name=".OFAnnouncementActivityModel"
+            android:exported="false"
+            android:theme="@style/CDialogThemeCenter" />
+        <activity
+            android:name=".OFAnnouncementActivityBannerTop"
+            android:exported="false"
+            android:theme="@style/CDialogThemeAnnounceBannerTop" />
+        <activity
+            android:name=".OFAnnouncementActivityBannerBottom"
+            android:exported="false"
+            android:theme="@style/CDialogThemeAnnounceBannerBottom" />
+        <activity
+            android:name=".OFAnnouncementActivitySlideTop"
+            android:exported="false"
+            android:theme="@style/CDialogThemeAnnounceBannerTop" />
+        <activity
+            android:name=".OFAnnouncementActivitySlideBottom"
+            android:exported="false"
+            android:theme="@style/CDialogThemeAnnounceBannerBottom" />
     </application>
 
 </manifest>

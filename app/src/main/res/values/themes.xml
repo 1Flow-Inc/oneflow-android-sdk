@@ -169,6 +169,28 @@
         <!--<item name="android:backgroundDimAmount">0.25</item>
         <item name="android:backgroundDimEnabled">true</item>-->
     </style>
+    <style name="CDialogThemeAnnounceBannerTop" parent="@style/Theme.AppCompat">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowAnimationStyle">@style/DialogTransitionFromTop</item>
+        <item name="android:windowBackground">@color/full_transparancy</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+    <style name="CDialogThemeAnnounceBannerBottom" parent="@style/Theme.AppCompat">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowAnimationStyle">@style/DialogTransitionFromBottom</item>
+        <item name="android:windowBackground">@color/full_transparancy</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
     <style name="AnotherTheme" parent="@style/Theme.AppCompat">
         <item name="android:background">@android:color/transparent</item>
         <!--on below line we are displaying the windowNotitle as true as we are not displaying our status bar-->

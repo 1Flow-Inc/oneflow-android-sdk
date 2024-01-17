@@ -6,10 +6,39 @@
     android:animateLayoutChanges="true"
     android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/announcement_list"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/announcement_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ProgressBar
+            android:layout_height="50dp"
+            android:layout_width="50dp"
+            android:id="@+id/progress_circular"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            android:layout_marginTop="50dp" />
+
+        <com.oneflow.analytics.customwidgets.OFCustomTextViewBold
+            android:id="@+id/tvEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="Your inbox is empty."
+            android:gravity="center"
+            android:paddingTop="@dimen/of_field_padding"
+            android:paddingBottom="@dimen/of_field_padding"
+            android:paddingRight="@dimen/of_field_padding"
+            android:paddingLeft="@dimen/of_field_padding"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:textColor="#66000000"
+            android:textSize="@dimen/of_page_sub_header_2" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/bottom_water_mark"

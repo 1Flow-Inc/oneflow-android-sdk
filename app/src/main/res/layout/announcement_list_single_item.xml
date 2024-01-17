@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llMain"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="5dp">
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -12,6 +12,7 @@
         android:orientation="horizontal">
 
         <View
+            android:id="@+id/seenView"
             android:layout_width="5dp"
             android:layout_height="match_parent"
             android:background="@color/graybordercolor"/>
@@ -26,9 +27,11 @@
                 android:layout_height="wrap_content"
                 android:paddingRight="@dimen/of_field_padding"
                 android:paddingLeft="@dimen/of_field_padding"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <com.oneflow.analytics.customwidgets.OFCustomTextViewBold
+                    android:id="@+id/tvCategoryName"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:background="@drawable/rounded_announc_title_rectangle"
@@ -41,6 +44,7 @@
                     android:textSize="@dimen/of_page_sub_header_1" />
 
                 <com.oneflow.analytics.customwidgets.OFCustomTextView
+                    android:id="@+id/tvDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="May 03, 2023"
@@ -53,50 +57,42 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <com.oneflow.analytics.customwidgets.OFCustomTextView
+            <com.oneflow.analytics.customwidgets.OFCustomTextViewBold
+                android:id="@+id/tvTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Announcing Feature X in 1Flow!"
+                android:text=""
                 android:paddingTop="@dimen/of_field_padding"
                 android:paddingBottom="@dimen/of_field_padding"
-                android:paddingRight="@dimen/of_field_padding"
-                android:paddingLeft="@dimen/of_field_padding"
-                android:textColor="@color/txtblack"
-                android:textSize="@dimen/of_page_sub_header_2" />
-
-            <com.oneflow.analytics.customwidgets.OFCustomTextViewBold
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Bolded"
                 android:paddingRight="@dimen/of_field_padding"
                 android:paddingLeft="@dimen/of_field_padding"
                 android:textStyle="bold"
                 android:textColor="@color/txtblack"
-                android:textSize="@dimen/of_page_sub_header_1" />
-
-            <com.oneflow.analytics.customwidgets.OFCustomTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Italic"
-                android:paddingTop="@dimen/of_field_padding"
-                android:paddingBottom="@dimen/of_field_padding"
-                android:paddingRight="@dimen/of_field_padding"
-                android:paddingLeft="@dimen/of_field_padding"
-                android:textStyle="italic"
-                android:textColor="@color/txtblack"
                 android:textSize="@dimen/of_page_sub_header_2" />
 
-            <include
-                android:id="@+id/weblayout"
-                layout="@layout/survey_webview_fragment"
-                android:visibility="visible" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <WebView
+                    android:id="@+id/webView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </RelativeLayout>
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llAction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal">
 
-                <com.oneflow.analytics.customwidgets.OFCustomTextView
+                <com.oneflow.analytics.customwidgets.OFCustomTextViewBold
+                    android:id="@+id/tvAction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Call to action link"
@@ -104,18 +100,25 @@
                     android:paddingBottom="@dimen/of_field_padding"
                     android:paddingRight="@dimen/of_field_padding"
                     android:paddingLeft="@dimen/of_field_padding"
+                    android:textStyle="bold"
                     android:textColor="@color/graybordercolor"
                     android:textSize="@dimen/of_page_sub_header_2" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:id="@+id/ivForward"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginStart="-8dp"
-                    android:padding="2dp"
+                    android:padding="5dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_forward"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#0D000000"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

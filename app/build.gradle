@@ -19,7 +19,7 @@
 
 plugins {
     id 'com.android.library'
-    //id 'com.android.application'
+//    id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
    // id 'com.google.gms.google-services'
@@ -31,7 +31,7 @@ android {
 
     defaultConfig {
 
-        //applicationId "com.circo.oneflow"
+//        applicationId "com.circo.oneflow"
         minSdkVersion 21
         targetSdkVersion 34
         versionCode 53
@@ -63,6 +63,9 @@ android {
             //exclude group: 'com.google.guava', module: 'guava'
 
         }
+    }
+    buildFeatures {
+        dataBinding true
     }
 }
 

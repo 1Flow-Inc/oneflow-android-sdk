@@ -18,6 +18,7 @@
 
 package com.oneflow.analytics;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -135,7 +136,9 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.activity_project_key);
         OFCustomEditText projectKeyET = dialog.findViewById(R.id.project_key);
-        //String projectKey = "oneflow_prod_UjlFunf96DxcEXXXgJKqm32q1RDIYXbmDkepkDmomBoDdlzXQM/U9qzEAKh6yj34xfQQT1Ejp0ltJnF9wGJU5Q==";// [TEST] All Screens
+        String projectKey = "oneflow_prod_QlKTPS50Cd7EoYxRN9KGSQ1cXriCe+0N/N/gCC4skFfaHuOgiSv+TisJ1IYlvMgTmpRxA+ax3ZwDVumKJaiAHA==";//
+//        String projectKey = "oneflow_prod_qBtB2ELzP75llq06OI7HIhMl80b1ScsR1Hf1CX+yJ5GGvWUtIUXj/5o/kBgNwDRE8wIm6KfM3eYZLAuGzM12Tw==";//
+//        String projectKey = "oneflow_prod_UjlFunf96DxcEXXXgJKqm32q1RDIYXbmDkepkDmomBoDdlzXQM/U9qzEAKh6yj34xfQQT1Ejp0ltJnF9wGJU5Q==";// [TEST] All Screens
         //String projectKey = "oneflow_prod_yxwI14oGAEhYgOEJjo43IsoKuWbSPoXBcKD+Bj5UkiZtPXb1vuuBkRUm5YxfBCs6thcsxPWbxDeJHJZlSGzxkw==";// SANVEDI'S PROJECT
         //String projectKey = "oneflow_sandbox_oV+xY+hArzT2i4lMP69YZnRBLK1a/qmYW16MboVc208IVjiNKPfHRIylm0rVFgEubtaRuhKMTdlTt5TEuP+8Pw==";// AmitRepeatTest
         //String projectKey = "oneflow_prod_CE5Cvb8EahGdiyeu7TkY4DDR8inq1u8qLHvV2XnJM5UuZNW1V0I+XMQi2Qo5raeyrk7b3GEl+a9iz6F2EWGtNg==";// QA-2
@@ -145,7 +148,7 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
         //String projectKey = "oneflow_prod_hlXx+7J/PLaZmjrScYvDqVr75+oIAS+Fyc2Hs7hO4o1GcsbyeMTJ74XKceugfPhDZ3MPdbB65rltbhP9cWmaYA==";// Embed I&V Android
         //String projectKey = "oneflow_prod_YMslXVT1uFOldcBl5kuupFSuLY1yaWkg1lC9lnsZ9jYDvB1KQdRyp4w34VOvMZwlUZ5efuXUWAV5JEizYPzfwA==";//AndroidTestinProject
         //String projectKey = "oneflow_prod_S2Fhp9kIgnuUifdybu416l5zcTJ1H2olfCwMbq2stQKvH/tvurEgpBSWgUIRFRxMkmc2cs7KOwALqzr235/wpw==";//AndroidTestinProject
-        String projectKey = "oneflow_prod_XYDk9mmRqZHYwKnG5s+3bkB3kqTnmew74mxqUQS8S4fcsfxx2E6ItOnNA3DKmMiWoKrQz0IqAvra9UbXDhGP6A==";//Ahsan's Project 10_july
+//        String projectKey = "oneflow_prod_XYDk9mmRqZHYwKnG5s+3bkB3kqTnmew74mxqUQS8S4fcsfxx2E6ItOnNA3DKmMiWoKrQz0IqAvra9UbXDhGP6A==";//Ahsan's Project 10_july
         //String projectKey = "oneflow_prod_43WVuVjDSygeAejX5uzRQUaYHpzs9eV6zrG+wPRRI2aCHjRwKRftCzVsEJ+Fp2+cBnB8rYogwdXjFnVKZEjxpw==";//AndroidTestinProject
         //String projectKey = "oneflow_prod_/xygSKirAO9POupz31Ef7RIO8gvkkRiqfeO4Q98hQHS6QugUesc/Fme4AXuIFvlwSe8KsMt9ochqOO71ojMXpg==";//AmitV2Testing
         //String projectKey = "oneflow_prod_FMmrAqrKisPtrNzr1nn2Fapz0hutCSAhwo7Ln7G2521f0JZV/G1iYhSRnnUgsgnUWVrtLdzq1Y00B8+lshncfg==";//AndroidTestinProject
@@ -266,6 +269,8 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
             });
 
             alert.show();
+        }else if (v.getId() == R.id.openAnnouncement) {
+            OneFlow.showInboxAnnouncement();
         }
     }
 

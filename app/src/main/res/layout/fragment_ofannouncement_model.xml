@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="@dimen/of_field_padding"
+                    android:paddingLeft="@dimen/of_field_padding"
+                    android:orientation="horizontal">
+
+                    <com.oneflow.analytics.customwidgets.OFCustomTextViewBold
+                        android:id="@+id/tvCategoryName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:background="@drawable/rounded_announc_title_rectangle"
+                        android:text=""
+                        android:gravity="center"
+                        android:paddingRight="@dimen/of_btn_left_right_padding"
+                        android:paddingLeft="@dimen/of_btn_left_right_padding"
+                        android:textStyle="bold"
+                        android:textColor="@color/graybordercolor"
+                        android:textSize="@dimen/of_page_sub_header_1" />
+
+                    <com.oneflow.analytics.customwidgets.OFCustomTextView
+                        android:id="@+id/tvDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:paddingTop="@dimen/of_field_padding"
+                        android:paddingBottom="@dimen/of_field_padding"
+                        android:paddingRight="@dimen/of_field_padding"
+                        android:paddingLeft="@dimen/of_field_padding"
+                        android:textColor="@color/txtlightgray"
+                        android:textSize="@dimen/of_page_sub_header_3" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <com.oneflow.analytics.customwidgets.OFCustomTextViewBold
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:paddingTop="@dimen/of_field_padding"
+                    android:paddingBottom="@dimen/of_field_padding"
+                    android:paddingRight="@dimen/of_field_padding"
+                    android:paddingLeft="@dimen/of_field_padding"
+                    android:textStyle="bold"
+                    android:textColor="@color/txtblack"
+                    android:textSize="@dimen/of_page_sub_header_2" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <WebView
+                        android:id="@+id/webContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                </RelativeLayout>
+
+                <com.oneflow.analytics.customwidgets.OFCustomTextViewBold
+                    android:id="@+id/btnSubmit"
+                    style="@style/of_comman_positive_button_style"
+                    android:layout_width="match_parent"
+                    android:layout_margin="@dimen/of_field_padding"
+                    android:background="@drawable/btn_rounded_rectangle_normal"
+                    android:text="Submit"
+                    android:textStyle="bold"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

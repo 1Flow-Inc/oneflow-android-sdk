@@ -2,18 +2,18 @@
 R
 java:S3740Í"/Provide the parametrized type for this generic.(Á»òéùÿÿÿÿ8›é®1
 Y
-java:S2589b"7Remove this expression which always evaluates to "true"(é×Ìôùÿÿÿÿ8—Ï‚Ú¶1
+java:S2589b"7Remove this expression which always evaluates to "true"(é×Ìôùÿÿÿÿ8£ºØ­º1
+a
+java:S2583“"CChange this condition so that it does not always evaluate to "true"(ËÄÒ‚8¤ºØ­º1
 e
-java:S2583i"CChange this condition so that it does not always evaluate to "true"(é×Ìôùÿÿÿÿ8˜Ï‚Ú¶1
+java:S2583i"CChange this condition so that it does not always evaluate to "true"(é×Ìôùÿÿÿÿ8¤ºØ­º1
 a
-java:S2583“"CChange this condition so that it does not always evaluate to "true"(ËÄÒ‚8˜Ï‚Ú¶1
-a
-java:S2583e"DChange this condition so that it does not always evaluate to "false"(‹‚ù©8˜Ï‚Ú¶1
+java:S2583e"DChange this condition so that it does not always evaluate to "false"(‹‚ù©8¤ºØ­º1
 u
-java:S3776™"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(ªêàüÿÿÿÿ8¼é®1
+java:S3776™"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(ªêàüÿÿÿÿ8ÁºØ­º1
 o
-java:S3776ä"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(ìÌıC8Îé®1
+java:S3776ä"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(ìÌıC8ÇºØ­º1
 m
-java:S1874ç"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(œƒƒ©ùÿÿÿÿ8ğé®1
+java:S1874ç"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(œƒƒ©ùÿÿÿÿ8ÛºØ­º1
 \
-java:S3398V"?Move this method into the anonymous class declared at line 208.(©áì8òé®1
+java:S3398V"?Move this method into the anonymous class declared at line 208.(©áì8ÜºØ­º1

@@ -131,6 +131,20 @@
         android:onClick="clickHandler"
         android:padding="10dp"
         android:text="Send Events to API"
+        android:layout_above="@id/openAnnouncement"
+        android:visibility="visible" />
+
+    <com.oneflow.analytics.customwidgets.OFCustomTextView
+        android:id="@+id/openAnnouncement"
+        style="@style/of_comman_positive_button_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="8dp"
+        android:background="@drawable/btn_selector"
+        android:onClick="clickHandler"
+        android:padding="10dp"
+        android:text="Announcement"
         android:layout_above="@id/build_mode"
         android:visibility="visible" />
 

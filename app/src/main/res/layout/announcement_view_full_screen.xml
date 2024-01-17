@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /* Copyright 2021 1Flow, Inc.
+  ~
+  ~
+  ~  Licensed under the Apache License, Version 2.0 (the "License");
+  ~  you may not use this file except in compliance with the License.
+  ~  You may obtain a copy of the License at
+  ~
+  ~       http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~  Unless required by applicable law or agreed to in writing, software
+  ~  distributed under the License is distributed on an "AS IS" BASIS,
+  ~  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~  See the License for the specific language governing permissions and
+  ~ limitations under the License.*/
+  ~
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/base_popup_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/main_survey_child"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/slider_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:visibility="gone">
+
+            <View
+                android:id="@+id/slider"
+                android:layout_width="50dp"
+                android:layout_height="5dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rounded_rectangle_small" />
+        </RelativeLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/slider_layout"
+            app:cardBackgroundColor="@color/plainwhite"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="14dp"
+            app:cardUseCompatPadding="false">
+            <!--android:background="@drawable/main_rounded_rectangle_new_theme"-->
+            <RelativeLayout
+                android:id="@+id/view_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/inner_child_view"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="60dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <FrameLayout
+                            android:id="@+id/fragment_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/bottom_water_mark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="5dp"
+                        android:padding="10dp"
+                        android:background="@drawable/btn_rounded_rectangle_watermark"
+                        android:layout_centerHorizontal="true">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/powered_by" />
+
+                        <com.oneflow.analytics.customwidgets.OFCustomTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:text="@string/powered_by"
+                            android:textColor="@color/powored_by_txt_color"/>
+                    </LinearLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <RelativeLayout
+                    android:id="@+id/relTopHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp">
+
+                    <com.oneflow.analytics.customwidgets.OFCustomTextViewBold
+                        android:id="@+id/tvTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Inbox"
+                        android:gravity="center_vertical"
+                        android:paddingTop="@dimen/of_field_padding"
+                        android:paddingBottom="@dimen/of_field_padding"
+                        android:paddingRight="@dimen/of_field_padding"
+                        android:paddingLeft="@dimen/of_field_padding"
+                        android:textStyle="bold"
+                        android:textColor="#66000000"
+                        android:textSize="@dimen/of_page_sub_header_2" />
+
+                    <ImageView
+                        android:id="@+id/close_btn_image_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_centerInParent="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/ic_baseline_close_24" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="#0D000000"/>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <ProgressBar
+                android:id="@+id/pbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/view_layout"
+                android:layout_gravity="bottom"
+                android:visibility="gone"
+                android:layout_marginBottom="-6dp"
+                android:indeterminate="false"
+                android:progressDrawable="@drawable/empty_progress_bar"
+                android:progress="100"
+                android:scaleY=".55"  />
+            <!--android:background="@color/plainwhite"-->
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</RelativeLayout>

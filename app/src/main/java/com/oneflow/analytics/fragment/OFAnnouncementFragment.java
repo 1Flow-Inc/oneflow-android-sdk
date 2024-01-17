@@ -7,28 +7,45 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
+import com.google.gson.Gson;
 import com.oneflow.analytics.R;
 import com.oneflow.analytics.adapter.OFAnnouncementListAdapter;
 import com.oneflow.analytics.adapter.OFSurveyOptionsAdapter;
+import com.oneflow.analytics.customwidgets.OFCustomTextViewBold;
+import com.oneflow.analytics.model.announcement.OFGetAnnouncementDetailResponse;
+import com.oneflow.analytics.model.announcement.OFGetAnnouncementResponse;
 import com.oneflow.analytics.model.survey.OFSDKSettingsTheme;
 import com.oneflow.analytics.model.survey.OFSurveyScreens;
+import com.oneflow.analytics.repositories.OFAnnouncementRepo;
+import com.oneflow.analytics.sdkdb.OFOneFlowSHP;
+import com.oneflow.analytics.utils.OFConstants;
 import com.oneflow.analytics.utils.OFHelper;
+import com.oneflow.analytics.utils.OFMyResponseHandlerOneFlow;
 
-public class OFAnnouncementFragment extends BaseFragment {
+import java.util.ArrayList;
+
+public class OFAnnouncementFragment extends Fragment implements OFMyResponseHandlerOneFlow {
 
     String tag = this.getClass().getName();
     OFAnnouncementListAdapter announcementListAdapter;
     RecyclerView announcementRecyclerView;
+    ProgressBar progressBar;
 
-    public static OFAnnouncementFragment newInstance(OFSurveyScreens ahdList, OFSDKSettingsTheme sdkTheme, String themeColor) {
+    OFCustomTextViewBold tvEmpty;
+
+    ArrayList<String> idArray;
+
+    public static OFAnnouncementFragment newInstance(ArrayList<String> idArray, OFSDKSettingsTheme sdkTheme, String themeColor) {
         OFAnnouncementFragment myFragment = new OFAnnouncementFragment();
 
         Bundle args = new Bundle();
-        args.putSerializable("data", ahdList);
+        args.putSerializable("data", idArray);
         args.putSerializable("theme", sdkTheme);
         args.putString("themeColor", themeColor);
         myFragment.setArguments(args);
@@ -47,14 +64,55 @@ public class OFAnnouncementFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_announcement, container, false);
 
         announcementRecyclerView = (RecyclerView) view.findViewById(R.id.announcement_list);
+        progressBar = (ProgressBar) view.findViewById(R.id.progress_circular);
+        tvEmpty = view.findViewById(R.id.tvEmpty);
 
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        announcementListAdapter = new OFAnnouncementListAdapter();
+        idArray = (ArrayList<String>) getArguments().getSerializable("data");
 
-        announcementRecyclerView.setLayoutManager(mLayoutManager);
-        announcementRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        announcementRecyclerView.setAdapter(announcementListAdapter);
+        if(idArray != null && !idArray.isEmpty()){
+            progressBar.setVisibility(View.VISIBLE);
+            OFOneFlowSHP shp = OFOneFlowSHP.getInstance(getActivity());
+            OFAnnouncementRepo.getAnnouncementDetail(shp.getStringValue(OFConstants.APPIDSHP), this, OFConstants.ApiHitType.fetchAnnouncementDetailFromAPI, TextUtils.join(",", idArray),"1");
+        }else{
+            tvEmpty.setVisibility(View.VISIBLE);
+        }
+
+//        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+//        announcementListAdapter = new OFAnnouncementListAdapter(getActivity(),getAnnouncementDetailResponses);
+//
+//        announcementRecyclerView.setLayoutManager(mLayoutManager);
+//        announcementRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//        announcementRecyclerView.setAdapter(announcementListAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onResponseReceived(OFConstants.ApiHitType hitType, Object obj, Long reserve, String reserved, Object obj2, Object obj3) {
+        switch (hitType) {
+            case fetchAnnouncementDetailFromAPI:
+                OFHelper.v("AnnouncementController", "OneFlow announcement detail received [" + reserved + "]");
+                progressBar.setVisibility(View.GONE);
+                if (obj != null) {
+                    if(reserved.equals("1")){
+                        ArrayList<OFGetAnnouncementDetailResponse> getAnnouncementDetailResponses = (ArrayList<OFGetAnnouncementDetailResponse>) obj;
+                        if(!getAnnouncementDetailResponses.isEmpty()){
+                            LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                            announcementListAdapter = new OFAnnouncementListAdapter(getActivity(),getAnnouncementDetailResponses);
+
+                            announcementRecyclerView.setLayoutManager(mLayoutManager);
+                            announcementRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                            announcementRecyclerView.setAdapter(announcementListAdapter);
+                        }else{
+                            tvEmpty.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }else{
+                    tvEmpty.setVisibility(View.VISIBLE);
+                }
+                break;
+            default:
+                break;
+        }
     }
 }
