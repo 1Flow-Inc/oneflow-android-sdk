@@ -1,72 +1,70 @@
 
-h	java:S112á"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8Ô£Œ†Ñ1
+h	java:S112ã"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8Š°ÂÑ1
 Q
-java:S3740i"/Provide the parametrized type for this generic.(Á»òéùÿÿÿÿ8‰ƒ†Ñ1
+java:S3740k"/Provide the parametrized type for this generic.(Á»òéùÿÿÿÿ8Š°ÂÑ1
 R
-java:S3740·"/Provide the parametrized type for this generic.(‡ïù×üÿÿÿÿ8‰ƒ†Ñ1
+java:S3740¹"/Provide the parametrized type for this generic.(‡ïù×üÿÿÿÿ8Š°ÂÑ1
 M
-java:S3740â"/Provide the parametrized type for this generic.(¤ÉäÔ8‰ƒ†Ñ1
+java:S3740ä"/Provide the parametrized type for this generic.(¤ÉäÔ8Š°ÂÑ1
 R
-java:S3740¹"/Provide the parametrized type for this generic.(„ÉÕ—ûÿÿÿÿ8‰ƒ†Ñ1
+java:S3740»"/Provide the parametrized type for this generic.(„ÉÕ—ûÿÿÿÿ8Š°ÂÑ1
 ‹
-java:S1319·"hThe type of "eventValues" should be an interface such as "Map" rather than the implementation "HashMap".(‡ïù×üÿÿÿÿ8„‰ƒ†Ñ1
+java:S1319¹"hThe type of "eventValues" should be an interface such as "Map" rather than the implementation "HashMap".(‡ïù×üÿÿÿÿ8‘Š°ÂÑ1
 Š
-java:S1319"gThe type of "userDetail" should be an interface such as "Map" rather than the implementation "HashMap".(´íğ©şÿÿÿÿ8„‰ƒ†Ñ1
+java:S1319’"gThe type of "userDetail" should be an interface such as "Map" rather than the implementation "HashMap".(´íğ©şÿÿÿÿ8‘Š°ÂÑ1
 w
-java:S1104o"UMake titleFace a static final constant or non-public and provide accessors if needed.(İş†¨úÿÿÿÿ8…‰ƒ†Ñ1
+java:S1104q"UMake titleFace a static final constant or non-public and provide accessors if needed.(İş†¨úÿÿÿÿ8”Š°ÂÑ1
 u
-java:S1104p"XMake subTitleFace a static final constant or non-public and provide accessors if needed.(Ç–Ï€8…‰ƒ†Ñ1
+java:S1104r"XMake subTitleFace a static final constant or non-public and provide accessors if needed.(Ç–Ï€8”Š°ÂÑ1
 u
-java:S1104š"WMake fontNameStr a static final constant or non-public and provide accessors if needed.(¨äı“8†‰ƒ†Ñ1
+java:S1104œ"WMake fontNameStr a static final constant or non-public and provide accessors if needed.(¨äı“8”Š°ÂÑ1
 Q
-java:S1444o"/Make this "public static titleFace" field final(İş†¨úÿÿÿÿ8†‰ƒ†Ñ1
+java:S1444q"/Make this "public static titleFace" field final(İş†¨úÿÿÿÿ8”Š°ÂÑ1
 O
-java:S1444p"2Make this "public static subTitleFace" field final(Ç–Ï€8†‰ƒ†Ñ1
+java:S1444r"2Make this "public static subTitleFace" field final(Ç–Ï€8”Š°ÂÑ1
 O
-java:S1444š"1Make this "public static fontNameStr" field final(¨äı“8†‰ƒ†Ñ1
-X	java:S125*"<This block of commented-out lines of code should be removed.(ô‘¤É8ğ‰ƒ†Ñ1
-X	java:S125f"<This block of commented-out lines of code should be removed.(ä€·8ù‰ƒ†Ñ1
+java:S1444œ"1Make this "public static fontNameStr" field final(¨äı“8”Š°ÂÑ1
+X	java:S125*"<This block of commented-out lines of code should be removed.(ô‘¤É8ñ‹°ÂÑ1
+X	java:S125h"<This block of commented-out lines of code should be removed.(ä€·8ø‹°ÂÑ1
 G
-java:S3010l"%Remove this assignment of "mContext".(åúı´ıÿÿÿÿ8ú‰ƒ†Ñ1
-Y	java:S125»"<This block of commented-out lines of code should be removed.(àşîŞ8ƒŠƒ†Ñ1
+java:S3010n"%Remove this assignment of "mContext".(åúı´ıÿÿÿÿ8ù‹°ÂÑ1
+Y	java:S125½"<This block of commented-out lines of code should be removed.(àşîŞ8€Œ°ÂÑ1
 ^
-java:S1874á";Remove this use of "CONNECTIVITY_ACTION"; it is deprecated.(—¿ë şÿÿÿÿ8‡Šƒ†Ñ1
-^	java:S125¤"<This block of commented-out lines of code should be removed.(©Ää»ÿÿÿÿÿ8Šƒ†Ñ1
+java:S1874ã";Remove this use of "CONNECTIVITY_ACTION"; it is deprecated.(—¿ë şÿÿÿÿ8„Œ°ÂÑ1
+^	java:S125¦"<This block of commented-out lines of code should be removed.(©Ää»ÿÿÿÿÿ8‰Œ°ÂÑ1
 V
-java:S1874Î"3Remove this use of "versionCode"; it is deprecated.(ˆç¶¤üÿÿÿÿ8‘Šƒ†Ñ1
+java:S1874Ğ"3Remove this use of "versionCode"; it is deprecated.(ˆç¶¤üÿÿÿÿ8ŒŒ°ÂÑ1
 \
-java:S1874ê"9Remove this use of "getDefaultDisplay"; it is deprecated.(ÿïÎÿúÿÿÿÿ8“Šƒ†Ñ1
+java:S1874ì"9Remove this use of "getDefaultDisplay"; it is deprecated.(ÿïÎÿúÿÿÿÿ8Œ°ÂÑ1
 P
-java:S1874ì"2Remove this use of "getMetrics"; it is deprecated.(ò¨–©8“Šƒ†Ñ1
-^	java:S125Â"<This block of commented-out lines of code should be removed.(ñ¥ùšøÿÿÿÿ8šŠƒ†Ñ1
+java:S1874î"2Remove this use of "getMetrics"; it is deprecated.(ò¨–©8Œ°ÂÑ1
+^	java:S125Ä"<This block of commented-out lines of code should be removed.(ñ¥ùšøÿÿÿÿ8“Œ°ÂÑ1
 Y
-java:S2696ñ"6Make the enclosing method "static" or remove this set.(Ó×ëúÿÿÿÿ8œŠƒ†Ñ1
+java:S2696ó"6Make the enclosing method "static" or remove this set.(Ó×ëúÿÿÿÿ8”Œ°ÂÑ1
 u
-java:S3776¹"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(„ÉÕ—ûÿÿÿÿ8í‡†Ñ1
-Y	java:S125ú"<This block of commented-out lines of code should be removed.(¬¡ƒ8è¤Œ†Ñ1
+java:S3776»"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(„ÉÕ—ûÿÿÿÿ8˜Œ°ÂÑ1
+Y	java:S125ü"<This block of commented-out lines of code should be removed.(¬¡ƒ8¡Œ°ÂÑ1
 u
-java:S3776Ì"RRefactor this method to reduce its Cognitive Complexity from 90 to the 15 allowed.(‡ÙÖÃıÿÿÿÿ8í¤Œ†Ñ1
+java:S3776Ú"RRefactor this method to reduce its Cognitive Complexity from 90 to the 15 allowed.(‡ÙÖÃıÿÿÿÿ8ÎöØÑ1
 Y
-java:S2696¥"6Make the enclosing method "static" or remove this set.(Óûßáúÿÿÿÿ8õ¤Œ†Ñ1
+java:S2696³"6Make the enclosing method "static" or remove this set.(Óûßáúÿÿÿÿ8˜ÎöØÑ1
 Y
-java:S2696°"6Make the enclosing method "static" or remove this set.(ªœæøÿÿÿÿ8ö¤Œ†Ñ1
-Y
-java:S2696¡"6Make the enclosing method "static" or remove this set.(Óûßáúÿÿÿÿ8ü¤Œ†Ñ1
+java:S2696¯"6Make the enclosing method "static" or remove this set.(Óûßáúÿÿÿÿ8­ÎöØÑ1
 V
-java:S1874ä"3Remove this use of "NetworkInfo"; it is deprecated.(Õ¥—ãùÿÿÿÿ8ÿ¤Œ†Ñ1
+java:S1874õ"3Remove this use of "NetworkInfo"; it is deprecated.(Õ¥—ãùÿÿÿÿ8µÎöØÑ1
 _
-java:S1874ä"<Remove this use of "getActiveNetworkInfo"; it is deprecated.(Õ¥—ãùÿÿÿÿ8ÿ¤Œ†Ñ1
+java:S1874õ"<Remove this use of "getActiveNetworkInfo"; it is deprecated.(Õ¥—ãùÿÿÿÿ8µÎöØÑ1
 M
-java:S1874ì"/Remove this use of "getType"; it is deprecated.(ïæñ¨8€¥Œ†Ñ1
+java:S1874ı"/Remove this use of "getType"; it is deprecated.(ïæñ¨8¶ÎöØÑ1
 O
-java:S1874ì"1Remove this use of "TYPE_WIFI"; it is deprecated.(ïæñ¨8€¥Œ†Ñ1
+java:S1874ı"1Remove this use of "TYPE_WIFI"; it is deprecated.(ïæñ¨8¶ÎöØÑ1
 R
-java:S1874ï"/Remove this use of "getType"; it is deprecated.(ÈÜøäşÿÿÿÿ8¥Œ†Ñ1
+java:S1874€"/Remove this use of "getType"; it is deprecated.(ÈÜøäşÿÿÿÿ8¶ÎöØÑ1
 V
-java:S1874ï"3Remove this use of "TYPE_MOBILE"; it is deprecated.(ÈÜøäşÿÿÿÿ8¥Œ†Ñ1
+java:S1874€"3Remove this use of "TYPE_MOBILE"; it is deprecated.(ÈÜøäşÿÿÿÿ8¶ÎöØÑ1
 u
-java:S3776¼"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(òÎ¯—ıÿÿÿÿ8†¥Œ†Ñ1
+java:S3776Í"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(òÎ¯—ıÿÿÿÿ8¼ÎöØÑ1
 T
-java:S1144"7Remove this unused private "shouldReturnSurvey" method.(ñòÊJ8¥Œ†Ñ1
+java:S1144"7Remove this unused private "shouldReturnSurvey" method.(ñòÊJ8ÇÎöØÑ1
 ê
-java:S6541Ì"ÆA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 214 to 64, Complexity from 37 to 14, Nesting Level from 4 to 2, Number of Variables from 41 to 6.(‡ÙÖÃıÿÿÿÿ8‘¥Œ†Ñ1
+java:S6541Ú"ÆA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 217 to 64, Complexity from 38 to 14, Nesting Level from 4 to 2, Number of Variables from 41 to 6.(‡ÙÖÃıÿÿÿÿ8ÈÎöØÑ1

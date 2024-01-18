@@ -54,6 +54,7 @@ import com.oneflow.analytics.model.adduser.OFAddUserContext;
 import com.oneflow.analytics.model.adduser.OFAddUserReq;
 import com.oneflow.analytics.model.adduser.OFAddUserResponse;
 import com.oneflow.analytics.model.adduser.OFDeviceDetails;
+import com.oneflow.analytics.model.adduser.OFFirebaseTokenRequest;
 import com.oneflow.analytics.model.announcement.OFAnnouncementIndex;
 import com.oneflow.analytics.model.announcement.OFGetAnnouncementDetailResponse;
 import com.oneflow.analytics.model.events.OFEventAPIRequest;
@@ -67,6 +68,7 @@ import com.oneflow.analytics.model.survey.OFThrottlingConfig;
 import com.oneflow.analytics.repositories.OFAddUserRepo;
 import com.oneflow.analytics.repositories.OFEventAPIRepo;
 import com.oneflow.analytics.repositories.OFEventDBRepoKT;
+import com.oneflow.analytics.repositories.OFFirebaseAPIRepo;
 import com.oneflow.analytics.repositories.OFLogUserDBRepoKT;
 import com.oneflow.analytics.repositories.OFLogUserRepo;
 import com.oneflow.analytics.repositories.OFSurvey;
@@ -647,6 +649,18 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
         }
     }
 
+    public static void pushToken(String token){
+        OneFlow of = new OneFlow(mContext);
+        of.sendFirebaseTokenToAPI(token);
+    }
+
+    private void sendFirebaseTokenToAPI(String token){
+        OFFirebaseTokenRequest ear = new OFFirebaseTokenRequest();
+        ear.setToken(token);
+        ear.setType("android");
+        OFFirebaseAPIRepo.sendToken(ear, this, OFConstants.ApiHitType.firebaseToken);
+    }
+
     /**
      * This method will check all aspects of re-survey
      *
@@ -983,6 +997,9 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
                 } else {
                     OFHelper.v("1Flow", "1Flow survey callback null");
                 }
+                break;
+            case firebaseToken:
+                OFHelper.v("1Flow", "1Flow firebase token added");
                 break;
             default:
                 break;

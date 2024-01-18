@@ -20,7 +20,7 @@ package com.oneflow.analytics.utils;
 
 public interface OFConstants {
 
-    String currentVersion = "2023.10.26";//2023.07.14;
+    String currentVersion = "2023.09.29";//2023.07.14;
     String MODE = "dev";//"beta";//"prod";//
 
     String PLATFORM = "Android";
@@ -98,7 +98,8 @@ public interface OFConstants {
         deleteEventsFromDB,deleteEventsFromDBLastSession, submittingOfflineSurvey, logUser, insertSurveyInDB, fetchSurveysFromDB, deleteSurveyFromDB, fetchLocation,
         filterSurveys,
         fetchSurveysFromAPI,fetchEventsBeforSurveyFetched,fetchSubmittedSurvey,checkResurveyNSubmission,updateSurveyIds,
-        surveySubmited,lastSubmittedSurvey,updateSubmittedSurveyLocally, directSurvey, fetchAnnouncementFromAPI, fetchAnnouncementDetailFromAPI
+        surveySubmited,lastSubmittedSurvey,updateSubmittedSurveyLocally, directSurvey, fetchAnnouncementFromAPI, fetchAnnouncementDetailFromAPI,
+        firebaseToken
     }
 
     String userInputValueTemp = "";

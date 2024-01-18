@@ -4,14 +4,6 @@ java:S3740ï"/Provide the parametrized type for this generic.(Á»òéùÿÿÿÿ8¯ãüñÇ1
 
 java:S1319¾"rThe type of "announcementToInit" should be an interface such as "List" rather than the implementation "ArrayList".(Öé›î8°ãüñÇ1
 Y
-java:S2589\"7Remove this expression which always evaluates to "true"(é×Ìôùÿÿÿÿ8õãüñÇ1
-a
-java:S2583³"CChange this condition so that it does not always evaluate to "true"(ËÄÒ‚8ÜÊİ˜È1
-e
-java:S2583c"CChange this condition so that it does not always evaluate to "true"(é×Ìôùÿÿÿÿ8õãüñÇ1
-a
-java:S2583_"DChange this condition so that it does not always evaluate to "false"(‹‚ù©8õãüñÇ1
-Y
 java:S1874F"<Remove this use of "getSerializableExtra"; it is deprecated.(¥©×Â8üãüñÇ1
 X	java:S125J"<This block of commented-out lines of code should be removed.(¼†™8ìÍ«ÜÊ1
 m

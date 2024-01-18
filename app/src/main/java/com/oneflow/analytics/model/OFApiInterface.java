@@ -20,6 +20,7 @@ package com.oneflow.analytics.model;
 
 import com.oneflow.analytics.model.adduser.OFAddUserReq;
 import com.oneflow.analytics.model.adduser.OFAddUserResponse;
+import com.oneflow.analytics.model.adduser.OFFirebaseTokenRequest;
 import com.oneflow.analytics.model.announcement.OFGetAnnouncementDetailResponse;
 import com.oneflow.analytics.model.announcement.OFGetAnnouncementResponse;
 import com.oneflow.analytics.model.events.OFEventAPIRequest;
@@ -97,5 +98,9 @@ public interface OFApiInterface {
     @GET("v3/announcements/inbox")
     Call<OFGenericResponse<ArrayList<OFGetAnnouncementDetailResponse>>> getAnnouncementDetail(@Header("one_flow_key") String headerKey,
                                                                                               @Query("ids") String userId);
+
+
+    @POST("details/added")
+    Call<OFGenericResponse> pushToken(@Body OFFirebaseTokenRequest aur);
 
 }

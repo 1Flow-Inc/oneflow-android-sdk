@@ -71,4 +71,25 @@ public class OFRetroBaseService {
         return retrofit;
     }
 
+    public static Retrofit getFirebaseClient() {
+        Retrofit retrofit = null;
+
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient clientProd = new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://dev-dashboard-api.1flow.app/api/v1/2021-06-15/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(clientProd)
+                .build();
+
+
+        return retrofit;
+    }
+
 }

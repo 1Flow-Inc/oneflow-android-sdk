@@ -4,5 +4,5 @@ java:S1319,"gThe type of "idArray" should be an interface such as "List" rather
 h
 java:S1301\"KReplace this "switch" statement by "if" statements to increase readability.(ë§…è8ž“î×Ì1
 Y
-java:S1874F"7Remove this use of "getSerializable"; it is deprecated.(†ƒ¬ïøÿÿÿÿ8¢™ï×Ì1
+java:S1874F"7Remove this use of "getSerializable"; it is deprecated.(†ƒ¬ïøÿÿÿÿ8Ô®ÊÁÑ1
 ]	java:S125P"<This block of commented-out lines of code should be removed.(áÖ¿øÿÿÿÿ8£™ï×Ì1
