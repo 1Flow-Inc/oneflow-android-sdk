@@ -95,8 +95,13 @@ public class OFSecondActivity extends AppCompatActivity {
             String key1 = ((OFCustomEditText) v.findViewById(R.id.key1)).getText().toString().trim();
             String value1 = ((OFCustomEditText) v.findViewById(R.id.value1)).getText().toString().trim();
             if (!(OFHelper.validateString(key1).equalsIgnoreCase("na") || OFHelper.validateString(value1).equalsIgnoreCase("na"))) {
-                params.put(key1, value1);
+                if(value1.equalsIgnoreCase("true") || value1.equalsIgnoreCase("false")){
+                    params.put(key1, Boolean.parseBoolean(value1.toLowerCase()));
+                }else{
+                    params.put(key1, value1);
+                }
             }
+            OFHelper.v(tag,"1Flow params1 ["+params+"]");
         }
     }
 

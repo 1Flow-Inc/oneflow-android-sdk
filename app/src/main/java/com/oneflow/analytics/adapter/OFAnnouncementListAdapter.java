@@ -83,6 +83,13 @@ public class OFAnnouncementListAdapter extends RecyclerView.Adapter<OFAnnounceme
                 public void onClick(View view) {
                     String action = getAnnouncementDetailResponse.getAction().getLink();
                     if(action != null && !action.isEmpty()){
+                        itemsList.get(position).isSeen = true;
+                        boolean isSeen = itemsList.get(position).isSeen;
+                        if(!isSeen){
+                            holder.seenView.setVisibility(View.VISIBLE);
+                        }else{
+                            holder.seenView.setVisibility(View.INVISIBLE);
+                        }
                         clickedAnnouncement(getAnnouncementDetailResponse.getId(), getAnnouncementDetailResponse.getAction().getName(), action);
                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(action));
                         browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -103,6 +110,13 @@ public class OFAnnouncementListAdapter extends RecyclerView.Adapter<OFAnnounceme
                 // Handle URL loading within the WebView
                 String action = request.getUrl().toString();
                 if(!action.isEmpty()){
+                    itemsList.get(position).isSeen = true;
+                    boolean isSeen = itemsList.get(position).isSeen;
+                    if(!isSeen){
+                        holder.seenView.setVisibility(View.VISIBLE);
+                    }else{
+                        holder.seenView.setVisibility(View.INVISIBLE);
+                    }
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(action));
                     browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.getApplicationContext().startActivity(browserIntent);
