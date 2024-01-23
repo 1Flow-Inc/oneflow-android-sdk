@@ -19,7 +19,7 @@
 
 plugins {
     id 'com.android.library'
-    //id 'com.android.application'
+//    id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
    // id 'com.google.gms.google-services'
@@ -31,11 +31,11 @@ android {
 
     defaultConfig {
 
-        //applicationId "com.circo.oneflow"
+//        applicationId "com.circo.oneflow"
         minSdkVersion 21
         targetSdkVersion 34
         versionCode 53
-        versionName "2023.09.34"
+        versionName "2023.10.01"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -72,7 +72,7 @@ def retroFitVersion = '2.9.0'
 def glideVersion = '4.15.1'
 //def mockitoVersion = '2.11.0'
 //def rxjavaVersion = '2.0.1'
-def room_version = "2.3.0"
+def room_version = "2.6.1"
 def billing_version = "6.0.1"
 //def core_version = "1.6.0"
 
