@@ -53,11 +53,13 @@ public class OFAnnouncementActivityBannerBottom extends OFAnnouncementBaseActivi
         OFOneFlowSHP shp = OFOneFlowSHP.getInstance(this);
         if(shp.getAnnouncementResponse() != null && shp.getAnnouncementResponse().getTheme() != null){
             OFAnnouncementTheme sdkTheme = shp.getAnnouncementResponse().getTheme();
-            binding.tvTitle.setTextColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getTextColor())));
-            textColor = Color.parseColor(OFHelper.handlerColor(sdkTheme.getTextColor()));
+            textColor = Color.parseColor(OFHelper.pickFontColorBasedOnBgColor(OFHelper.handlerColor(sdkTheme.getBackgroundColor()),"#ffffff","#000000"));
 
+            binding.viewLayout.setBackgroundColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getBackgroundColor())));
+
+            binding.tvTitle.setTextColor(textColor);
             Drawable closeIcon = binding.closeBtnImageView.getDrawable();
-            closeIcon.setColorFilter(OFHelper.manipulateColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getTextColor())), 1.0f), PorterDuff.Mode.SRC_ATOP);
+            closeIcon.setColorFilter(OFHelper.manipulateColor(textColor, 1.0f), PorterDuff.Mode.SRC_ATOP);
         }
 
         if(getAnnouncementDetailResponses != null && getAnnouncementDetailResponses.get(0) != null){
@@ -101,7 +103,7 @@ public class OFAnnouncementActivityBannerBottom extends OFAnnouncementBaseActivi
             binding.tvTitle.setHighlightColor(Color.TRANSPARENT);
         }
 
-        setTheme(binding.viewLayout, binding.closeBtnImageView);
+//        setTheme(binding.viewLayout, binding.closeBtnImageView);
 
         binding.closeBtnImageView.setOnClickListener(new View.OnClickListener() {
             @Override

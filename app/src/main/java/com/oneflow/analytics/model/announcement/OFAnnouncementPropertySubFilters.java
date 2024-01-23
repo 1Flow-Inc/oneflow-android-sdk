@@ -23,7 +23,7 @@ public class OFAnnouncementPropertySubFilters extends OFBaseModel {
     private String condition;
     @SerializedName("values")
     @Expose
-    private ArrayList<String> values;
+    private String[] values;
 
     public String getType() {
         return type;
@@ -57,11 +57,11 @@ public class OFAnnouncementPropertySubFilters extends OFBaseModel {
         this.condition = condition;
     }
 
-    public ArrayList<String> getValues() {
+    public String[] getValues() {
         return values;
     }
 
-    public void setValues(ArrayList<String> values) {
+    public void setValues(String[] values) {
         this.values = values;
     }
 }

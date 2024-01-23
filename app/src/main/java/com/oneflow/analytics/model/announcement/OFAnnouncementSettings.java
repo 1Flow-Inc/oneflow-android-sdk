@@ -8,13 +8,13 @@ public class OFAnnouncementSettings extends OFBaseModel {
 
     @SerializedName("audience_rule")
     @Expose
-    private OFAnnouncementAudienceRule audienceRule;
+    private OFAnnouncementRule audienceRule;
 
-    public OFAnnouncementAudienceRule getAudienceRule() {
+    public OFAnnouncementRule getAudienceRule() {
         return audienceRule;
     }
 
-    public void setAudienceRule(OFAnnouncementAudienceRule audienceRule) {
+    public void setAudienceRule(OFAnnouncementRule audienceRule) {
         this.audienceRule = audienceRule;
     }
 

@@ -721,5 +721,14 @@ public class OFHelper {
             drawable.setColorFilter(color, PorterDuff.Mode.MULTIPLY);
         }
     }
+
+    public static String pickFontColorBasedOnBgColor(String bgColor, String lightColor, String darkColor){
+        String color = (bgColor.charAt(0) == '#') ? bgColor.substring(1,7) : bgColor;
+        int r = Integer.parseInt(color.substring(0,2), 16);
+        int g = Integer.parseInt(color.substring(2,4), 16);
+        int b = Integer.parseInt(color.substring(4,6), 16);
+
+        return r * 0.229 + g * 0.587 + b * 0.114 > 186 ? darkColor : lightColor;
+    }
 }
 

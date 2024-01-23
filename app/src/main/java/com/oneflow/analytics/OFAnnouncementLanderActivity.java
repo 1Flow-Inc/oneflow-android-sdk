@@ -65,14 +65,27 @@ public class OFAnnouncementLanderActivity extends AppCompatActivity {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        eventData = this.getIntent().getStringExtra("eventData");
+        eventData = getIntent().getStringExtra("eventData");
+
+        OFHelper.v(tag, "1Flow webmethod called [" + eventData + "]");
+        try {
+            eventMapArray = new JSONArray(eventData);
+            OFHelper.v(tag, "1Flow webmethod called [" + eventMapArray.get(0) + "]");
+
+        } catch (JSONException je) {
+            // error
+        }
 
         filteredList = (ArrayList<OFAnnouncementIndex>) getIntent().getSerializableExtra("listData");
 
         OFHelper.v(tag, "1Flow AnnouncementLander [" + filteredList.size() + "]");
 
 //        setUpHashForActivity();
-        checkWebviewFunction(eventData);
+        try {
+            checkWebviewFunction(eventMapArray.get(0).toString());
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -99,7 +112,7 @@ public class OFAnnouncementLanderActivity extends AppCompatActivity {
         if (jsCode != null) {
             StringBuilder jsFunction = new StringBuilder();
             try {
-                jsFunction = new StringBuilder("oneflowAnnouncementFilter(" + new Gson().toJson(filteredList) + "," + eventData + ")");
+                jsFunction = new StringBuilder("oneflowAnnouncementFilter(" + new Gson().toJson(filteredList) + "," + eventData + ",null,false)");
 
             } catch (Exception ex) {
                 OFHelper.e(tag, "1Flow error[" + ex.getMessage() + "]");

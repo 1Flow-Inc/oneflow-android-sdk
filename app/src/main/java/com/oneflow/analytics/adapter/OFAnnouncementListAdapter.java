@@ -47,7 +47,7 @@ public class OFAnnouncementListAdapter extends RecyclerView.Adapter<OFAnnounceme
 
         OFGetAnnouncementDetailResponse getAnnouncementDetailResponse = itemsList.get(position);
 
-        boolean isSeen = checkSeenStatus(getAnnouncementDetailResponse.getId());
+        boolean isSeen = getAnnouncementDetailResponse.isSeen;
         if(!isSeen){
             holder.seenView.setVisibility(View.VISIBLE);
         }else{
@@ -58,7 +58,7 @@ public class OFAnnouncementListAdapter extends RecyclerView.Adapter<OFAnnounceme
         String textColor = "#2f54eb";
         if(shp.getAnnouncementResponse() != null && shp.getAnnouncementResponse().getTheme() != null){
             OFAnnouncementTheme sdkTheme = shp.getAnnouncementResponse().getTheme();
-//            textColor = OFHelper.handlerColor(sdkTheme.getTextColor());
+            textColor = OFHelper.handlerColor(sdkTheme.getTextColor());
             holder.tvTitle.setTextColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getTextColor())));
             holder.tvAction.setTextColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getBrandColor())));
             holder.llMain.setBackgroundColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getBackgroundColor())));

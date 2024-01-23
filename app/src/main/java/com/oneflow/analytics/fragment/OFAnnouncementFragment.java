@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TableRow;
 
 import com.google.gson.Gson;
 import com.oneflow.analytics.R;
@@ -97,6 +98,20 @@ public class OFAnnouncementFragment extends Fragment implements OFMyResponseHand
                     if(reserved.equals("1")){
                         ArrayList<OFGetAnnouncementDetailResponse> getAnnouncementDetailResponses = (ArrayList<OFGetAnnouncementDetailResponse>) obj;
                         if(!getAnnouncementDetailResponses.isEmpty()){
+
+                            OFOneFlowSHP shp = OFOneFlowSHP.getInstance(getActivity());
+
+                            ArrayList<String> inboxIdList;
+                            inboxIdList = shp.getSeenInboxAnnounceList();
+
+                            OFHelper.v("OFAnnouncementController", inboxIdList + "");
+                            for (int i = 0; i < getAnnouncementDetailResponses.size(); i++) {
+                                if(inboxIdList.contains(getAnnouncementDetailResponses.get(i).getId())){
+                                    getAnnouncementDetailResponses.get(i).isSeen = true;
+                                }
+                            }
+
+
                             LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                             announcementListAdapter = new OFAnnouncementListAdapter(getActivity(),getAnnouncementDetailResponses);
 

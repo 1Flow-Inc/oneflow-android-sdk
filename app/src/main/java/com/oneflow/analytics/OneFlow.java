@@ -579,6 +579,7 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
                 boolean isAvailable = false;
                 for (int i1 = 0; i1 < shp.getSeenInAppAnnounceList().size(); i1++) {
                     if(shp.getSeenInAppAnnounceList().get(i1).equals(announcementIndex.getId())){
+                        OFHelper.v("1Flow", "1Flow announcement check[" + announcementIndex.getId() + "]");
                         isAvailable = true;
                         break;
                     }
@@ -590,6 +591,7 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
             }
         }
         if(!inAppList.isEmpty()){
+            OFHelper.v("1Flow", "1Flow announcement1 check[" + inAppList + "]");
             triggerAnnouncement(inAppList);
         }else{
             recordEventAfterCheckAnnouncement(eventName, eventValues);
@@ -605,11 +607,7 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
 
         surveyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         surveyIntent.putExtra("listData", originalList);
-        try {
-            surveyIntent.putExtra("eventData", eventMapArray.get(0).toString());
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
+        surveyIntent.putExtra("eventData", eventMapArray.toString());
 
         if (!OFSDKBaseActivity.isActive) { // This to check if any survey is already running or not
             mContext.getApplicationContext().startActivity(surveyIntent);

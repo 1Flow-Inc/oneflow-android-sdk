@@ -25,6 +25,8 @@ public class OFGetAnnouncementDetailResponse extends OFBaseModel {
     @Expose
     private OFGetAnnouncementDetailAction action;
 
+    public boolean isSeen = false;
+
     public String getTitle() {
         return title;
     }

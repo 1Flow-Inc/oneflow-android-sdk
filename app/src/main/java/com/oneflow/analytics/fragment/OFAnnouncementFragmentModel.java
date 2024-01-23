@@ -84,7 +84,7 @@ public class OFAnnouncementFragmentModel extends Fragment {
         String textColor = "#2f54eb";
         if(shp.getAnnouncementResponse() != null && shp.getAnnouncementResponse().getTheme() != null){
             OFAnnouncementTheme sdkTheme = shp.getAnnouncementResponse().getTheme();
-//            textColor = OFHelper.handlerColor(sdkTheme.getTextColor());
+            textColor = OFHelper.handlerColor(sdkTheme.getTextColor());
             binding.tvTitle.setTextColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getTextColor())));
             themeColor = OFHelper.handlerColor(sdkTheme.getBrandColor());
         }

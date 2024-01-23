@@ -13,7 +13,7 @@ public class OFAnnouncementTimingOption extends OFBaseModel {
     private String type;
     @SerializedName("value")
     @Expose
-    private int value;
+    private long value;
 
     public String getType() {
         return type;
@@ -23,11 +23,11 @@ public class OFAnnouncementTimingOption extends OFBaseModel {
         this.type = type;
     }
 
-    public int getValue() {
+    public long getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(long value) {
         this.value = value;
     }
 
