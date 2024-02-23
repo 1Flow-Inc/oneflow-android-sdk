@@ -426,6 +426,8 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
 
     static Map<String, Object> eventMap = new HashMap<>();
 
+    static String eventNameVar = "";
+    static HashMap eventValuesVar = null;
 
 
 
@@ -439,6 +441,9 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
      * @param eventValues : will accept HashMap<String,Object>
      */
     public static void recordEvents(String eventName, HashMap eventValues) {
+
+        eventNameVar = eventName;
+        eventValuesVar = eventValues;
 
         OneFlow of1 = new OneFlow(mContext);
 
@@ -479,6 +484,11 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
 //        } catch (Exception ex) {
 //            // error
 //        }
+    }
+
+    public static void callEvent(){
+        OneFlow of1 = new OneFlow(mContext);
+        of1.recordEventAfterCheckAnnouncement(eventNameVar,eventValuesVar);
     }
 
     private void recordEventAfterCheckAnnouncement(String eventName, HashMap eventValues){
@@ -592,6 +602,16 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
         }
         if(!inAppList.isEmpty()){
             OFHelper.v("1Flow", "1Flow announcement1 check[" + inAppList + "]");
+
+            if (mContext != null) {
+                // storage, api call and check survey if available.
+                OFEventController ec = OFEventController.getInstance(mContext);
+                ec.storeEventsInDB(eventName, eventValues, 0);
+
+            } else {
+                OFHelper.v("1Flow", "1Flow null context for event");
+            }
+
             triggerAnnouncement(inAppList);
         }else{
             recordEventAfterCheckAnnouncement(eventName, eventValues);

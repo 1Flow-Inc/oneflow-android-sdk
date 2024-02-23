@@ -112,7 +112,7 @@ public class OFAnnouncementLanderActivity extends AppCompatActivity {
         if (jsCode != null) {
             StringBuilder jsFunction = new StringBuilder();
             try {
-                jsFunction = new StringBuilder("oneflowAnnouncementFilter(" + new Gson().toJson(filteredList) + "," + eventData + ",null,false)");
+                jsFunction = new StringBuilder("oneflowAnnouncementFilter(" + new Gson().toJson(filteredList) + "," + eventData + ")");
 
             } catch (Exception ex) {
                 OFHelper.e(tag, "1Flow error[" + ex.getMessage() + "]");

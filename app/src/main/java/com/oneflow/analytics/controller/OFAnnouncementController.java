@@ -30,6 +30,7 @@ import com.oneflow.analytics.OFAnnouncementActivitySlideBottom;
 import com.oneflow.analytics.OFAnnouncementActivitySlideTop;
 import com.oneflow.analytics.OFAnnouncementLanderActivity;
 import com.oneflow.analytics.OFSDKBaseActivity;
+import com.oneflow.analytics.OneFlow;
 import com.oneflow.analytics.model.announcement.OFAnnouncementIndex;
 import com.oneflow.analytics.model.announcement.OFGetAnnouncementDetailResponse;
 import com.oneflow.analytics.model.announcement.OFGetAnnouncementResponse;
@@ -69,6 +70,7 @@ public class OFAnnouncementController implements OFMyResponseHandlerOneFlow {
         OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
         String userId = shp.getUserDetails().getAnalytic_user_id();
         OFHelper.v("AnnouncementController userId : ", userId);
+        OFHelper.v("AnnouncementController project Key : ", shp.getStringValue(OFConstants.APPIDSHP));
         OFAnnouncementRepo.getAnnouncement(shp.getStringValue(OFConstants.APPIDSHP), this, OFConstants.ApiHitType.fetchAnnouncementFromAPI,shp.getUserDetails().getAnalytic_user_id());
     }
 
@@ -152,6 +154,8 @@ public class OFAnnouncementController implements OFMyResponseHandlerOneFlow {
                             }else if(style.equalsIgnoreCase("bottom_left")){
                                 triggerAnnouncementSideBottom(getAnnouncementDetailResponses);
                             }
+                        }else{
+                            OneFlow.callEvent();
                         }
                     }
                 }

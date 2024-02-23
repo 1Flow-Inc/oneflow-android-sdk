@@ -62,7 +62,7 @@ public class OFAnnouncementActivityBannerTop extends OFAnnouncementBaseActivity 
 //            textColor = Color.parseColor(OFHelper.handlerColor(sdkTheme.getTextColor()));
             textColor = Color.parseColor(OFHelper.pickFontColorBasedOnBgColor(OFHelper.handlerColor(sdkTheme.getBackgroundColor()),"#ffffff","#000000"));
 
-            binding.viewLayout.setBackgroundColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getBackgroundColor())));
+//            binding.viewLayout.setBackgroundColor(Color.parseColor(OFHelper.handlerColor(sdkTheme.getBackgroundColor())));
 
             binding.tvTitle.setTextColor(textColor);
             Drawable closeIcon = binding.closeBtnImageView.getDrawable();
@@ -77,6 +77,8 @@ public class OFAnnouncementActivityBannerTop extends OFAnnouncementBaseActivity 
 
             viewedAnnouncement(getAnnouncementDetailResponse.getId());
 
+            binding.viewLayout.setBackgroundColor(Color.parseColor(OFHelper.handlerColor(getAnnouncementDetailResponse.getCategory().getColor())));
+
             text = getAnnouncementDetailResponse.getTitle();
 
             if(getAnnouncementDetailResponse.getAction() != null && getAnnouncementDetailResponse.getAction().getLink() != null){
@@ -87,12 +89,14 @@ public class OFAnnouncementActivityBannerTop extends OFAnnouncementBaseActivity 
             ClickableSpan clickableSpan = new ClickableSpan() {
                 @Override
                 public void onClick(View textView) {
-                    String action = getAnnouncementDetailResponse.getAction().getLink();
-                    if(action != null && !action.isEmpty()){
-                        clickedAnnouncement(getAnnouncementDetailResponse.getId(),getAnnouncementDetailResponse.getAction().getName(),action);
-                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(action));
-                        browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(browserIntent);
+                    if(getAnnouncementDetailResponse.getAction() != null && getAnnouncementDetailResponse.getAction().getLink() != null){
+                        String action = getAnnouncementDetailResponse.getAction().getLink();
+                        if(action != null && !action.isEmpty()){
+                            clickedAnnouncement(getAnnouncementDetailResponse.getId(),getAnnouncementDetailResponse.getAction().getName(),action);
+                            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(action));
+                            browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(browserIntent);
+                        }
                     }
                 }
                 @Override
@@ -102,7 +106,11 @@ public class OFAnnouncementActivityBannerTop extends OFAnnouncementBaseActivity 
                     ds.setColor(textColor);
                 }
             };
-            spannableString.setSpan(clickableSpan, text.length() - getAnnouncementDetailResponse.getAction().getName().length(), spannableString.length(),
+            int spannedLength = 0;
+            if(getAnnouncementDetailResponse.getAction() != null && getAnnouncementDetailResponse.getAction().getName() != null){
+                spannedLength = getAnnouncementDetailResponse.getAction().getName().length();
+            }
+            spannableString.setSpan(clickableSpan, text.length() - spannedLength, spannableString.length(),
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             binding.tvTitle.setText(spannableString);

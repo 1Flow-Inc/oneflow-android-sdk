@@ -451,12 +451,11 @@ const dateDiffrence = (timestamp, user_zone) => {
      
  async function oneflowAnnouncementFilter(announcements,currentEvent,isPageUrl=null,web=true){
      try{
+         console.log("ANNOUNCEMENT PARAM:- ",JSON.stringify(announcements),JSON.stringify(currentEvent));
          let announcement = null;
-         console.log("ANNOUNCEMENT PARAM1:- ",JSON.stringify(announcements),JSON.stringify(currentEvent));
          if (announcements.length > 0) {
              announcement = await triggerAnnouncementFilter(announcements, currentEvent, isPageUrl, web);
              if(isAnnouncementCallBackAvilable()){
-                 console.log("ANNOUNCEMENT PARAM2:- ",JSON.stringify(announcement));
                  oneFlowAnnouncementCallBack(announcement);
              }
          }

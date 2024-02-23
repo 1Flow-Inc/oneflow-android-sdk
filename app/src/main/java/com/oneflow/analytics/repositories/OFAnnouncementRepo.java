@@ -30,7 +30,7 @@ public class OFAnnouncementRepo {
             Call<OFGenericResponse<OFGetAnnouncementResponse>> responseCall = null;
 
 
-            responseCall = connectAPI.getAnnouncement(headerKey,userId,"mobile");
+            responseCall = connectAPI.getAnnouncement(headerKey,userId,"android");
 
             responseCall.enqueue(new Callback<OFGenericResponse<OFGetAnnouncementResponse>>() {
                 @Override

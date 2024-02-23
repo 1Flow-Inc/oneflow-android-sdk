@@ -107,6 +107,7 @@ public class OFAnnouncementFragmentModel extends Fragment {
             binding.tvDate.setText(OFHelper.formatedDate(getAnnouncementDetailResponse.getPublishedAt(),"MMM dd, yyyy"));
 
             if(getAnnouncementDetailResponse.getAction() != null && getAnnouncementDetailResponse.getAction().getLink() != null){
+                binding.btnSubmit.setVisibility(View.VISIBLE);
                 binding.btnSubmit.setText(getAnnouncementDetailResponse.getAction().getName());
                 binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -120,6 +121,8 @@ public class OFAnnouncementFragmentModel extends Fragment {
                         }
                     }
                 });
+            }else{
+                binding.btnSubmit.setVisibility(View.GONE);
             }
 
             binding.webContent.getSettings().setJavaScriptEnabled(true);
