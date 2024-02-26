@@ -20,8 +20,8 @@ package com.oneflow.analytics.utils;
 
 public interface OFConstants {
 
-    String currentVersion = "2024.02.23";//2023.07.14;
-    String MODE = "prod";//"dev";//"beta";//
+    String currentVersion = "2024.01.01";//2023.07.14;
+    String MODE = "dev";//"prod";//"beta";//
 
     String PLATFORM = "Android";
     String CACHE_FILE_NAME = "logic-engine.js";
@@ -91,6 +91,10 @@ public interface OFConstants {
 
     String ANN_VIEWED = "announcement_viewed";
     String ANN_CLICKED = "announcement_clicked";
+    String NOTIFICATION_SUBSCRIBED = "notification_subscribed";
+    String NOTIFICATION_UNSUBSCRIBED = "notification_unsubscribed";
+    String NOTIFICATION_DELIVERED = "notification_delivered";
+    String NOTIFICATION_CLICKED = "notification_clicked";
 
     enum ApiHitType{
 

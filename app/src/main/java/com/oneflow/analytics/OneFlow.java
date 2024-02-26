@@ -25,7 +25,9 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Looper;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -573,7 +575,7 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
         }
     }
 
-    public static void showInboxAnnouncement(){
+    public static void showInbox(){
         OneFlow of = new OneFlow(mContext);
         of.getInboxAnnouncement();
     }
@@ -673,10 +675,94 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
     }
 
     private void sendFirebaseTokenToAPI(String token){
-        OFFirebaseTokenRequest ear = new OFFirebaseTokenRequest();
-        ear.setToken(token);
-        ear.setType("android");
-        OFFirebaseAPIRepo.sendToken(ear, this, OFConstants.ApiHitType.firebaseToken);
+        if(!token.isEmpty()){
+            OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
+            String userId = shp.getUserDetails().getAnalytic_user_id();
+
+            OFEventController ec = OFEventController.getInstance(mContext);
+            HashMap<String, Object> mapValue = new HashMap<>();
+            mapValue.put("user_id", userId);
+            mapValue.put("timestamp", System.currentTimeMillis() / 1000);
+            mapValue.put("token", token);
+            ec.storeEventsInDB(OFConstants.NOTIFICATION_SUBSCRIBED, mapValue, 0);
+
+            OFFirebaseTokenRequest ear = new OFFirebaseTokenRequest();
+            ear.setToken(token);
+            ear.setType("android");
+            OFFirebaseAPIRepo.sendToken(ear, this, OFConstants.ApiHitType.firebaseToken);
+        }else{
+            OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
+            String userId = shp.getUserDetails().getAnalytic_user_id();
+
+            OFEventController ec = OFEventController.getInstance(mContext);
+            HashMap<String, Object> mapValue = new HashMap<>();
+            mapValue.put("user_id", userId);
+            mapValue.put("timestamp", System.currentTimeMillis() / 1000);
+            ec.storeEventsInDB(OFConstants.NOTIFICATION_UNSUBSCRIBED, mapValue, 0);
+        }
+    }
+
+    public static void receivedNotification(String jsonData){
+        String announcementId = "";
+        try {
+            JSONObject json = new JSONObject(jsonData);
+            announcementId = json.optString("announcement_id");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
+        String userId = shp.getUserDetails().getAnalytic_user_id();
+
+        OFEventController ec = OFEventController.getInstance(mContext);
+        HashMap<String, Object> mapValue = new HashMap<>();
+        mapValue.put("user_id", userId);
+        mapValue.put("timestamp", System.currentTimeMillis() / 1000);
+        mapValue.put("announcement_id", announcementId);
+        ec.storeEventsInDB(OFConstants.NOTIFICATION_DELIVERED, mapValue, 0);
+    }
+
+    public static void clickedNotification(Bundle data){
+        String announcementId = "";
+        String link = "";
+
+        if(data != null){
+            String jsonData = data.getString("data");
+            if(jsonData != null){
+                try {
+                    JSONObject json = new JSONObject(jsonData);
+                    announcementId = json.optString("announcement_id");
+                    link = json.optString("link");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }else{
+                announcementId = data.getString("announcement_id");
+                if(announcementId == null){
+                    announcementId = "";
+                }
+                link = data.getString("link");
+                if(link == null){
+                    link = "";
+                }
+            }
+        }
+
+        OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
+        String userId = shp.getUserDetails().getAnalytic_user_id();
+
+        OFEventController ec = OFEventController.getInstance(mContext);
+        HashMap<String, Object> mapValue = new HashMap<>();
+        mapValue.put("user_id", userId);
+        mapValue.put("timestamp", System.currentTimeMillis() / 1000);
+        mapValue.put("announcement_id", announcementId);
+        ec.storeEventsInDB(OFConstants.NOTIFICATION_CLICKED, mapValue, 0);
+
+        if(!link.isEmpty()){
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+            browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.getApplicationContext().startActivity(browserIntent);
+        }
     }
 
     /**
