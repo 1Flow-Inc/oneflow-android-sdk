@@ -686,9 +686,13 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
             mapValue.put("token", token);
             ec.storeEventsInDB(OFConstants.NOTIFICATION_SUBSCRIBED, mapValue, 0);
 
+            ArrayList<String> tokenArray = new ArrayList<>();
+            tokenArray.add(token);
+
             OFFirebaseTokenRequest ear = new OFFirebaseTokenRequest();
-            ear.setToken(token);
+            ear.setToken(tokenArray);
             ear.setType("android");
+            ear.setLink("");
             OFFirebaseAPIRepo.sendToken(ear, this, OFConstants.ApiHitType.firebaseToken);
         }else{
             OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);

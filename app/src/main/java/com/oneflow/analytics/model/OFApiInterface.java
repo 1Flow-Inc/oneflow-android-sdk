@@ -100,7 +100,7 @@ public interface OFApiInterface {
                                                                                               @Query("ids") String userId);
 
 
-    @POST("details/added")
+    @POST("push-notification/testing")
     Call<OFGenericResponse> pushToken(@Body OFFirebaseTokenRequest aur);
 
 }

@@ -5,20 +5,24 @@ import com.google.gson.annotations.SerializedName;
 import com.oneflow.analytics.model.OFBaseModel;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class OFFirebaseTokenRequest extends OFBaseModel {
 
     @SerializedName("token")
-    private String token;
+    private ArrayList<String> token;
 
     @SerializedName("type")
     private String type;
 
-    public String getToken() {
+    @SerializedName("link")
+    private String link;
+
+    public ArrayList<String> getToken() {
         return token;
     }
 
-    public void setToken(String token) {
+    public void setToken(ArrayList<String> token) {
         this.token = token;
     }
 
@@ -28,5 +32,13 @@ public class OFFirebaseTokenRequest extends OFBaseModel {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }
