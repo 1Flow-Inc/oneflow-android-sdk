@@ -38,14 +38,14 @@ public class OFFirebaseAPIRepo {
     }
 
     static String tag = "FirebaseAPIRepo";
-    public static void sendToken(OFFirebaseTokenRequest ear, OFMyResponseHandlerOneFlow mrh, OFConstants.ApiHitType type){
+    public static void sendToken(String headerKey,String userId,OFFirebaseTokenRequest ear, OFMyResponseHandlerOneFlow mrh, OFConstants.ApiHitType type){
 
-        OFApiInterface connectAPI = OFRetroBaseService.getFirebaseClient().create(OFApiInterface.class);
+        OFApiInterface connectAPI = OFRetroBaseService.getClient().create(OFApiInterface.class);
         try {
             Call<OFGenericResponse> responseCall = null;
 
 
-            responseCall = connectAPI.pushToken(ear);
+            responseCall = connectAPI.pushToken(headerKey,userId,ear);
 
             responseCall.enqueue(new Callback<OFGenericResponse>() {
                 @Override

@@ -675,10 +675,9 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
     }
 
     private void sendFirebaseTokenToAPI(String token){
+        OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
+        String userId = shp.getUserDetails().getAnalytic_user_id();
         if(!token.isEmpty()){
-            OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
-            String userId = shp.getUserDetails().getAnalytic_user_id();
-
             OFEventController ec = OFEventController.getInstance(mContext);
             HashMap<String, Object> mapValue = new HashMap<>();
             mapValue.put("user_id", userId);
@@ -686,17 +685,17 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
             mapValue.put("token", token);
             ec.storeEventsInDB(OFConstants.NOTIFICATION_SUBSCRIBED, mapValue, 0);
 
-            ArrayList<String> tokenArray = new ArrayList<>();
-            tokenArray.add(token);
+//            ArrayList<String> tokenArray = new ArrayList<>();
+//            tokenArray.add(token);
 
-            OFFirebaseTokenRequest ear = new OFFirebaseTokenRequest();
-            ear.setToken(tokenArray);
-            ear.setType("android");
-            ear.setLink("");
-            OFFirebaseAPIRepo.sendToken(ear, this, OFConstants.ApiHitType.firebaseToken);
+//            OFFirebaseTokenRequest ear = new OFFirebaseTokenRequest();
+//            ear.setToken(token);
+//            ear.setType("android");
+//            ear.setLink("");
+//            OFFirebaseAPIRepo.sendToken(shp.getStringValue(OFConstants.APPIDSHP),userId,ear, this, OFConstants.ApiHitType.firebaseToken);
         }else{
-            OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
-            String userId = shp.getUserDetails().getAnalytic_user_id();
+//            OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
+//            String userId = shp.getUserDetails().getAnalytic_user_id();
 
             OFEventController ec = OFEventController.getInstance(mContext);
             HashMap<String, Object> mapValue = new HashMap<>();
@@ -704,6 +703,10 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
             mapValue.put("timestamp", System.currentTimeMillis() / 1000);
             ec.storeEventsInDB(OFConstants.NOTIFICATION_UNSUBSCRIBED, mapValue, 0);
         }
+
+        OFFirebaseTokenRequest ear = new OFFirebaseTokenRequest();
+        ear.setToken(token);
+        OFFirebaseAPIRepo.sendToken(shp.getStringValue(OFConstants.APPIDSHP),userId,ear, this, OFConstants.ApiHitType.firebaseToken);
     }
 
     public static void receivedNotification(String jsonData){

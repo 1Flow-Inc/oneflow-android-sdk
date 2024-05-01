@@ -100,7 +100,7 @@ public interface OFApiInterface {
                                                                                               @Query("ids") String userId);
 
 
-    @POST("push-notification/testing")
-    Call<OFGenericResponse> pushToken(@Body OFFirebaseTokenRequest aur);
+    @POST("v3/user/device/{user_id}")
+    Call<OFGenericResponse> pushToken(@Header("one_flow_key") String headerKey, @Path("user_id") String userId,@Body OFFirebaseTokenRequest aur);
 
 }
