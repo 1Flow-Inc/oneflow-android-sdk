@@ -729,29 +729,17 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
         ec.storeEventsInDB(OFConstants.NOTIFICATION_DELIVERED, mapValue, 0);
     }
 
-    public static void clickedNotification(Bundle data){
+    public static void clickedNotification(String jsonData){
         String announcementId = "";
         String link = "";
 
-        if(data != null){
-            String jsonData = data.getString("data");
-            if(jsonData != null){
-                try {
-                    JSONObject json = new JSONObject(jsonData);
-                    announcementId = json.optString("announcement_id");
-                    link = json.optString("link");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }else{
-                announcementId = data.getString("announcement_id");
-                if(announcementId == null){
-                    announcementId = "";
-                }
-                link = data.getString("link");
-                if(link == null){
-                    link = "";
-                }
+        if(jsonData != null){
+            try {
+                JSONObject json = new JSONObject(jsonData);
+                announcementId = json.optString("announcement_id");
+                link = json.optString("link");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 
