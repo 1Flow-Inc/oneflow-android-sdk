@@ -28,6 +28,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Looper;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -754,9 +755,15 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
         ec.storeEventsInDB(OFConstants.NOTIFICATION_CLICKED, mapValue, 0);
 
         if(!link.isEmpty()){
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-            browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mContext.getApplicationContext().startActivity(browserIntent);
+            String finalLink = link;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(finalLink));
+                    browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.getApplicationContext().startActivity(browserIntent);
+                }
+            },5000);
         }
     }
 
