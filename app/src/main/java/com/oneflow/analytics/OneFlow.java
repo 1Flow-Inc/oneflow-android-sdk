@@ -670,7 +670,7 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
         }
     }
 
-    public static void pushToken(String token){
+    public static void setPushToken(String token){
         OneFlow of = new OneFlow(mContext);
         of.sendFirebaseTokenToAPI(token);
     }
@@ -730,7 +730,7 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
         ec.storeEventsInDB(OFConstants.NOTIFICATION_DELIVERED, mapValue, 0);
     }
 
-    public static void clickedNotification(String jsonData){
+    public static void didTapNotification(String jsonData){
         String announcementId = "";
         String link = "";
 
