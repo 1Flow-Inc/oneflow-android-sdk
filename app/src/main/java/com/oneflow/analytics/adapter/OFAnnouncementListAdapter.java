@@ -68,10 +68,16 @@ public class OFAnnouncementListAdapter extends RecyclerView.Adapter<OFAnnounceme
 
         holder.tvTitle.setText(getAnnouncementDetailResponse.getTitle());
 
-        int colorTitle = OFHelper.manipulateColor(Color.parseColor(OFHelper.handlerColor(getAnnouncementDetailResponse.getCategory().getColor())), 1.0f);
+        String catColor = "#5D5FEF";
+        String catName = "New";
+        if(getAnnouncementDetailResponse.getCategory() != null){
+            catName = getAnnouncementDetailResponse.getCategory().getName();
+            catColor = getAnnouncementDetailResponse.getCategory().getColor();
+        }
+        int colorTitle = OFHelper.manipulateColor(Color.parseColor(OFHelper.handlerColor(catColor)), 1.0f);
         holder.tvCategoryName.setTextColor(colorTitle);
-        holder.tvCategoryName.setText(getAnnouncementDetailResponse.getCategory().getName());
-        holder.tvCategoryName.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(OFHelper.getAlphaHexColor(getAnnouncementDetailResponse.getCategory().getColor(),51))));
+        holder.tvCategoryName.setText(catName);
+        holder.tvCategoryName.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(OFHelper.getAlphaHexColor(catColor,51))));
 
         holder.tvDate.setText(OFHelper.formatedDate(getAnnouncementDetailResponse.getPublishedAt(),"MMM dd, yyyy"));
 

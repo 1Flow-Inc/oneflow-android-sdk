@@ -28,6 +28,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -43,6 +44,7 @@ import com.oneflow.analytics.model.events.OFRecordEventsTabKT;
 import com.oneflow.analytics.model.survey.OFGetSurveyListResponse;
 import com.oneflow.analytics.repositories.OFEventDBRepoKT;
 import com.oneflow.analytics.sdkdb.OFOneFlowSHP;
+import com.oneflow.analytics.utils.OFConfigCallback;
 import com.oneflow.analytics.utils.OFConstants;
 import com.oneflow.analytics.utils.OFHelper;
 import com.oneflow.analytics.utils.OFMyResponseHandlerOneFlow;
@@ -128,6 +130,17 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
     private void configureOneFlow(String projectKey) {
 
         OneFlow.configure(getApplicationContext(), projectKey);
+        OneFlow.getConfigCallback(new OFConfigCallback() {
+            @Override
+            public void oneFlowSetupDidFail() {
+                Log.e("oneFlowSetupDidFail ","call");
+            }
+
+            @Override
+            public void oneFlowSetupDidFinish() {
+                Log.e("oneFlowSetupDidFinish ","call");
+            }
+        });
         OneFlow.shouldShowSurvey(true);
         OneFlow.shouldPrintLog(true);
     }
@@ -136,8 +149,9 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.activity_project_key);
         OFCustomEditText projectKeyET = dialog.findViewById(R.id.project_key);
+        String projectKey = "oneflow_prod_YRNyGSbfk3bbep1V7OzGz4rRNGAVVG2A0fiedlbkEZ35MExMBGwF40A8U3DH3bDwNv14ntU1DN/gc/bKDf6SiQ==";// Ahsan prod key
 //        String projectKey = "oneflow_prod_ttJC0k5tqP6OIhhxkOttWnlAWSAzIEOUbusMOfl+RW7rxCR3od6p7nZHxp7Pzf9GT0r80e73BeyU3J0X4yfA4A==";// Ahsan dev key
-        String projectKey = "oneflow_prod_QlKTPS50Cd7EoYxRN9KGSQ1cXriCe+0N/N/gCC4skFfaHuOgiSv+TisJ1IYlvMgTmpRxA+ax3ZwDVumKJaiAHA==";// Rohan dev key
+//        String projectKey = "oneflow_prod_QlKTPS50Cd7EoYxRN9KGSQ1cXriCe+0N/N/gCC4skFfaHuOgiSv+TisJ1IYlvMgTmpRxA+ax3ZwDVumKJaiAHA==";// Rohan dev key
 //        String projectKey = "oneflow_prod_qBtB2ELzP75llq06OI7HIhMl80b1ScsR1Hf1CX+yJ5GGvWUtIUXj/5o/kBgNwDRE8wIm6KfM3eYZLAuGzM12Tw==";//
 //        String projectKey = "oneflow_prod_UjlFunf96DxcEXXXgJKqm32q1RDIYXbmDkepkDmomBoDdlzXQM/U9qzEAKh6yj34xfQQT1Ejp0ltJnF9wGJU5Q==";// [TEST] All Screens
         //String projectKey = "oneflow_prod_yxwI14oGAEhYgOEJjo43IsoKuWbSPoXBcKD+Bj5UkiZtPXb1vuuBkRUm5YxfBCs6thcsxPWbxDeJHJZlSGzxkw==";// SANVEDI'S PROJECT
@@ -273,7 +287,7 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
         }else if (v.getId() == R.id.openAnnouncement) {
             OneFlow.showInbox();
         }else if (v.getId() == R.id.pushToken) {
-            OneFlow.setPushToken("test");
+//            OneFlow.setPushToken("test");
         }
     }
 
