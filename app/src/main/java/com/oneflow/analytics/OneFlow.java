@@ -671,10 +671,10 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
         }
     }
 
-//    public static void setPushToken(String token){
-//        OneFlow of = new OneFlow(mContext);
-//        of.sendFirebaseTokenToAPI(token);
-//    }
+    public static void setPushToken(String token){
+        OneFlow of = new OneFlow(mContext);
+        of.sendFirebaseTokenToAPI(token);
+    }
 
     private void sendFirebaseTokenToAPI(String token){
         OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
@@ -711,62 +711,62 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
         OFFirebaseAPIRepo.sendToken(shp.getStringValue(OFConstants.APPIDSHP),userId,ear, this, OFConstants.ApiHitType.firebaseToken);
     }
 
-//    public static void receivedNotification(String jsonData){
-//        String announcementId = "";
-//        try {
-//            JSONObject json = new JSONObject(jsonData);
-//            announcementId = json.optString("announcement_id");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
-//        String userId = shp.getUserDetails().getAnalytic_user_id();
-//
-//        OFEventController ec = OFEventController.getInstance(mContext);
-//        HashMap<String, Object> mapValue = new HashMap<>();
-//        mapValue.put("user_id", userId);
-//        mapValue.put("timestamp", System.currentTimeMillis() / 1000);
-//        mapValue.put("announcement_id", announcementId);
-//        ec.storeEventsInDB(OFConstants.NOTIFICATION_DELIVERED, mapValue, 0);
-//    }
-//
-//    public static void didTapNotification(String jsonData){
-//        String announcementId = "";
-//        String link = "";
-//
-//        if(jsonData != null){
-//            try {
-//                JSONObject json = new JSONObject(jsonData);
-//                announcementId = json.optString("announcement_id");
-//                link = json.optString("link");
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
-//        String userId = shp.getUserDetails().getAnalytic_user_id();
-//
-//        OFEventController ec = OFEventController.getInstance(mContext);
-//        HashMap<String, Object> mapValue = new HashMap<>();
-//        mapValue.put("user_id", userId);
-//        mapValue.put("timestamp", System.currentTimeMillis() / 1000);
-//        mapValue.put("announcement_id", announcementId);
-//        ec.storeEventsInDB(OFConstants.NOTIFICATION_CLICKED, mapValue, 0);
-//
-//        if(!link.isEmpty()){
-//            String finalLink = link;
-//            new Handler().postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(finalLink));
-//                    browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    mContext.getApplicationContext().startActivity(browserIntent);
-//                }
-//            },5000);
-//        }
-//    }
+    public static void receivedNotification(String jsonData){
+        String announcementId = "";
+        try {
+            JSONObject json = new JSONObject(jsonData);
+            announcementId = json.optString("announcement_id");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
+        String userId = shp.getUserDetails().getAnalytic_user_id();
+
+        OFEventController ec = OFEventController.getInstance(mContext);
+        HashMap<String, Object> mapValue = new HashMap<>();
+        mapValue.put("user_id", userId);
+        mapValue.put("timestamp", System.currentTimeMillis() / 1000);
+        mapValue.put("announcement_id", announcementId);
+        ec.storeEventsInDB(OFConstants.NOTIFICATION_DELIVERED, mapValue, 0);
+    }
+
+    public static void didTapNotification(String jsonData){
+        String announcementId = "";
+        String link = "";
+
+        if(jsonData != null){
+            try {
+                JSONObject json = new JSONObject(jsonData);
+                announcementId = json.optString("announcement_id");
+                link = json.optString("link");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
+        String userId = shp.getUserDetails().getAnalytic_user_id();
+
+        OFEventController ec = OFEventController.getInstance(mContext);
+        HashMap<String, Object> mapValue = new HashMap<>();
+        mapValue.put("user_id", userId);
+        mapValue.put("timestamp", System.currentTimeMillis() / 1000);
+        mapValue.put("announcement_id", announcementId);
+        ec.storeEventsInDB(OFConstants.NOTIFICATION_CLICKED, mapValue, 0);
+
+        if(!link.isEmpty()){
+            String finalLink = link;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(finalLink));
+                    browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.getApplicationContext().startActivity(browserIntent);
+                }
+            },5000);
+        }
+    }
 
     /**
      * This method will check all aspects of re-survey
