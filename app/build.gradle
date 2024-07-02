@@ -36,8 +36,11 @@ android {
         minSdkVersion 21
         targetSdkVersion 34
         versionCode 59
-        versionName "2024.03.05"
+        versionName "2024.03.06"
         multiDexEnabled true
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+        }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -51,6 +54,11 @@ android {
             debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    repositories {
+        flatDir {
+            dirs 'libs'
         }
     }
     compileOptions {
@@ -138,7 +146,8 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1'
 
-    implementation 'com.eclipsesource.j2v8:j2v8:6.2.1@aar'
+//    implementation 'com.eclipsesource.j2v8:j2v8:6.2.1@aar'
+    implementation(name: 'j2v8-6.2.1', ext: 'aar')
 
     //implementation 'org.mongodb:bson:3.4.3'
 
