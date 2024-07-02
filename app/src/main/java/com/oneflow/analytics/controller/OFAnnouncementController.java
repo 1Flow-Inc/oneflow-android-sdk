@@ -28,7 +28,6 @@ import com.oneflow.analytics.OFAnnouncementActivityFullScreen;
 import com.oneflow.analytics.OFAnnouncementActivityModel;
 import com.oneflow.analytics.OFAnnouncementActivitySlideBottom;
 import com.oneflow.analytics.OFAnnouncementActivitySlideTop;
-import com.oneflow.analytics.OFAnnouncementLanderActivity;
 import com.oneflow.analytics.OFSDKBaseActivity;
 import com.oneflow.analytics.OneFlow;
 import com.oneflow.analytics.model.announcement.OFAnnouncementIndex;

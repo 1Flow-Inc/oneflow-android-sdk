@@ -1,20 +1,13 @@
 package com.oneflow.analytics;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.view.Window;
-import android.webkit.ConsoleMessage;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.eclipsesource.v8.JavaVoidCallback;
@@ -47,52 +40,60 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResponseHandlerOneFlow {
-    WebView wv;
+public class OFSurveyLander implements OFMyResponseHandlerOneFlow {
+
+    Context context;
+    String tag = this.getClass().getName();
+
     String triggerEventName;
     String eventData;
-    String tag = this.getClass().getName();
+
     JSONArray eventMapArray;
+
     int counter = 0;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    ArrayList<OFGetSurveyListResponse> filteredList;
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+    Intent surveyIntent = null;
 
-        eventData = this.getIntent().getStringExtra("eventData");
+    Long delayDuration;
 
-        OFHelper.v(tag, "1Flow webmethod called [" + eventData + "]");
+    public OFSurveyLander(Context context) {
+        this.context = context;
+    }
+
+    public void setData(String eventData,String triggerEventName){
+        this.eventData = eventData;
+        this.triggerEventName = triggerEventName;
+
+        OFHelper.v(tag, "1Flow v8 called [" + this.eventData + "]");
         try {
-            eventMapArray = new JSONArray(eventData);
+            eventMapArray = new JSONArray(this.eventData);
 
             if (eventMapArray.length() > 0) {
                 JSONObject jsInner = eventMapArray.getJSONObject(counter);
-                triggerEventName = jsInner.get("name").toString();
+                this.triggerEventName = jsInner.get("name").toString();
             }
 
-            OFHelper.v(tag, "1Flow webmethod called [" + eventMapArray.length() + "]triggerEventName[" + triggerEventName + "]");
-            OFHelper.v(tag, "1Flow webmethod called [" + eventMapArray.get(0) + "]");
+            OFHelper.v(tag, "1Flow v8 called [" + eventMapArray.length() + "]triggerEventName[" + this.triggerEventName + "]");
+            OFHelper.v(tag, "1Flow v8 called [" + eventMapArray.get(0) + "]");
 
         } catch (JSONException je) {
-           // error
+            // error
         }
 
-
-        new OFFilterSurveys(OFFirstLanderActivity.this, OFFirstLanderActivity.this, OFConstants.ApiHitType.filterSurveys, triggerEventName).start();
+        new OFFilterSurveys(context, this, OFConstants.ApiHitType.filterSurveys, this.triggerEventName).start();
 
         setUpHashForActivity();
-
     }
 
     private void handleV8(String eventData){
         StringBuilder jsCode = new StringBuilder();
 
-        jsCode = getFileContents1(getCacheDir().getPath() + File.separator + OFConstants.CACHE_FILE_NAME);
+        jsCode = getFileContents1(context.getCacheDir().getPath() + File.separator + OFConstants.CACHE_FILE_NAME);
 
         if (jsCode != null) {
-            OFHelper.v(tag, "1Flow webmethod 0.1[" + jsCode.length() + "]");
+            OFHelper.v(tag, "1Flow v8 [" + jsCode.length() + "]");
         }
         if (jsCode == null) {
             jsCode = getFileContentsFromLocal1(OFConstants.CACHE_FILE_NAME);
@@ -122,7 +123,6 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
                         if (parameters.length() > 0 && !parameters.isUndefined()) {
                             String jsonString = parameters.get(0).toString();
                             handleDataFromJS(jsonString);
-                            System.out.println("Value: " + jsonString);
                         }
                     }
                 }, "onResultReceived");
@@ -146,7 +146,6 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
                 if ((++counter) < eventMapArray.length()) {
 
                     try {
-                        wv = null;
                         OFHelper.v(tag, "1Flow JavaScript returns1: [" + counter + "][" + eventMapArray.get(counter).toString() + "]");
 
                         Message msg = new Message();
@@ -156,13 +155,9 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
                         handler.sendMessage(msg);
 
                     } catch (JSONException je) {
-                        OFFirstLanderActivity.this.finish();
+                        je.printStackTrace();
                     }
-                } else {
-                    OFFirstLanderActivity.this.finish();
                 }
-            } else {
-                OFFirstLanderActivity.this.finish();
             }
         } else {
             if (!OFHelper.validateString(resultJson).equalsIgnoreCase("NA")) {
@@ -170,80 +165,20 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
                     Gson gson = new Gson();
                     OFGetSurveyListResponse result = gson.fromJson(resultJson, OFGetSurveyListResponse.class);
                     handleResult(result);
-                } else {
-                    OFFirstLanderActivity.this.finish();
                 }
-            } else {
-                OFFirstLanderActivity.this.finish();
             }
         }
     }
 
-    private void checkWebviewFunction(String eventData) {
-        OFHelper.v(tag, "1Flow webmethod called 0 [" + eventData + "]");
-
-        wv = new WebView(OFFirstLanderActivity.this);
-        setContentView(wv);
-        StringBuilder jsCode = new StringBuilder();
-        OFHelper.v(tag, "1Flow webmethod 11[" + jsCode.length() + "]");
-
-
-
-        jsCode = getFileContents1(getCacheDir().getPath() + File.separator + OFConstants.CACHE_FILE_NAME);
-
-        if (jsCode != null) {
-            OFHelper.v(tag, "1Flow webmethod 12[" + jsCode.length() + "]");
-        }
-        if (jsCode == null) {
-            jsCode = getFileContentsFromLocal1(OFConstants.CACHE_FILE_NAME);
-        }
-
-        if (jsCode != null) {
-            StringBuilder jsFunction = new StringBuilder();
-            try {
-                jsFunction = new StringBuilder("oneFlowFilterSurvey(" + new Gson().toJson(filteredList) + "," + eventData + ")");
-
-            } catch (Exception ex) {
-                OFHelper.e(tag, "1Flow error[" + ex.getMessage() + "]");
-            }
-
-            StringBuilder jsCallerMethod = new StringBuilder("function oneFlowCallBack(survey){ console.log(\"reached at callback method\"); android.onResultReceived(JSON.stringify(survey));}");
-            StringBuilder finalCode = new StringBuilder(jsCode.toString() + "\n\n" + jsFunction.toString() + "\n\n" + jsCallerMethod.toString());
-
-            OFHelper.v(tag, "1Flow webmethod 14[" + finalCode.length() + "]");
-
-            wv.clearCache(true);
-            wv.clearHistory();
-            wv.getSettings().setJavaScriptEnabled(true);
-            wv.addJavascriptInterface(new MyJavaScriptInterface(), "android");
-            wv.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-            wv.getSettings().setDomStorageEnabled(false);
-            wv.setWebChromeClient(new WebChromeClient() {
-                @Override
-                public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-                    if (consoleMessage.messageLevel() == ConsoleMessage.MessageLevel.ERROR) {
-                        OFHelper.e(tag, "1Flow webpage JS Error[" + consoleMessage.message() + "]");
-                        OFFirstLanderActivity.this.finish();
-
-                    } else {
-                        OFHelper.v(tag, "1Flow webpage JS log[" + consoleMessage.message() + "]");
-                    }
-
-                    return true;
-
-                }
-            });
-
-            wv.evaluateJavascript(finalCode.toString(), result -> {
-                // onReceiveValue
-            });
-
+    private void handleResult(OFGetSurveyListResponse result) {
+        // Do something with the result
+        OFHelper.v(tag, "1Flow JavaScript returns2: " + result.toString());
+        if (result != null) {
+            throtlingCheck(result);
         } else {
-            OFFirstLanderActivity.this.finish();
+            OFHelper.v(tag, "1Flow event flow check failed no survey launch");
         }
     }
-
-    ArrayList<OFGetSurveyListResponse> filteredList;
 
     @Override
     public void onResponseReceived(OFConstants.ApiHitType hitType, Object obj1, Long reserve, String reserved, Object obj2, Object obj3) {
@@ -256,13 +191,11 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
                     launchSurvey(gslrTH);
                 } else {
                     OFSurveyUserInput ofSurveyUserInput = (OFSurveyUserInput) obj1;
-                    OFOneFlowSHP ofs1 = OFOneFlowSHP.getInstance(OFFirstLanderActivity.this);
+                    OFOneFlowSHP ofs1 = OFOneFlowSHP.getInstance(context);
                     OFThrottlingConfig config = ofs1.getThrottlingConfig();
                     OFHelper.v(tag, "1Flow globalThrottling inside else [" + (ofSurveyUserInput.getCreatedOn() < config.getActivatedAt()) + "]");
                     if (ofSurveyUserInput.getCreatedOn() < config.getActivatedAt()) {
                         launchSurvey(gslrTH);
-                    }else{
-                        OFFirstLanderActivity.this.finish();
                     }
                 }
 
@@ -288,11 +221,7 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
                         } catch (JSONException je) {
                             // error
                         }
-                    } else {
-                        OFFirstLanderActivity.this.finish();
                     }
-                }else {
-                    OFFirstLanderActivity.this.finish();
                 }
 
                 break;
@@ -307,132 +236,24 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
             super.handleMessage(msg);
             String data = msg.getData().getString("data");
             OFHelper.v(tag, "1Flow handler data[" + data + "]");
-            wv = null;
-            wv = findViewById(R.id.webview_contents_lander);
-            checkWebviewFunction(data);
-//            handleV8(data);
+            handleV8(data);
         }
     };
-
-    public class MyJavaScriptInterface {
-
-
-        public MyJavaScriptInterface() {
-            // Constructor
-        }
-
-        @JavascriptInterface
-        public void onResultReceived(String resultJson) {
-
-
-            OFHelper.v(tag, "1Flow JavaScript returns1: [" + resultJson + "][" + eventMapArray.length() + "]");
-            if (resultJson.equalsIgnoreCase("null")) {
-                if (eventMapArray.length() > 1) {
-                    OFHelper.v(tag, "1Flow JavaScript returns1: [" + counter + "]");
-                    if ((++counter) < eventMapArray.length()) {
-
-                        try {
-                            wv = null;
-                            OFHelper.v(tag, "1Flow JavaScript returns1: [" + counter + "][" + eventMapArray.get(counter).toString() + "]");
-
-                            Message msg = new Message();
-                            Bundle bundle = new Bundle();
-                            bundle.putString("data", eventMapArray.get(counter).toString());
-                            msg.setData(bundle);
-                            handler.sendMessage(msg);
-
-                        } catch (JSONException je) {
-                            OFFirstLanderActivity.this.finish();
-                        }
-                    } else {
-                        OFFirstLanderActivity.this.finish();
-                    }
-                } else {
-                    OFFirstLanderActivity.this.finish();
-                }
-            } else {
-                if (!OFHelper.validateString(resultJson).equalsIgnoreCase("NA")) {
-                    if (!resultJson.equalsIgnoreCase("undefined")) {
-                        Gson gson = new Gson();
-                        OFGetSurveyListResponse result = gson.fromJson(resultJson, OFGetSurveyListResponse.class);
-                        handleResult(result);
-                    } else {
-                        OFFirstLanderActivity.this.finish();
-                    }
-                } else {
-                    OFFirstLanderActivity.this.finish();
-                }
-            }
-
-        }
-    }
-
-    private void handleResult(OFGetSurveyListResponse result) {
-        // Do something with the result
-        OFHelper.v(tag, "1Flow JavaScript returns2: " + result.toString());
-        if (result != null) {
-
-            throtlingCheck(result);
-        } else {
-            OFFirstLanderActivity.this.finish();
-            OFHelper.v(tag, "1Flow event flow check failed no survey launch");
-        }
-    }
-
-
-    Long delayDuration;
-
-    public void throtlingCheck(OFGetSurveyListResponse surveyToInit) {
-        OFOneFlowSHP ofs = OFOneFlowSHP.getInstance(OFFirstLanderActivity.this);
-        OFThrottlingConfig throttlingConfig = ofs.getThrottlingConfig();
-        if (throttlingConfig == null) {
-
-            launchSurvey(surveyToInit);
-        } else {
-
-            OFHelper.v(tag, "1Flow globalThrottling[" + surveyToInit.getSurveySettings().getOverrideGlobalThrottling() + "]throttlingConfig isActivated[" + throttlingConfig.isActivated() + "]");
-
-            boolean globalThrottling = surveyToInit.getSurveySettings().getOverrideGlobalThrottling();
-            if (globalThrottling) {
-
-                launchSurvey(surveyToInit);
-            } else {
-                if (throttlingConfig.isActivated()) {
-                    if (throttlingConfig.getActivatedById().equalsIgnoreCase(surveyToInit.get_id())) {
-
-                        OFHelper.v(tag, "1Flow globalThrottling id matched ");
-
-                        // check in submitted survey list locally if this survey has been submitted then false
-                        new OFLogUserDBRepoKT().findLastSubmittedSurveyID(OFFirstLanderActivity.this, this, OFConstants.ApiHitType.lastSubmittedSurvey, triggerEventName, surveyToInit);
-
-                    }else{
-                        OFFirstLanderActivity.this.finish();
-                    }
-
-                } else {
-                    launchSurvey(surveyToInit);
-                }
-            }
-
-        }
-    }
-
-    Intent surveyIntent = null;
 
     public void launchSurvey(OFGetSurveyListResponse surveyToInit) {
         OFHelper.v(tag, "1Flow eventName[" + triggerEventName + "]surveyId[" + new Gson().toJson(surveyToInit) + "]");
 
         if (surveyToInit.getSurveySettings().getSdkTheme().getWidgetPosition() == null) {
-            surveyIntent = new Intent(getApplicationContext(), activityName.get("bottom-center"));
+            surveyIntent = new Intent(context, activityName.get("bottom-center"));
         } else {
-            surveyIntent = new Intent(getApplicationContext(), activityName.get(surveyToInit.getSurveySettings().getSdkTheme().getWidgetPosition()));
+            surveyIntent = new Intent(context, activityName.get(surveyToInit.getSurveySettings().getSdkTheme().getWidgetPosition()));
         }
 
-        OFOneFlowSHP ofs1 = OFOneFlowSHP.getInstance(this);
+        OFOneFlowSHP ofs1 = OFOneFlowSHP.getInstance(context);
 
         HashMap<String, Object> mapValue = new HashMap<>();
         mapValue.put("flow_id", surveyToInit.get_id());
-        OFEventController ec = OFEventController.getInstance(this);
+        OFEventController ec = OFEventController.getInstance(context);
         HashMap<String, Object> mapValue1 = new HashMap<>();
         mapValue1.put("survey_id", surveyToInit.get_id());
         ec.storeEventsInDB(OFConstants.AUTOEVENT_SURVEYIMPRESSION, mapValue1, 0);
@@ -476,26 +297,55 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
                 OFHelper.v("1Flow", "1Flow activity waiting duration[" + delayDuration + "]");
 
 
-                ContextCompat.getMainExecutor(this).execute(() -> {
-                    OFDelayedSurveyCountdownTimer delaySurvey = OFDelayedSurveyCountdownTimer.getInstance(OFFirstLanderActivity.this, delayDuration, 1000l, surveyIntent);
+                ContextCompat.getMainExecutor(context).execute(() -> {
+                    OFDelayedSurveyCountdownTimer delaySurvey = OFDelayedSurveyCountdownTimer.getInstance(context, delayDuration, 1000l, surveyIntent);
                     delaySurvey.start();
                 });
 
 
             } else {
-                startActivity(surveyIntent);
+                context.startActivity(surveyIntent);
             }
-
-            OFFirstLanderActivity.this.finish();
         }
     }
 
+    public void throtlingCheck(OFGetSurveyListResponse surveyToInit) {
+        OFOneFlowSHP ofs = OFOneFlowSHP.getInstance(context);
+        OFThrottlingConfig throttlingConfig = ofs.getThrottlingConfig();
+        if (throttlingConfig == null) {
+
+            launchSurvey(surveyToInit);
+        } else {
+
+            OFHelper.v(tag, "1Flow globalThrottling[" + surveyToInit.getSurveySettings().getOverrideGlobalThrottling() + "]throttlingConfig isActivated[" + throttlingConfig.isActivated() + "]");
+
+            boolean globalThrottling = surveyToInit.getSurveySettings().getOverrideGlobalThrottling();
+            if (globalThrottling) {
+
+                launchSurvey(surveyToInit);
+            } else {
+                if (throttlingConfig.isActivated()) {
+                    if (throttlingConfig.getActivatedById().equalsIgnoreCase(surveyToInit.get_id())) {
+
+                        OFHelper.v(tag, "1Flow globalThrottling id matched ");
+
+                        // check in submitted survey list locally if this survey has been submitted then false
+                        new OFLogUserDBRepoKT().findLastSubmittedSurveyID(context, this, OFConstants.ApiHitType.lastSubmittedSurvey, triggerEventName, surveyToInit);
+
+                    }
+
+                } else {
+                    launchSurvey(surveyToInit);
+                }
+            }
+
+        }
+    }
 
     private void setupGlobalTimerToDeactivateThrottlingLocally() {
 
-
         OFHelper.v(tag, "1Flow deactivate called ");
-        OFThrottlingConfig config = OFOneFlowSHP.getInstance(this).getThrottlingConfig();
+        OFThrottlingConfig config = OFOneFlowSHP.getInstance(context).getThrottlingConfig();
         OFHelper.v(tag, "1Flow deactivate called config activated[" + config.isActivated() + "]globalTime[" + config.getGlobalTime() + "]activatedBy[" + config.getActivatedById() + "]");
         if (config.getGlobalTime() != null && config.getGlobalTime() > 0) {
             setThrottlingAlarm(config);
@@ -503,18 +353,16 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
             OFHelper.v(tag, "1Flow deactivate called at else");
             config.setActivated(false);
             config.setActivatedById(null);
-            OFOneFlowSHP.getInstance(this).setThrottlingConfig(config);
+            OFOneFlowSHP.getInstance(context).setThrottlingConfig(config);
         }
-
 
     }
 
     public void setThrottlingAlarm(OFThrottlingConfig config) {
         OFHelper.v(tag, "1Flow Setting ThrottlingAlarm [" + config.getGlobalTime() + "]");
 
-        OFOneFlowSHP shp = OFOneFlowSHP.getInstance(this);
+        OFOneFlowSHP shp = OFOneFlowSHP.getInstance(context);
         shp.storeValue(OFConstants.SHP_THROTTLING_TIME, config.getGlobalTime() * 1000 + System.currentTimeMillis());
-
 
     }
 
@@ -539,7 +387,7 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
     private StringBuilder getFileContentsFromLocal1(String fileName) {
         try {
             byte[] buffer;
-            try (InputStream is = getAssets().open(fileName)) {
+            try (InputStream is = context.getAssets().open(fileName)) {
 
                 int size = is.available();
                 buffer = new byte[size];
@@ -575,19 +423,5 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
         activityName.put("bottom-center", OFSurveyActivityBottom.class); //default one
         activityName.put("bottom-right", OFSurveyActivityBottom.class);
 
-
     }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-
-        OFOneFlowSHP.getInstance(this).storeValue(OFConstants.SHP_SURVEY_RUNNING, false);
-        OFHelper.v(this.getClass().getName(), "1Flow onStop called");
-
-
-    }
-
-
 }

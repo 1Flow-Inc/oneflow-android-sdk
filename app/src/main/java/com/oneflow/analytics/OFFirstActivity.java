@@ -149,11 +149,11 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.activity_project_key);
         OFCustomEditText projectKeyET = dialog.findViewById(R.id.project_key);
-        String projectKey = "oneflow_prod_YRNyGSbfk3bbep1V7OzGz4rRNGAVVG2A0fiedlbkEZ35MExMBGwF40A8U3DH3bDwNv14ntU1DN/gc/bKDf6SiQ==";// Ahsan prod key
+//        String projectKey = "oneflow_prod_YRNyGSbfk3bbep1V7OzGz4rRNGAVVG2A0fiedlbkEZ35MExMBGwF40A8U3DH3bDwNv14ntU1DN/gc/bKDf6SiQ==";// Ahsan prod key
 //        String projectKey = "oneflow_prod_ttJC0k5tqP6OIhhxkOttWnlAWSAzIEOUbusMOfl+RW7rxCR3od6p7nZHxp7Pzf9GT0r80e73BeyU3J0X4yfA4A==";// Ahsan dev key
 //        String projectKey = "oneflow_prod_QlKTPS50Cd7EoYxRN9KGSQ1cXriCe+0N/N/gCC4skFfaHuOgiSv+TisJ1IYlvMgTmpRxA+ax3ZwDVumKJaiAHA==";// Rohan dev key
 //        String projectKey = "oneflow_prod_qBtB2ELzP75llq06OI7HIhMl80b1ScsR1Hf1CX+yJ5GGvWUtIUXj/5o/kBgNwDRE8wIm6KfM3eYZLAuGzM12Tw==";//
-//        String projectKey = "oneflow_prod_UjlFunf96DxcEXXXgJKqm32q1RDIYXbmDkepkDmomBoDdlzXQM/U9qzEAKh6yj34xfQQT1Ejp0ltJnF9wGJU5Q==";// [TEST] All Screens
+        String projectKey = "oneflow_prod_UjlFunf96DxcEXXXgJKqm32q1RDIYXbmDkepkDmomBoDdlzXQM/U9qzEAKh6yj34xfQQT1Ejp0ltJnF9wGJU5Q==";// [TEST] All Screens
         //String projectKey = "oneflow_prod_yxwI14oGAEhYgOEJjo43IsoKuWbSPoXBcKD+Bj5UkiZtPXb1vuuBkRUm5YxfBCs6thcsxPWbxDeJHJZlSGzxkw==";// SANVEDI'S PROJECT
         //String projectKey = "oneflow_sandbox_oV+xY+hArzT2i4lMP69YZnRBLK1a/qmYW16MboVc208IVjiNKPfHRIylm0rVFgEubtaRuhKMTdlTt5TEuP+8Pw==";// AmitRepeatTest
         //String projectKey = "oneflow_prod_CE5Cvb8EahGdiyeu7TkY4DDR8inq1u8qLHvV2XnJM5UuZNW1V0I+XMQi2Qo5raeyrk7b3GEl+a9iz6F2EWGtNg==";// QA-2
@@ -229,7 +229,7 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
     @Override
     protected void onResume() {
         super.onResume();
-        OFHelper.v(tag,"1Flow onResume ["+configureCalled+"]");
+        OFHelper.e(tag,"1Flow onResume ["+configureCalled+"]");
         if (Boolean.FALSE.equals(configureCalled)) {
             slr = OFOneFlowSHP.getInstance(OFFirstActivity.this).getSurveyList();
             if (slr != null) {
@@ -239,6 +239,12 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
 
             new OFEventDBRepoKT().fetchEvents(this, this, OFConstants.ApiHitType.fetchEventsFromDB);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        OFHelper.e(tag,"1Flow onPause ["+configureCalled+"]");
     }
 
     public void clickHandler(View v) {
@@ -287,7 +293,8 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
         }else if (v.getId() == R.id.openAnnouncement) {
             OneFlow.showInbox();
         }else if (v.getId() == R.id.pushToken) {
-//            OneFlow.setPushToken("test");
+            OneFlow.setPushToken("test");
+//            OneFlow.recordEvents("test_sdk_event");
         }
     }
 
