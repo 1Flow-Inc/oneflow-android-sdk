@@ -36,11 +36,8 @@ android {
         minSdkVersion 21
         targetSdkVersion 34
         versionCode 59
-        versionName "2024.03.06"
+        versionName "2024.03.07"
         multiDexEnabled true
-        ndk {
-            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
-        }
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
