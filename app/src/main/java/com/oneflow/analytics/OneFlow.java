@@ -627,15 +627,20 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
         JSONArray eventMapArray = new JSONArray();
         eventMapArray.put(new JSONObject(eventMap));
 
-        final Intent surveyIntent = new Intent(mContext.getApplicationContext(), OFAnnouncementLanderActivity.class);
+        Intent intent = new Intent(mContext, OFAnnouncementLanderService.class);
+        intent.putExtra("listData", originalList);
+        intent.putExtra("eventData", eventMapArray.toString());
+        mContext.startService(intent);
 
-        surveyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        surveyIntent.putExtra("listData", originalList);
-        surveyIntent.putExtra("eventData", eventMapArray.toString());
-
-        if (!OFSDKBaseActivity.isActive) { // This to check if any survey is already running or not
-            mContext.getApplicationContext().startActivity(surveyIntent);
-        }
+//        final Intent surveyIntent = new Intent(mContext.getApplicationContext(), OFAnnouncementLanderActivity.class);
+//
+//        surveyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        surveyIntent.putExtra("listData", originalList);
+//        surveyIntent.putExtra("eventData", eventMapArray.toString());
+//
+//        if (!OFSDKBaseActivity.isActive) { // This to check if any survey is already running or not
+//            mContext.getApplicationContext().startActivity(surveyIntent);
+//        }
     }
 
     private void getInboxAnnouncement(){
@@ -1141,21 +1146,27 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
 
     private void triggerSurveyNew(String eventName){
 
+        OFHelper.e("OneFlow","1Flow triggerSurveyNew");
         JSONArray eventMapArray = new JSONArray();
         eventMapArray.put(new JSONObject(eventMap));
 
-        final Intent surveyIntent = new Intent(mContext.getApplicationContext(), OFFirstLanderActivity.class);
+        Intent intent = new Intent(mContext, OFSurveyLanderService.class);
+        intent.putExtra("eventName", eventName);
+        intent.putExtra("eventData", eventMapArray.toString());
+        mContext.startService(intent);
 
-        surveyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        surveyIntent.putExtra("eventName", eventName);
-        surveyIntent.putExtra("eventData", eventMapArray.toString());
-
-
-        OFHelper.v("1Flow", "1Flow activity running 0[" + OFSDKBaseActivity.isActive + "]");
-
-        if (!OFSDKBaseActivity.isActive) { // This to check if any survey is already running or not
-            mContext.getApplicationContext().startActivity(surveyIntent);
-        }
+//        final Intent surveyIntent = new Intent(mContext.getApplicationContext(), OFFirstLanderActivity.class);
+//
+//        surveyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        surveyIntent.putExtra("eventName", eventName);
+//        surveyIntent.putExtra("eventData", eventMapArray.toString());
+//
+//
+//        OFHelper.v("1Flow", "1Flow activity running 0[" + OFSDKBaseActivity.isActive + "]");
+//
+//        if (!OFSDKBaseActivity.isActive) { // This to check if any survey is already running or not
+//            mContext.getApplicationContext().startActivity(surveyIntent);
+//        }
     }
 
     Long delayDuration = 0l;
@@ -1166,13 +1177,16 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
 
         OFHelper.v("1Flow", "1Flow eventName[" + eventName + "]surveyId[" + gslr.get_id() + "]position[" + gslr.getSurveySettings().getSdkTheme().getWidgetPosition() + "]");
 
-        final Intent surveyIntent = new Intent(mContext.getApplicationContext(), OFFirstLanderActivity.class);
+//        final Intent surveyIntent = new Intent(mContext.getApplicationContext(), OFFirstLanderActivity.class);
+//
+//        surveyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        surveyIntent.putExtra("SurveyType", gslr);
+//        surveyIntent.putExtra("eventName", eventName);
+//        surveyIntent.putExtra("eventData", new JSONObject(eventMap).toString());
 
-        surveyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        surveyIntent.putExtra("SurveyType", gslr);
-        surveyIntent.putExtra("eventName", eventName);
-        surveyIntent.putExtra("eventData", new JSONObject(eventMap).toString());
-
+        Intent intent = new Intent(mContext, OFSurveyLanderService.class);
+        intent.putExtra("eventName", eventName);
+        intent.putExtra("eventData", new JSONObject(eventMap).toString());
 
         OFHelper.v("1Flow", "1Flow activity running 1[" + OFSDKBaseActivity.isActive + "]");
 
@@ -1190,17 +1204,20 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
 
 
                         ContextCompat.getMainExecutor(mContext).execute(() -> {
-                            OFDelayedSurveyCountdownTimer delaySurvey = OFDelayedSurveyCountdownTimer.getInstance(mContext, delayDuration, 1000l, surveyIntent);
+                            OFDelayedSurveyCountdownTimer delaySurvey = OFDelayedSurveyCountdownTimer.getInstance(mContext, delayDuration, 1000l, intent);
+                            delaySurvey.setData(true);
                             delaySurvey.start();
                         });
 
 
                     } else {
-                        mContext.getApplicationContext().startActivity(surveyIntent);
+                        mContext.startService(intent);
+//                        mContext.getApplicationContext().startActivity(surveyIntent);
                     }
 
             } else {
-                mContext.getApplicationContext().startActivity(surveyIntent);
+                mContext.startService(intent);
+//                mContext.getApplicationContext().startActivity(surveyIntent);
             }
         }
     }

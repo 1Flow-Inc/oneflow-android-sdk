@@ -23,7 +23,6 @@ import android.content.Intent;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.oneflow.analytics.OFFirstLanderActivity;
 import com.oneflow.analytics.OFSDKBaseActivity;
 import com.oneflow.analytics.OFSurveyActivityBannerBottom;
 import com.oneflow.analytics.OFSurveyActivityBannerTop;
@@ -31,6 +30,7 @@ import com.oneflow.analytics.OFSurveyActivityBottom;
 import com.oneflow.analytics.OFSurveyActivityCenter;
 import com.oneflow.analytics.OFSurveyActivityFullScreen;
 import com.oneflow.analytics.OFSurveyActivityTop;
+import com.oneflow.analytics.OFSurveyLanderService;
 import com.oneflow.analytics.model.survey.OFGetSurveyListResponse;
 import com.oneflow.analytics.model.survey.OFThrottlingConfig;
 import com.oneflow.analytics.repositories.OFEventDBRepoKT;
@@ -172,16 +172,22 @@ public class OFSurveyController implements OFMyResponseHandlerOneFlow {
     private void triggerSurveyNew(){
 
         OFHelper.v("1Flow", "1Flow activity reached running[" + OFSDKBaseActivity.isActive + "]");
-        final Intent surveyIntent = new Intent(mContext.getApplicationContext(), OFFirstLanderActivity.class);
 
-        surveyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        surveyIntent.putExtra("eventData", eventMapArray.toString());
+        Intent intent = new Intent(mContext, OFSurveyLanderService.class);
+        intent.putExtra("eventName", "");
+        intent.putExtra("eventData", eventMapArray.toString());
+        mContext.startService(intent);
 
-        OFHelper.v("1Flow", "1Flow activity running 4[" + OFSDKBaseActivity.isActive + "]");
-
-        if (!OFSDKBaseActivity.isActive) {
-            mContext.getApplicationContext().startActivity(surveyIntent);
-        }
+//        final Intent surveyIntent = new Intent(mContext.getApplicationContext(), OFFirstLanderActivity.class);
+//
+//        surveyIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        surveyIntent.putExtra("eventData", eventMapArray.toString());
+//
+//        OFHelper.v("1Flow", "1Flow activity running 4[" + OFSDKBaseActivity.isActive + "]");
+//
+//        if (!OFSDKBaseActivity.isActive) {
+//            mContext.getApplicationContext().startActivity(surveyIntent);
+//        }
     }
     private void setupGlobalTimerToDeactivateThrottlingLocally() {
 

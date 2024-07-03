@@ -10,6 +10,7 @@ public class OFDelayedSurveyCountdownTimer extends CountDownTimer{
     static OFDelayedSurveyCountdownTimer cdt;
     static int count = 0;
     Intent intent1;
+    boolean isOpenService = false;
     public static synchronized OFDelayedSurveyCountdownTimer getInstance(Context context, Long duration, Long interval, Intent intent) {
         if (cdt == null) {
             cdt = new OFDelayedSurveyCountdownTimer(context, duration, interval,intent);
@@ -21,6 +22,11 @@ public class OFDelayedSurveyCountdownTimer extends CountDownTimer{
         this.mContext = context;
         this.intent1 = delayedIntent;
     }
+
+    public void setData(boolean isOpenService){
+        this.isOpenService = isOpenService;
+    }
+
     @Override
     public void onTick(long millisUntilFinished) {
        OFHelper.v("OFDelayedSurveyCountdownTimer", "1Flow waiting for survey to start");
@@ -30,7 +36,11 @@ public class OFDelayedSurveyCountdownTimer extends CountDownTimer{
     @Override
     public void onFinish() {
         OFHelper.v("OFDelayedSurveyCountdownTimer", "1Flow init survey");
-        mContext.getApplicationContext().startActivity(intent1);
+        if(isOpenService){
+            mContext.getApplicationContext().startService(intent1);
+        }else{
+            mContext.getApplicationContext().startActivity(intent1);
+        }
     }
 
 

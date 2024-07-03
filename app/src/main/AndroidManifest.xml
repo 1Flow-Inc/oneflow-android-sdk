@@ -76,6 +76,9 @@
             android:name=".OFAnnouncementActivitySlideBottom"
             android:exported="false"
             android:theme="@style/CDialogThemeAnnounceBannerBottom" />
+
+        <service android:name=".OFSurveyLanderService"/>
+        <service android:name=".OFAnnouncementLanderService"/>
     </application>
 
 </manifest>
