@@ -36,7 +36,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 34
         versionCode 59
-        versionName "2024.03.07"
+        versionName "2024.03.08"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -143,8 +143,8 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1'
 
-//    implementation 'com.eclipsesource.j2v8:j2v8:6.2.1@aar'
-    implementation(name: 'j2v8-6.2.1', ext: 'aar')
+    implementation 'com.eclipsesource.j2v8:j2v8:6.2.1@aar'
+    implementation 'org.eclipse.jdt.core.compiler:ecj:4.6.1'
 
     //implementation 'org.mongodb:bson:3.4.3'
 
