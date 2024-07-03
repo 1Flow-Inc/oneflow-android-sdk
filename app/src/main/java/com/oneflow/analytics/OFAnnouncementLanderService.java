@@ -44,7 +44,7 @@ public class OFAnnouncementLanderService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        OFHelper.e(tag,"1Flow onCreate []");
+//        OFHelper.e(tag,"1Flow onCreate");
     }
 
     private void intiData(Intent intent) {
@@ -73,7 +73,7 @@ public class OFAnnouncementLanderService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
+//        OFHelper.e(tag,"1Flow onDestroy");
     }
 
     @Nullable
@@ -84,7 +84,7 @@ public class OFAnnouncementLanderService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        OFHelper.e(tag,"1Flow onStartCommand []");
+//        OFHelper.e(tag,"1Flow onStartCommand");
         intiData(intent);
         return START_STICKY;
     }
