@@ -70,7 +70,12 @@ public class OFAnnouncementActivityBannerBottom extends OFAnnouncementBaseActivi
 
             viewedAnnouncement(getAnnouncementDetailResponse.getId());
 
-            binding.viewLayout.setBackgroundColor(Color.parseColor(OFHelper.handlerColor(getAnnouncementDetailResponse.getCategory().getColor())));
+            String catColor = "#5D5FEF";
+            if(getAnnouncementDetailResponse.getCategory() != null){
+                catColor = getAnnouncementDetailResponse.getCategory().getColor();
+            }
+
+            binding.viewLayout.setBackgroundColor(Color.parseColor(OFHelper.handlerColor(catColor)));
 
             text = getAnnouncementDetailResponse.getTitle();
 

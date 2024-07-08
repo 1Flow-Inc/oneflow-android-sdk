@@ -99,10 +99,17 @@ public class OFAnnouncementFragmentModel extends Fragment {
 
             binding.tvTitle.setText(getAnnouncementDetailResponse.getTitle());
 
-            int colorTitle = OFHelper.manipulateColor(Color.parseColor(OFHelper.handlerColor(getAnnouncementDetailResponse.getCategory().getColor())), 1.0f);
+            String catColor = "#5D5FEF";
+            String catName = "New";
+            if(getAnnouncementDetailResponse.getCategory() != null){
+                catName = getAnnouncementDetailResponse.getCategory().getName();
+                catColor = getAnnouncementDetailResponse.getCategory().getColor();
+            }
+
+            int colorTitle = OFHelper.manipulateColor(Color.parseColor(OFHelper.handlerColor(catColor)), 1.0f);
             binding.tvCategoryName.setTextColor(colorTitle);
-            binding.tvCategoryName.setText(getAnnouncementDetailResponse.getCategory().getName());
-            binding.tvCategoryName.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(OFHelper.getAlphaHexColor(getAnnouncementDetailResponse.getCategory().getColor(),51))));
+            binding.tvCategoryName.setText(catName);
+            binding.tvCategoryName.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(OFHelper.getAlphaHexColor(catColor,51))));
 
             binding.tvDate.setText(OFHelper.formatedDate(getAnnouncementDetailResponse.getPublishedAt(),"MMM dd, yyyy"));
 
