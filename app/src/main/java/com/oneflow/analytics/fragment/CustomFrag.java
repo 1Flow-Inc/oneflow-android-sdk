@@ -1,5 +1,7 @@
 package com.oneflow.analytics.fragment;
 
+import static android.content.Context.RECEIVER_EXPORTED;
+
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -11,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -77,7 +80,9 @@ public class CustomFrag extends Fragment {
         getView().setVisibility(View.GONE);
         IntentFilter inf = new IntentFilter();
         inf.addAction("CustomView");
-        getActivity().registerReceiver(br, inf);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            getActivity().registerReceiver(br, inf,RECEIVER_EXPORTED);
+        }
     }
 
     @Override

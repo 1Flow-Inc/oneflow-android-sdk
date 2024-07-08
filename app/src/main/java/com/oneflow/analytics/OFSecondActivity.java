@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,7 +55,9 @@ public class OFSecondActivity extends AppCompatActivity {
 
         IntentFilter inf = new IntentFilter();
         inf.addAction("survey_finished");
-        registerReceiver(listFetched, inf);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            registerReceiver(listFetched, inf,RECEIVER_EXPORTED);
+        }
     }
 
     public boolean validateFirst(){

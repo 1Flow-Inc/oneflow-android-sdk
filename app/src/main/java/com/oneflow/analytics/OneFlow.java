@@ -18,6 +18,8 @@
 
 package com.oneflow.analytics;
 
+import static android.content.Context.RECEIVER_EXPORTED;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -229,7 +231,9 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
             OFHelper.v("1Flow", "1Flow network listener registered ");
             OFNetworkChangeReceiver ncr = new OFNetworkChangeReceiver();
             IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-            mContext.registerReceiver(ncr, intentFilter);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                mContext.registerReceiver(ncr, intentFilter,RECEIVER_EXPORTED);
+            }
             ofs.storeValue(OFConstants.SHP_NETWORK_LISTENER, true);
         }
         OFHelper.v("1Flow", "1Flow Throttling receiver[" + ofs.getBooleanValue(OFConstants.SHP_THROTTLING_RECEIVER, false) + "]");

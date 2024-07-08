@@ -121,6 +121,10 @@ public class OFAnnouncementLanderService extends Service {
 
             OFHelper.v(tag, "1Flow webmethod 14[" + finalCode.length() + "]");
 
+            if(wv == null){
+                stopSelf();
+                return;
+            }
             wv.clearCache(true);
             wv.clearHistory();
             wv.getSettings().setJavaScriptEnabled(true);

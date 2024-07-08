@@ -105,6 +105,13 @@ public class OFSurveyLanderService extends Service implements OFMyResponseHandle
         return START_STICKY;
     }
 
+    private void stopService(){
+        if(handler != null){
+            handler.removeCallbacksAndMessages(null);
+        }
+        stopSelf();
+    }
+
     private void checkWebviewFunction(String eventData) {
         OFHelper.v(tag, "1Flow webmethod called 0 [" + eventData + "]");
 
@@ -137,6 +144,10 @@ public class OFSurveyLanderService extends Service implements OFMyResponseHandle
 
             OFHelper.v(tag, "1Flow webmethod 14[" + finalCode.length() + "]");
 
+            if(wv == null){
+                stopService();
+                return;
+            }
             wv.clearCache(true);
             wv.clearHistory();
             wv.getSettings().setJavaScriptEnabled(true);
@@ -148,7 +159,7 @@ public class OFSurveyLanderService extends Service implements OFMyResponseHandle
                 public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
                     if (consoleMessage.messageLevel() == ConsoleMessage.MessageLevel.ERROR) {
                         OFHelper.e(tag, "1Flow webpage JS Error[" + consoleMessage.message() + "]");
-                        stopSelf();
+                        stopService();
 
                     } else {
                         OFHelper.v(tag, "1Flow webpage JS log[" + consoleMessage.message() + "]");
@@ -164,7 +175,7 @@ public class OFSurveyLanderService extends Service implements OFMyResponseHandle
             });
 
         } else {
-            stopSelf();
+            stopService();
         }
     }
 
@@ -187,7 +198,7 @@ public class OFSurveyLanderService extends Service implements OFMyResponseHandle
                     if (ofSurveyUserInput.getCreatedOn() < config.getActivatedAt()) {
                         launchSurvey(gslrTH);
                     }else{
-                        stopSelf();
+                        stopService();
                     }
                 }
 
@@ -214,10 +225,10 @@ public class OFSurveyLanderService extends Service implements OFMyResponseHandle
                             // error
                         }
                     } else {
-                        stopSelf();
+                        stopService();
                     }
                 }else {
-                    stopSelf();
+                    stopService();
                 }
 
                 break;
@@ -264,13 +275,13 @@ public class OFSurveyLanderService extends Service implements OFMyResponseHandle
                             handler.sendMessage(msg);
 
                         } catch (JSONException je) {
-                            stopSelf();
+                            stopService();
                         }
                     } else {
-                        stopSelf();
+                        stopService();
                     }
                 } else {
-                    stopSelf();
+                    stopService();
                 }
             } else {
                 if (!OFHelper.validateString(resultJson).equalsIgnoreCase("NA")) {
@@ -279,10 +290,10 @@ public class OFSurveyLanderService extends Service implements OFMyResponseHandle
                         OFGetSurveyListResponse result = gson.fromJson(resultJson, OFGetSurveyListResponse.class);
                         handleResult(result);
                     } else {
-                        stopSelf();
+                        stopService();
                     }
                 } else {
-                    stopSelf();
+                    stopService();
                 }
             }
 
@@ -295,7 +306,7 @@ public class OFSurveyLanderService extends Service implements OFMyResponseHandle
 
                 throtlingCheck(result);
             } else {
-                stopSelf();
+                stopService();
                 OFHelper.v(tag, "1Flow event flow check failed no survey launch");
             }
         }
@@ -330,7 +341,7 @@ public class OFSurveyLanderService extends Service implements OFMyResponseHandle
                         new OFLogUserDBRepoKT().findLastSubmittedSurveyID(this, this, OFConstants.ApiHitType.lastSubmittedSurvey, triggerEventName, surveyToInit);
 
                     }else{
-                        stopSelf();
+                        stopService();
                     }
 
                 } else {
@@ -410,7 +421,7 @@ public class OFSurveyLanderService extends Service implements OFMyResponseHandle
                 startActivity(surveyIntent);
             }
 
-            stopSelf();
+            stopService();
         }
     }
 

@@ -27,6 +27,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -109,7 +110,9 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
         inf.addAction("survey_list_fetched");
         inf.addAction("events_submitted");
         inf.addAction("survey_finished");
-        registerReceiver(listFetched, inf);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            registerReceiver(listFetched, inf,RECEIVER_EXPORTED);
+        }
 
         String projectKey = ofs.getStringValue(OFConstants.APPIDSHP);
 
