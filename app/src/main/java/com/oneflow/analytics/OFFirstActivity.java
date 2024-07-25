@@ -296,7 +296,7 @@ public class OFFirstActivity extends AppCompatActivity implements OFMyResponseHa
         }else if (v.getId() == R.id.openAnnouncement) {
             OneFlow.showInbox();
         }else if (v.getId() == R.id.pushToken) {
-            OneFlow.setPushToken("test");
+//            OneFlow.setPushToken("test");
 //            OneFlow.recordEvents("test_sdk_event");
         }
     }

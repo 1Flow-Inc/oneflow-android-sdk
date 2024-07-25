@@ -680,6 +680,8 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
         }
     }
 
+    static String pushTokenPending = "";
+
     public static void setPushToken(String token){
         OneFlow of = new OneFlow(mContext);
         of.sendFirebaseTokenToAPI(token);
@@ -687,7 +689,15 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
 
     private void sendFirebaseTokenToAPI(String token){
         OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
-        String userId = shp.getUserDetails().getAnalytic_user_id();
+        String userId = "";
+        if(shp.getUserDetails() != null) {
+            userId = shp.getUserDetails().getAnalytic_user_id();
+        }
+        if(userId.isEmpty()){
+            pushTokenPending = token;
+            return;
+        }
+        pushTokenPending = "";
         if(!token.isEmpty()){
             OFEventController ec = OFEventController.getInstance(mContext);
             HashMap<String, Object> mapValue = new HashMap<>();
@@ -942,8 +952,13 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
                         OFAnnouncementController.getInstance(mContext).getAnnouncementFromAPI();
                         OFSurveyController.getInstance(mContext).getSurveyFromAPI();
                     }
+
+                    if(!pushTokenPending.isEmpty()){
+                        sendFirebaseTokenToAPI(pushTokenPending);
+                    }
                 } else {
                     OFHelper.headerKey = "";
+                    pushTokenPending = "";
 
                     OFHelper.v("1Flow", "1Flow create user finish failed calling again[" + createUserCounter + "]");
                     if(createUserCounter<1){

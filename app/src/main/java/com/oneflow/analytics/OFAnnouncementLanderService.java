@@ -48,6 +48,10 @@ public class OFAnnouncementLanderService extends Service {
     }
 
     private void intiData(Intent intent) {
+        if(intent == null){
+            stopSelf();
+            return;
+        }
         eventData = intent.getStringExtra("eventData");
 
         OFHelper.v(tag, "1Flow webmethod called [" + eventData + "]");
