@@ -173,6 +173,11 @@ public class OFSurveyController implements OFMyResponseHandlerOneFlow {
 
         OFHelper.v("1Flow", "1Flow activity reached running[" + OFSDKBaseActivity.isActive + "]");
 
+        boolean isRunning = OFHelper.isServiceRunning(mContext, OFSurveyLanderService.class);
+        if(isRunning){
+            return;
+        }
+
         Intent intent = new Intent(mContext, OFSurveyLanderService.class);
         intent.putExtra("eventName", "");
         intent.putExtra("eventData", eventMapArray.toString());

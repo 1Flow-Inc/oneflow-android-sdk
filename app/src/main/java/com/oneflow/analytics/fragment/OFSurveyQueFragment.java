@@ -437,7 +437,7 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
                                 allSelections = allSelections.replace("]", "");
                                 allSelections = allSelections.replace(" ", "");
                                 OFHelper.v(tag, "1Flow allselection[" + allSelections + "] str[" + reserve + "]");
-                                if (weakReference != null) {
+                                if (weakReference != null && weakReference.get() != null) {
                                     weakReference.get().addUserResponseToList(surveyScreens.get_id(), allSelections, reserve);
                                 } else {
                                     OFHelper.v(tag, "1Flow no instance available to process");
@@ -472,7 +472,7 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
                         if (!surveyScreens.getInput().getOtherOption().equalsIgnoreCase(position)) {
 
                             new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                                if (weakReference.get() != null) {
+                                if (weakReference != null && weakReference.get() != null) {
                                     weakReference.get().addUserResponseToList(surveyScreens.get_id(), position, null);
                                 } else {
                                     OFHelper.v(tag, "1Flow no instance available to process");
@@ -482,7 +482,7 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
                     } else {
 
                         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                            if (weakReference.get() != null) {
+                            if (weakReference != null && weakReference.get() != null) {
                                 weakReference.get().addUserResponseToList(surveyScreens.get_id(), position, (String) obj);
                             } else {
                                 OFHelper.v(tag, "1Flow no instance available to process");
@@ -544,13 +544,13 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
                 new Handler(Looper.getMainLooper()).postDelayed(() -> {
                     if (surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_RATING_FIVE_START) ||
                             surveyScreens.getInput().getInput_type().equalsIgnoreCase(OFConstants.STR_RATING_EMOJI)) {
-                        if(weakReference.get()!=null) {
+                        if(weakReference != null && weakReference.get() != null) {
                             weakReference.get().addUserResponseToList(surveyScreens.get_id(), null, String.valueOf(position + 1));
                         }else{
                             OFHelper.v(tag,"1Flow no instance available to process");
                         }
                     } else {
-                        if(weakReference.get()!=null) {
+                        if(weakReference != null && weakReference.get() != null) {
                             weakReference.get().addUserResponseToList(surveyScreens.get_id(), null, String.valueOf(position));
                         }else{
                             OFHelper.v(tag,"1Flow no instance available to process");

@@ -352,7 +352,7 @@ public class OFSurveyQueInfoFragment extends BaseFragment implements View.OnClic
     @Override
     public void onClick(View v) {
 
-        if(weakReference.get()!=null) {
+        if(weakReference != null && weakReference.get() != null) {
             weakReference.get().addUserResponseToList(surveyScreens.get_id(), null, null);
         }else{
             OFHelper.v(tag,"1Flow no instance available to process");

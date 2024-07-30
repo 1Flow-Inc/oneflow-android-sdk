@@ -176,7 +176,7 @@ public class BaseFragment extends Fragment {
 
             int colorFrom;
             int colorTo;
-            if (weakReference.get() != null) {
+            if (weakReference != null && weakReference.get() != null) {
                 colorFrom = OFHelper.manipulateColorNew(Color.parseColor(weakReference.get().themeColor), OFConstants.buttonActiveValue);
                 colorTo = Color.parseColor(weakReference.get().themeColor);
             } else {
@@ -197,7 +197,7 @@ public class BaseFragment extends Fragment {
             int colorFrom;
             int colorTo;
 
-            if (weakReference.get() != null) {
+            if (weakReference != null && weakReference.get() != null) {
                 colorFrom = OFHelper.manipulateColorNew(Color.parseColor(weakReference.get().themeColor), OFConstants.buttonActiveValue);
                 colorTo = Color.parseColor(weakReference.get().themeColor);
             } else {
@@ -218,7 +218,7 @@ public class BaseFragment extends Fragment {
 
         try {
 
-            if (weakReference.get() != null) {
+            if (weakReference != null && weakReference.get() != null) {
                 if (weakReference.get() instanceof OFSurveyActivityFullScreen) {
                     waterMarkLayout.setVisibility(View.GONE);
                 } else {

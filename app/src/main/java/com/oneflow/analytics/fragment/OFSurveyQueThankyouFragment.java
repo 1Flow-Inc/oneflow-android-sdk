@@ -131,7 +131,7 @@ public class OFSurveyQueThankyouFragment extends BaseFragment {
             surveyDescription.setVisibility(View.GONE);
         }
 
-        if(weakReference!=null) {
+        if(weakReference != null && weakReference.get() != null) {
             weakReference.get().position = weakReference.get().screens.size();
         }else{
             OFHelper.v(tag,"1Flow no instance available to process");
@@ -160,7 +160,7 @@ public class OFSurveyQueThankyouFragment extends BaseFragment {
                                         new Handler(Looper.getMainLooper()).postDelayed(() -> {
 
                                             ruleAction();
-                                            if(weakReference!=null) {
+                                            if(weakReference != null && weakReference.get() != null) {
                                                 weakReference.get().finish();
                                             }else{
                                                 OFHelper.v(tag,"1Flow no instance available to process");
@@ -171,7 +171,7 @@ public class OFSurveyQueThankyouFragment extends BaseFragment {
                                 } else {
                                     new Handler(Looper.getMainLooper()).postDelayed(() -> {
                                         ruleAction();
-                                        if(weakReference!=null) {
+                                        if(weakReference != null && weakReference.get() != null) {
                                             weakReference.get().finish();
                                         }else{
                                             OFHelper.v(tag,"1Flow no instance available to process");
@@ -180,7 +180,7 @@ public class OFSurveyQueThankyouFragment extends BaseFragment {
                                 }
                             } else {
                                 new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                                    if(weakReference!=null) {
+                                    if(weakReference != null && weakReference.get() != null) {
                                         weakReference.get().finish();
                                     }else{
                                         OFHelper.v(tag,"1Flow no instance available to process");
@@ -193,7 +193,7 @@ public class OFSurveyQueThankyouFragment extends BaseFragment {
 
             }
         });
-        if(weakReference!=null) {
+        if(weakReference != null && weakReference.get() != null) {
             weakReference.get().initFragment(5);
         }else{
             OFHelper.v(tag,"1Flow no instance available to process");
@@ -209,7 +209,7 @@ public class OFSurveyQueThankyouFragment extends BaseFragment {
             //Logic for showing close button if fade away is false then have to show close button at thankyou page
             boolean fades = surveyScreens.getRules().getDismissBehavior().getFadesAway();
             if (!fades) {
-                if(weakReference!=null) {
+                if(weakReference != null && weakReference.get() != null) {
                     weakReference.get().closeBtn.setVisibility(View.VISIBLE);
                 }else{
                     OFHelper.v(tag,"1Flow no instance available to process");
@@ -228,7 +228,7 @@ public class OFSurveyQueThankyouFragment extends BaseFragment {
                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(dl.getAction()));
                         startActivity(browserIntent);
                     } else if (dl.getType().equalsIgnoreCase("rating")) {
-                        if(weakReference!=null) {
+                        if(weakReference != null && weakReference.get() != null) {
                             weakReference.get().reviewThisApp(getActivity());
                         }else{
                             OFHelper.v(tag,"1Flow no instance available to process");

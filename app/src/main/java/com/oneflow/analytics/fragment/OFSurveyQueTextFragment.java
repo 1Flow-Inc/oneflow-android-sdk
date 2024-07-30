@@ -497,7 +497,7 @@ public class OFSurveyQueTextFragment extends BaseFragment implements View.OnClic
             OFOneFlowSHP.getInstance(getActivity()).storeValue("userInput", "");
             OFOneFlowSHP.getInstance(getActivity()).storeValue(OFConstants.SHP_LAST_CLICK_TIME, System.currentTimeMillis());
             if (v.getId() == R.id.skip_btn) {
-                if (weakReference != null) {
+                if (weakReference != null && weakReference.get() != null) {
                     weakReference.get().addUserResponseToList(surveyScreens.get_id(), null, null);
                 } else {
                     OFHelper.v(tag, "1Flow no instance available to process");
@@ -505,14 +505,14 @@ public class OFSurveyQueTextFragment extends BaseFragment implements View.OnClic
             } else if (v.getId() == R.id.submit_btn) {
                 if (surveyScreens.getInput().getInput_type().equalsIgnoreCase("text")) {
                     if (userInput.getText().toString().trim().length() >= surveyScreens.getInput().getMin_chars()) {
-                        if (weakReference != null) {
+                        if (weakReference != null && weakReference.get() != null) {
                             weakReference.get().addUserResponseToList(surveyScreens.get_id(), null, userInput.getText().toString().trim().length() > 0 ? userInput.getText().toString().trim() : null);
                         } else {
                             OFHelper.v(tag, "1Flow no instance available to process");
                         }
                     }
                 } else {
-                    if (weakReference != null) {
+                    if (weakReference != null && weakReference.get() != null) {
                         weakReference.get().addUserResponseToList(surveyScreens.get_id(), null, userInputShort.getText().toString().trim().length() > 0 ? userInputShort.getText().toString().trim() : null);
                     } else {
                         OFHelper.v(tag, "1Flow no instance available to process");

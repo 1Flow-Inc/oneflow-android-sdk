@@ -90,72 +90,75 @@ public class OFAnnouncementLanderService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 //        OFHelper.e(tag,"1Flow onStartCommand");
         intiData(intent);
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     private void checkWebviewFunction(String eventData) {
         OFHelper.v(tag, "1Flow webmethod called 0 [" + eventData + "]");
 
-        wv = new WebView(this);
-        StringBuilder jsCode = new StringBuilder();
-        OFHelper.v(tag, "1Flow webmethod 11[" + jsCode.length() + "]");
+        try {
+            wv = new WebView(this);
+            StringBuilder jsCode = new StringBuilder();
+            OFHelper.v(tag, "1Flow webmethod 11[" + jsCode.length() + "]");
 
+            jsCode = getFileContents1(getCacheDir().getPath() + File.separator + OFConstants.ANN_FILE_NAME);
 
-
-        jsCode = getFileContents1(getCacheDir().getPath() + File.separator + OFConstants.ANN_FILE_NAME);
-
-        if (jsCode != null) {
-            OFHelper.v(tag, "1Flow webmethod 12[" + jsCode.length() + "]");
-        }
-        if (jsCode == null) {
-            jsCode = getFileContentsFromLocal1(OFConstants.ANN_FILE_NAME);
-        }
-
-        if (jsCode != null) {
-            StringBuilder jsFunction = new StringBuilder();
-            try {
-                jsFunction = new StringBuilder("oneflowAnnouncementFilter(" + new Gson().toJson(filteredList) + "," + eventData + ")");
-
-            } catch (Exception ex) {
-                OFHelper.e(tag, "1Flow error[" + ex.getMessage() + "]");
+            if (jsCode != null) {
+                OFHelper.v(tag, "1Flow webmethod 12[" + jsCode.length() + "]");
+            }
+            if (jsCode == null) {
+                jsCode = getFileContentsFromLocal1(OFConstants.ANN_FILE_NAME);
             }
 
-            StringBuilder jsCallerMethod = new StringBuilder("function oneFlowAnnouncementCallBack(announcement){ console.log(\"reached at callback method\"); android.onResultReceived(JSON.stringify(announcement));}");
-            StringBuilder finalCode = new StringBuilder(jsCode.toString() + "\n\n" + jsFunction.toString() + "\n\n" + jsCallerMethod.toString());
+            if (jsCode != null) {
+                StringBuilder jsFunction = new StringBuilder();
+                try {
+                    jsFunction = new StringBuilder("oneflowAnnouncementFilter(" + new Gson().toJson(filteredList) + "," + eventData + ")");
 
-            OFHelper.v(tag, "1Flow webmethod 14[" + finalCode.length() + "]");
-
-            if(wv == null){
-                stopSelf();
-                return;
-            }
-            wv.clearCache(true);
-            wv.clearHistory();
-            wv.getSettings().setJavaScriptEnabled(true);
-            wv.addJavascriptInterface(new MyJavaScriptInterface(), "android");
-            wv.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-            wv.getSettings().setDomStorageEnabled(false);
-            wv.setWebChromeClient(new WebChromeClient() {
-                @Override
-                public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-                    if (consoleMessage.messageLevel() == ConsoleMessage.MessageLevel.ERROR) {
-                        OFHelper.e(tag, "1Flow webpage JS Error[" + consoleMessage.message() + "]");
-                        stopSelf();
-
-                    } else {
-                        OFHelper.v(tag, "1Flow webpage JS log[" + consoleMessage.message() + "]");
-                    }
-
-                    return true;
-
+                } catch (Exception ex) {
+                    OFHelper.e(tag, "1Flow error[" + ex.getMessage() + "]");
                 }
-            });
 
-            wv.evaluateJavascript(finalCode.toString(), result -> {
-                // onReceiveValue
-            });
+                StringBuilder jsCallerMethod = new StringBuilder("function oneFlowAnnouncementCallBack(announcement){ console.log(\"reached at callback method\"); android.onResultReceived(JSON.stringify(announcement));}");
+                StringBuilder finalCode = new StringBuilder(jsCode.toString() + "\n\n" + jsFunction.toString() + "\n\n" + jsCallerMethod.toString());
 
-        } else {
+                OFHelper.v(tag, "1Flow webmethod 14[" + finalCode.length() + "]");
+
+                if(wv == null){
+                    stopSelf();
+                    return;
+                }
+                wv.clearCache(true);
+                wv.clearHistory();
+                wv.getSettings().setJavaScriptEnabled(true);
+                wv.addJavascriptInterface(new MyJavaScriptInterface(), "android");
+                wv.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+                wv.getSettings().setDomStorageEnabled(false);
+                wv.setWebChromeClient(new WebChromeClient() {
+                    @Override
+                    public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
+                        if (consoleMessage.messageLevel() == ConsoleMessage.MessageLevel.ERROR) {
+                            OFHelper.e(tag, "1Flow webpage JS Error[" + consoleMessage.message() + "]");
+                            stopSelf();
+
+                        } else {
+                            OFHelper.v(tag, "1Flow webpage JS log[" + consoleMessage.message() + "]");
+                        }
+
+                        return true;
+
+                    }
+                });
+
+                wv.evaluateJavascript(finalCode.toString(), result -> {
+                    // onReceiveValue
+                });
+
+            } else {
+                stopSelf();
+            }
+        } catch (Exception e) {
+            // Handle the exception, possibly by showing an error message to the user
             stopSelf();
         }
     }

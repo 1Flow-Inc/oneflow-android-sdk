@@ -631,6 +631,11 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
         JSONArray eventMapArray = new JSONArray();
         eventMapArray.put(new JSONObject(eventMap));
 
+        boolean isRunning = OFHelper.isServiceRunning(mContext, OFAnnouncementLanderService.class);
+        if(isRunning){
+            return;
+        }
+
         Intent intent = new Intent(mContext, OFAnnouncementLanderService.class);
         intent.putExtra("listData", originalList);
         intent.putExtra("eventData", eventMapArray.toString());
@@ -1169,6 +1174,11 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
         JSONArray eventMapArray = new JSONArray();
         eventMapArray.put(new JSONObject(eventMap));
 
+        boolean isRunning = OFHelper.isServiceRunning(mContext, OFSurveyLanderService.class);
+        if(isRunning){
+            return;
+        }
+
         Intent intent = new Intent(mContext, OFSurveyLanderService.class);
         intent.putExtra("eventName", eventName);
         intent.putExtra("eventData", eventMapArray.toString());
@@ -1202,6 +1212,11 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
 //        surveyIntent.putExtra("SurveyType", gslr);
 //        surveyIntent.putExtra("eventName", eventName);
 //        surveyIntent.putExtra("eventData", new JSONObject(eventMap).toString());
+
+        boolean isRunning = OFHelper.isServiceRunning(mContext, OFSurveyLanderService.class);
+        if(isRunning){
+            return;
+        }
 
         Intent intent = new Intent(mContext, OFSurveyLanderService.class);
         intent.putExtra("eventName", eventName);

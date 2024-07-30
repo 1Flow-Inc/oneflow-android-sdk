@@ -20,7 +20,7 @@ package com.oneflow.analytics.utils;
 
 public interface OFConstants {
 
-    String currentVersion = "2024.07.25";//2023.07.14;
+    String currentVersion = "2024.06.22";//2023.07.14;
     String MODE = "prod";//"dev";//"beta";//
 
     String PLATFORM = "Android";
