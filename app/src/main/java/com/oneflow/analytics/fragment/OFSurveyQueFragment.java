@@ -110,9 +110,10 @@ public class OFSurveyQueFragment extends BaseFragment implements OFGenericClickH
 
         if (i == 0) {
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                annim[i].setFillAfter(true);
-                animateViews[i].startAnimation(annim[i]);
-
+                if(i < animateViews.length){
+                    annim[i].setFillAfter(true);
+                    animateViews[i].startAnimation(annim[i]);
+                }
             }, 1000);
 
             animation1.setAnimationListener(new Animation.AnimationListener() {

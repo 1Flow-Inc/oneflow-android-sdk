@@ -365,9 +365,10 @@ public class OFSurveyQueTextFragment extends BaseFragment implements View.OnClic
 
         if (i == 0) {
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                annim[i].setFillAfter(true);
-                animateViews[i].startAnimation(annim[i]);
-
+                if(i < animateViews.length){
+                    annim[i].setFillAfter(true);
+                    animateViews[i].startAnimation(annim[i]);
+                }
             }, 500);
 
             animation1.setAnimationListener(new Animation.AnimationListener() {
