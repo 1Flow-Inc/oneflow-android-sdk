@@ -57,7 +57,12 @@ public class OFFirstLanderActivity extends AppCompatActivity implements OFMyResp
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        eventData = this.getIntent().getStringExtra("eventData");
+        eventData = getIntent().getStringExtra("eventData");
+
+        if(eventData == null){
+            OFFirstLanderActivity.this.finish();
+            return;
+        }
 
         OFHelper.v(tag, "1Flow webmethod called [" + eventData + "]");
         try {

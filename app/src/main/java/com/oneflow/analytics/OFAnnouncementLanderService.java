@@ -54,6 +54,11 @@ public class OFAnnouncementLanderService extends Service {
         }
         eventData = intent.getStringExtra("eventData");
 
+        if(eventData == null){
+            stopSelf();
+            return;
+        }
+
         OFHelper.v(tag, "1Flow webmethod called [" + eventData + "]");
         try {
             eventMapArray = new JSONArray(eventData);

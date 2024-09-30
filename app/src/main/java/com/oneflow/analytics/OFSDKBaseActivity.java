@@ -177,6 +177,10 @@ public class OFSDKBaseActivity extends AppCompatActivity implements OFMyResponse
 
         surveyItem = (OFGetSurveyListResponse) this.getIntent().getSerializableExtra("SurveyType");
 
+        if(surveyItem == null){
+            OFSDKBaseActivity.this.finish();
+            return;
+        }
         surveyName = surveyItem.getName();
         screens = surveyItem.getScreens();
         triggerEventName = this.getIntent().getStringExtra("eventName");

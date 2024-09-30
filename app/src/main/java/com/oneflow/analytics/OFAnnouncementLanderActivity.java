@@ -67,6 +67,11 @@ public class OFAnnouncementLanderActivity extends AppCompatActivity {
 
         eventData = getIntent().getStringExtra("eventData");
 
+        if(eventData == null){
+            OFAnnouncementLanderActivity.this.finish();
+            return;
+        }
+
         OFHelper.v(tag, "1Flow webmethod called [" + eventData + "]");
         try {
             eventMapArray = new JSONArray(eventData);

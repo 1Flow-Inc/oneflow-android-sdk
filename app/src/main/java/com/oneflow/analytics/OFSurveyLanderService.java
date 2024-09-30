@@ -68,6 +68,11 @@ public class OFSurveyLanderService extends Service implements OFMyResponseHandle
         }
         eventData = intent.getStringExtra("eventData");
 
+        if(eventData == null){
+            stopService();
+            return;
+        }
+
         OFHelper.v(tag, "1Flow webmethod called [" + eventData + "]");
         try {
             eventMapArray = new JSONArray(eventData);
