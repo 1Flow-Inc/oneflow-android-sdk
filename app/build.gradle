@@ -37,7 +37,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 34
         versionCode 65
-        versionName "2024.07.12"
+        versionName "2024.07.13"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -55,12 +55,12 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_21
-        targetCompatibility JavaVersion.VERSION_21
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
-//    kotlinOptions {
-//        jvmTarget = "17"
-//    }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
     configurations {
         all { // You should exclude one of them not both of them
             exclude group: "com.android.support", module: "support-core-ui"
