@@ -21,7 +21,8 @@ plugins {
     id 'com.android.library'
 //    id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-kapt'
+//    id 'kotlin-kapt'
+    id 'com.google.devtools.ksp'
    // id 'com.google.gms.google-services'
 }
 
@@ -36,7 +37,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 34
         versionCode 64
-        versionName "2024.09.30"
+        versionName "2024.07.10"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -57,6 +58,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
+    kotlinOptions {
+        jvmTarget = "17"
+    }
     configurations {
         all { // You should exclude one of them not both of them
             exclude group: "com.android.support", module: "support-core-ui"
@@ -67,6 +71,7 @@ android {
     }
     buildFeatures {
         dataBinding true
+        buildConfig = true
     }
     lintOptions {
         abortOnError false
@@ -109,7 +114,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.10.1'
 
     implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
+    ksp "androidx.room:room-compiler:$room_version"
     //annotationProcessor "androidx.room:room-compiler:$room_version"
 //    annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
 
@@ -135,8 +140,8 @@ dependencies {
     //implementation "com.google.android.play:core:1.8.0"
     implementation 'com.google.android.play:review:2.0.1'
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
 
 
     //implementation 'org.mongodb:bson:3.4.3'

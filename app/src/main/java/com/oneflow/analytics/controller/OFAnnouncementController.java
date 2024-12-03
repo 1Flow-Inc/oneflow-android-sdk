@@ -151,7 +151,11 @@ public class OFAnnouncementController implements OFMyResponseHandlerOneFlow {
                                 triggerAnnouncementBannerBottom(getAnnouncementDetailResponses);
                             }else if(style.equalsIgnoreCase("top_left")){
                                 triggerAnnouncementSideTop(getAnnouncementDetailResponses);
+                            }else if(style.equalsIgnoreCase("top_right")){
+                                triggerAnnouncementSideTop(getAnnouncementDetailResponses);
                             }else if(style.equalsIgnoreCase("bottom_left")){
+                                triggerAnnouncementSideBottom(getAnnouncementDetailResponses);
+                            }else if(style.equalsIgnoreCase("bottom_right")){
                                 triggerAnnouncementSideBottom(getAnnouncementDetailResponses);
                             }
                         }else{

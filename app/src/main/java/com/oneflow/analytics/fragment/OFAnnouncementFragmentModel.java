@@ -26,6 +26,9 @@ import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.oneflow.analytics.OFAnnouncementActivityModel;
+import com.oneflow.analytics.OFAnnouncementActivitySlideBottom;
+import com.oneflow.analytics.OFAnnouncementActivitySlideTop;
 import com.oneflow.analytics.R;
 import com.oneflow.analytics.adapter.OFAnnouncementListAdapter;
 import com.oneflow.analytics.controller.OFEventController;
@@ -125,6 +128,13 @@ public class OFAnnouncementFragmentModel extends Fragment {
                             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(action));
                             browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             mContext.getApplicationContext().startActivity(browserIntent);
+                            if(mContext instanceof OFAnnouncementActivityModel){
+                                ((OFAnnouncementActivityModel) mContext).finish();
+                            }else if(mContext instanceof OFAnnouncementActivitySlideTop){
+                                ((OFAnnouncementActivitySlideTop) mContext).finish();
+                            }else if(mContext instanceof OFAnnouncementActivitySlideBottom){
+                                ((OFAnnouncementActivitySlideBottom) mContext).finish();
+                            }
                         }
                     }
                 });
@@ -145,6 +155,13 @@ public class OFAnnouncementFragmentModel extends Fragment {
                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(action));
                         browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.getApplicationContext().startActivity(browserIntent);
+                        if(mContext instanceof OFAnnouncementActivityModel){
+                            ((OFAnnouncementActivityModel) mContext).finish();
+                        }else if(mContext instanceof OFAnnouncementActivitySlideTop){
+                            ((OFAnnouncementActivitySlideTop) mContext).finish();
+                        }else if(mContext instanceof OFAnnouncementActivitySlideBottom){
+                            ((OFAnnouncementActivitySlideBottom) mContext).finish();
+                        }
                     }
                     return true;
                 }

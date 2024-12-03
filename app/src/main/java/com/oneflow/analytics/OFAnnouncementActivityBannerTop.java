@@ -101,6 +101,7 @@ public class OFAnnouncementActivityBannerTop extends OFAnnouncementBaseActivity 
                             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(action));
                             browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(browserIntent);
+                            finish();
                         }
                     }
                 }
