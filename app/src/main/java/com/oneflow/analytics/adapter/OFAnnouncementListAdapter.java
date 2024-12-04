@@ -26,6 +26,7 @@ import com.oneflow.analytics.R;
 import com.oneflow.analytics.controller.OFEventController;
 import com.oneflow.analytics.customwidgets.OFCustomTextView;
 import com.oneflow.analytics.customwidgets.OFCustomTextViewBold;
+import com.oneflow.analytics.fragment.OFAnnouncementFragment;
 import com.oneflow.analytics.model.announcement.OFAnnouncementIndex;
 import com.oneflow.analytics.model.announcement.OFAnnouncementTheme;
 import com.oneflow.analytics.model.announcement.OFGetAnnouncementDetailResponse;
@@ -41,6 +42,7 @@ public class OFAnnouncementListAdapter extends RecyclerView.Adapter<OFAnnounceme
     private View.OnClickListener gch;
     private Context mContext;
     private OFOneFlowSHP shp;
+    private OFAnnouncementFragment ofAnnouncementFragment;
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
@@ -100,6 +102,9 @@ public class OFAnnouncementListAdapter extends RecyclerView.Adapter<OFAnnounceme
                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(action));
                         browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.getApplicationContext().startActivity(browserIntent);
+                        if(ofAnnouncementFragment != null){
+                            ofAnnouncementFragment.finishActivity();
+                        }
                     }
                 }
             });
@@ -126,6 +131,9 @@ public class OFAnnouncementListAdapter extends RecyclerView.Adapter<OFAnnounceme
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(action));
                     browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.getApplicationContext().startActivity(browserIntent);
+                    if(ofAnnouncementFragment != null){
+                        ofAnnouncementFragment.finishActivity();
+                    }
                 }
                 return true;
             }
@@ -255,6 +263,10 @@ public class OFAnnouncementListAdapter extends RecyclerView.Adapter<OFAnnounceme
         this.mContext = context;
         this.itemsList = itemsList;
         shp = OFOneFlowSHP.getInstance(mContext);
+    }
+
+    public void setFragment(OFAnnouncementFragment ofAnnouncementFragment){
+        this.ofAnnouncementFragment = ofAnnouncementFragment;
     }
 
     public void notifyMyList(ArrayList<OFGetAnnouncementDetailResponse> arrayList) {

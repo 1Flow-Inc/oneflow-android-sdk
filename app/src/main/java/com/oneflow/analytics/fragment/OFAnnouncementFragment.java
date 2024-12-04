@@ -1,5 +1,6 @@
 package com.oneflow.analytics.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,8 @@ import android.widget.ProgressBar;
 import android.widget.TableRow;
 
 import com.google.gson.Gson;
+import com.oneflow.analytics.OFAnnouncementActivityFullScreen;
+import com.oneflow.analytics.OFAnnouncementActivityModel;
 import com.oneflow.analytics.R;
 import com.oneflow.analytics.adapter.OFAnnouncementListAdapter;
 import com.oneflow.analytics.adapter.OFSurveyOptionsAdapter;
@@ -40,6 +43,8 @@ public class OFAnnouncementFragment extends Fragment implements OFMyResponseHand
 
     OFCustomTextViewBold tvEmpty;
 
+    Context mContext;
+
     ArrayList<String> idArray;
 
     public static OFAnnouncementFragment newInstance(ArrayList<String> idArray, OFSDKSettingsTheme sdkTheme, String themeColor) {
@@ -64,6 +69,8 @@ public class OFAnnouncementFragment extends Fragment implements OFMyResponseHand
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_announcement, container, false);
 
+        mContext = getActivity();
+
         announcementRecyclerView = (RecyclerView) view.findViewById(R.id.announcement_list);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_circular);
         tvEmpty = view.findViewById(R.id.tvEmpty);
@@ -86,6 +93,12 @@ public class OFAnnouncementFragment extends Fragment implements OFMyResponseHand
 //        announcementRecyclerView.setAdapter(announcementListAdapter);
 
         return view;
+    }
+
+    public void finishActivity(){
+        if(mContext instanceof OFAnnouncementActivityFullScreen){
+            ((OFAnnouncementActivityFullScreen) mContext).finish();
+        }
     }
 
     @Override
@@ -114,6 +127,7 @@ public class OFAnnouncementFragment extends Fragment implements OFMyResponseHand
 
                             LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                             announcementListAdapter = new OFAnnouncementListAdapter(getActivity(),getAnnouncementDetailResponses);
+                            announcementListAdapter.setFragment(this);
 
                             announcementRecyclerView.setLayoutManager(mLayoutManager);
                             announcementRecyclerView.setItemAnimator(new DefaultItemAnimator());
