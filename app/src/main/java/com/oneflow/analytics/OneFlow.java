@@ -499,6 +499,8 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
         if(!eventNameVar.isEmpty()){
             OneFlow of1 = new OneFlow(mContext);
             of1.recordEventAfterCheckAnnouncement(eventNameVar,eventValuesVar);
+            eventNameVar = "";
+            eventValuesVar = null;
         }
     }
 
