@@ -495,8 +495,11 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
     }
 
     public static void callEvent(){
-        OneFlow of1 = new OneFlow(mContext);
-        of1.recordEventAfterCheckAnnouncement(eventNameVar,eventValuesVar);
+        OFHelper.v("1Flow", "1Flow call event " + eventNameVar + " ");
+        if(!eventNameVar.isEmpty()){
+            OneFlow of1 = new OneFlow(mContext);
+            of1.recordEventAfterCheckAnnouncement(eventNameVar,eventValuesVar);
+        }
     }
 
     private void recordEventAfterCheckAnnouncement(String eventName, HashMap eventValues){
@@ -608,8 +611,8 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
                 }
             }
         }
+        OFHelper.v("1Flow", "1Flow announcement1 check[" + inAppList + "]");
         if(!inAppList.isEmpty()){
-            OFHelper.v("1Flow", "1Flow announcement1 check[" + inAppList + "]");
 
             if (mContext != null) {
                 // storage, api call and check survey if available.

@@ -2,7 +2,11 @@ package com.oneflow.analytics;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
+import android.os.Message;
 import android.text.TextUtils;
 import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
@@ -10,11 +14,13 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.oneflow.analytics.controller.OFAnnouncementController;
+import com.oneflow.analytics.controller.OFSurveyController;
 import com.oneflow.analytics.model.announcement.OFAnnouncementIndex;
 import com.oneflow.analytics.utils.OFConstants;
 import com.oneflow.analytics.utils.OFHelper;
@@ -38,6 +44,7 @@ public class OFAnnouncementLanderService extends Service {
     String eventData;
     String tag = this.getClass().getName();
     JSONArray eventMapArray;
+    int counter = 0;
 
     ArrayList<OFAnnouncementIndex> filteredList;
 
@@ -49,13 +56,13 @@ public class OFAnnouncementLanderService extends Service {
 
     private void intiData(Intent intent) {
         if(intent == null){
-            stopSelf();
+            stopService();
             return;
         }
         eventData = intent.getStringExtra("eventData");
 
         if(eventData == null){
-            stopSelf();
+            stopService();
             return;
         }
 
@@ -83,6 +90,9 @@ public class OFAnnouncementLanderService extends Service {
     public void onDestroy() {
         super.onDestroy();
 //        OFHelper.e(tag,"1Flow onDestroy");
+        if(handler != null){
+            handler.removeCallbacksAndMessages(null);
+        }
     }
 
     @Nullable
@@ -96,6 +106,21 @@ public class OFAnnouncementLanderService extends Service {
 //        OFHelper.e(tag,"1Flow onStartCommand");
         intiData(intent);
         return START_NOT_STICKY;
+    }
+
+    private void stopService(){
+        OFSurveyController.getInstance(this).getEventForStartUp();
+        if(handler != null){
+            handler.removeCallbacksAndMessages(null);
+        }
+        stopSelf();
+    }
+
+    private void stopServiceForOpenedAnnouncement(){
+        if(handler != null){
+            handler.removeCallbacksAndMessages(null);
+        }
+        stopSelf();
     }
 
     private void checkWebviewFunction(String eventData) {
@@ -130,7 +155,7 @@ public class OFAnnouncementLanderService extends Service {
                 OFHelper.v(tag, "1Flow webmethod 14[" + finalCode.length() + "]");
 
                 if(wv == null){
-                    stopSelf();
+                    stopService();
                     return;
                 }
                 wv.clearCache(true);
@@ -144,7 +169,7 @@ public class OFAnnouncementLanderService extends Service {
                     public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
                         if (consoleMessage.messageLevel() == ConsoleMessage.MessageLevel.ERROR) {
                             OFHelper.e(tag, "1Flow webpage JS Error[" + consoleMessage.message() + "]");
-                            stopSelf();
+                            stopService();
 
                         } else {
                             OFHelper.v(tag, "1Flow webpage JS log[" + consoleMessage.message() + "]");
@@ -160,13 +185,23 @@ public class OFAnnouncementLanderService extends Service {
                 });
 
             } else {
-                stopSelf();
+                stopService();
             }
         } catch (Exception e) {
             // Handle the exception, possibly by showing an error message to the user
-            stopSelf();
+            stopService();
         }
     }
+
+    Handler handler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            String data = msg.getData().getString("data");
+            OFHelper.v(tag, "1Flow handler data[" + data + "]");
+            checkWebviewFunction(data);
+        }
+    };
 
     public class MyJavaScriptInterface {
 
@@ -181,7 +216,29 @@ public class OFAnnouncementLanderService extends Service {
 
             OFHelper.v(tag, "1Flow JavaScript returns1: [" + resultJson + "]");
             if (resultJson.equalsIgnoreCase("null")) {
-                stopSelf();
+                if (eventMapArray.length() > 1) {
+                    OFHelper.v(tag, "1Flow JavaScript returns1: [" + counter + "]");
+                    if ((++counter) < eventMapArray.length()) {
+
+                        try {
+                            wv = null;
+                            OFHelper.v(tag, "1Flow JavaScript returns1: [" + counter + "][" + eventMapArray.get(counter).toString() + "]");
+
+                            Message msg = new Message();
+                            Bundle bundle = new Bundle();
+                            bundle.putString("data", eventMapArray.get(counter).toString());
+                            msg.setData(bundle);
+                            handler.sendMessage(msg);
+
+                        } catch (JSONException je) {
+                            stopService();
+                        }
+                    } else {
+                        stopService();
+                    }
+                } else {
+                    stopService();
+                }
             } else {
                 if (!OFHelper.validateString(resultJson).equalsIgnoreCase("NA")) {
                     if (!resultJson.equalsIgnoreCase("undefined")) {
@@ -191,10 +248,10 @@ public class OFAnnouncementLanderService extends Service {
                         ArrayList<OFAnnouncementIndex> result = gson.fromJson(resultJson,type);
                         handleResult(result);
                     } else {
-                        stopSelf();
+                        stopService();
                     }
                 } else {
-                    stopSelf();
+                    stopService();
                 }
             }
 
@@ -206,7 +263,7 @@ public class OFAnnouncementLanderService extends Service {
             if (result != null) {
                 launchAnnouncement(result);
             } else {
-                stopSelf();
+                stopService();
                 OFHelper.v(tag, "1Flow event flow check failed no survey launch");
             }
         }
@@ -224,7 +281,7 @@ public class OFAnnouncementLanderService extends Service {
 
         OFHelper.v(tag, "1Flow ids[" + idArray + "]");
         OFAnnouncementController.getInstance(this).getAnnouncementDetailFromAPI(TextUtils.join(",", idArray),"");
-        stopSelf();
+        stopServiceForOpenedAnnouncement();
     }
 
 

@@ -29,12 +29,15 @@ import com.oneflow.analytics.OFAnnouncementActivityModel;
 import com.oneflow.analytics.OFAnnouncementActivitySlideBottom;
 import com.oneflow.analytics.OFAnnouncementActivitySlideTop;
 import com.oneflow.analytics.OFAnnouncementLanderActivity;
+import com.oneflow.analytics.OFAnnouncementLanderService;
 import com.oneflow.analytics.OFSDKBaseActivity;
+import com.oneflow.analytics.OFSurveyLanderService;
 import com.oneflow.analytics.OneFlow;
 import com.oneflow.analytics.model.announcement.OFAnnouncementIndex;
 import com.oneflow.analytics.model.announcement.OFGetAnnouncementDetailResponse;
 import com.oneflow.analytics.model.announcement.OFGetAnnouncementResponse;
 import com.oneflow.analytics.repositories.OFAnnouncementRepo;
+import com.oneflow.analytics.repositories.OFEventDBRepoKT;
 import com.oneflow.analytics.sdkdb.OFOneFlowSHP;
 import com.oneflow.analytics.utils.OFConstants;
 import com.oneflow.analytics.utils.OFHelper;
@@ -45,6 +48,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,6 +56,7 @@ public class OFAnnouncementController implements OFMyResponseHandlerOneFlow {
 
     Context mContext;
     static OFAnnouncementController sc;
+    JSONArray eventMapArray;
 
     private OFAnnouncementController(Context context) {
         this.mContext = context;
@@ -127,6 +132,9 @@ public class OFAnnouncementController implements OFMyResponseHandlerOneFlow {
 //                        getAnnouncementDetailFromAPI(TextUtils.join(",", idArray));
 //                    }
 //                    checkAnnouncement(getAnnouncementList.getAnnouncements().getInApp());
+
+                    //Enabled again on 13/June/22
+                    new OFEventDBRepoKT().fetchEventsBeforeSurvey(mContext, this, OFConstants.ApiHitType.fetchEventsBeforSurveyFetched);
                 }
                 break;
             case fetchAnnouncementDetailFromAPI:
@@ -164,8 +172,80 @@ public class OFAnnouncementController implements OFMyResponseHandlerOneFlow {
                     }
                 }
                 break;
+            case fetchEventsBeforSurveyFetched:
+                try {
+                    if (obj != null) {
+                        String[] name = (String[]) obj;
+                        OFHelper.v("OFAnnouncementController", "OneFlow events before survey found[" + Arrays.asList(name) + "]length[" + name.length + "]");
+                        if (name.length > 0) {
+                            HashMap<String,Object> eventMapLocal;
+                            eventMapArray = new JSONArray();
+
+
+                            for(String nameLocal: name){
+                                OFHelper.v("OFAnnouncementController", "OneFlow events for["+nameLocal+"]");
+                                eventMapLocal = new HashMap<>();
+                                eventMapLocal.put("name", nameLocal);
+                                eventMapLocal.put("timestamp", System.currentTimeMillis() / 1000);
+                                eventMapArray.put(new JSONObject(eventMapLocal));
+
+                            }
+                            triggeredStartAppSurveyOrAnnouncement();
+                        }
+                    }
+                }
+                catch(Exception ex){
+                    // ex
+                }
+                break;
             default:
                 break;
+        }
+    }
+
+    private void triggeredStartAppSurveyOrAnnouncement(){
+        ArrayList<OFAnnouncementIndex> inAppList = new ArrayList<>();
+        OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
+        if (shp.getAnnouncementResponse() != null && shp.getAnnouncementResponse().getAnnouncements() != null) {
+            for (int i = 0; i < shp.getAnnouncementResponse().getAnnouncements().getInApp().size(); i++) {
+
+                OFAnnouncementIndex announcementIndex = shp.getAnnouncementResponse().getAnnouncements().getInApp().get(i);
+
+                boolean isAvailable = false;
+                for (int i1 = 0; i1 < shp.getSeenInAppAnnounceList().size(); i1++) {
+                    if (shp.getSeenInAppAnnounceList().get(i1).equals(announcementIndex.getId())) {
+                        OFHelper.v("OFAnnouncementController", "1Flow announcement check[" + announcementIndex.getId() + "]");
+                        isAvailable = true;
+                        break;
+                    }
+                }
+
+                if (announcementIndex.getStatus().equalsIgnoreCase("active") && !isAvailable) {
+                    inAppList.add(announcementIndex);
+                }
+            }
+        }
+        OFHelper.v("OFAnnouncementController", "1Flow announcement1 check[" + inAppList + "]");
+        if (!inAppList.isEmpty()) {
+            boolean isRunning = OFHelper.isServiceRunning(mContext, OFAnnouncementLanderService.class);
+            if (isRunning) {
+                return;
+            }
+
+            Intent intent = new Intent(mContext, OFAnnouncementLanderService.class);
+            intent.putExtra("listData", inAppList);
+            intent.putExtra("eventData", eventMapArray.toString());
+            mContext.startService(intent);
+        }else{
+            boolean isRunning = OFHelper.isServiceRunning(mContext, OFSurveyLanderService.class);
+            if(isRunning){
+                return;
+            }
+
+            Intent intent = new Intent(mContext, OFSurveyLanderService.class);
+            intent.putExtra("eventName", "");
+            intent.putExtra("eventData", eventMapArray.toString());
+            mContext.startService(intent);
         }
     }
 

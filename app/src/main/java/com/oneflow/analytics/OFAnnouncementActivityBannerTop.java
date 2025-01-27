@@ -73,9 +73,9 @@ public class OFAnnouncementActivityBannerTop extends OFAnnouncementBaseActivity 
             String text = "";
             OFGetAnnouncementDetailResponse getAnnouncementDetailResponse = getAnnouncementDetailResponses.get(0);
 
-            handleSeen(getAnnouncementDetailResponse.getId());
-
             viewedAnnouncement(getAnnouncementDetailResponse.getId());
+
+            handleSeen(getAnnouncementDetailResponse.getId());
 
             String catColor = "#5D5FEF";
             if(getAnnouncementDetailResponse.getCategory() != null){
@@ -177,8 +177,9 @@ public class OFAnnouncementActivityBannerTop extends OFAnnouncementBaseActivity 
         ArrayList<String> inAppIdList;
         inAppIdList = shp.getSeenInAppAnnounceList();
 
-        inAppIdList.add(id);
-
-        shp.setSeenInAppAnnounceList(inAppIdList);
+        if(!inAppIdList.contains(id)){
+            inAppIdList.add(id);
+            shp.setSeenInAppAnnounceList(inAppIdList);
+        }
     }
 }

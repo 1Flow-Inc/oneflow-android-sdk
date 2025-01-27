@@ -281,8 +281,10 @@ public class OFSurveyQueTextFragment extends BaseFragment implements View.OnClic
 
                 } else {
                     if (surveyScreens.getButtons().size() == 1 || surveyScreens.getButtons().size() == 2 && (isActive)) {
-                        transitInActive();
+//                        transitInActive();
                         isActive = false;
+                        int colorAlpha = OFHelper.manipulateColorNew(Color.parseColor(themeColor), OFConstants.buttonActiveValue);
+                        gdSubmit.setColor(colorAlpha);
                     }
                 }
                 if (userInput.getText().toString().length() > surveyScreens.getInput().getMax_chars()) {

@@ -96,9 +96,9 @@ public class OFAnnouncementFragmentModel extends Fragment {
 
             OFGetAnnouncementDetailResponse getAnnouncementDetailResponse = getAnnouncementDetailResponses.get(0);
 
-            viewedAnnouncement(getAnnouncementDetailResponse.getId());
-
             handleSeen(getAnnouncementDetailResponse.getId());
+
+            viewedAnnouncement(getAnnouncementDetailResponse.getId());
 
             binding.tvTitle.setText(getAnnouncementDetailResponse.getTitle());
 
@@ -234,8 +234,9 @@ public class OFAnnouncementFragmentModel extends Fragment {
         ArrayList<String> inAppIdList;
         inAppIdList = shp.getSeenInAppAnnounceList();
 
-        inAppIdList.add(id);
-
-        shp.setSeenInAppAnnounceList(inAppIdList);
+        if(!inAppIdList.contains(id)){
+            inAppIdList.add(id);
+            shp.setSeenInAppAnnounceList(inAppIdList);
+        }
     }
 }

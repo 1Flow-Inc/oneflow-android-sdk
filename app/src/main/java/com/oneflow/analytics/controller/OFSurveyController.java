@@ -23,6 +23,7 @@ import android.content.Intent;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.oneflow.analytics.OFAnnouncementLanderService;
 import com.oneflow.analytics.OFSDKBaseActivity;
 import com.oneflow.analytics.OFSurveyActivityBannerBottom;
 import com.oneflow.analytics.OFSurveyActivityBannerTop;
@@ -31,6 +32,8 @@ import com.oneflow.analytics.OFSurveyActivityCenter;
 import com.oneflow.analytics.OFSurveyActivityFullScreen;
 import com.oneflow.analytics.OFSurveyActivityTop;
 import com.oneflow.analytics.OFSurveyLanderService;
+import com.oneflow.analytics.OneFlow;
+import com.oneflow.analytics.model.announcement.OFAnnouncementIndex;
 import com.oneflow.analytics.model.survey.OFGetSurveyListResponse;
 import com.oneflow.analytics.model.survey.OFThrottlingConfig;
 import com.oneflow.analytics.repositories.OFEventDBRepoKT;
@@ -70,6 +73,10 @@ public class OFSurveyController implements OFMyResponseHandlerOneFlow {
         OFHelper.v("SurveyController", "OneFlow reached SurveyController 0");
         OFOneFlowSHP shp = OFOneFlowSHP.getInstance(mContext);
         OFSurvey.getSurvey(shp.getStringValue(OFConstants.APPIDSHP), this, OFConstants.ApiHitType.fetchSurveysFromAPI,shp.getUserDetails().getAnalytic_user_id(),OFConstants.currentVersion);
+    }
+
+    public void getEventForStartUp(){
+        new OFEventDBRepoKT().fetchEventsBeforeSurvey(mContext, this, OFConstants.ApiHitType.fetchEventsBeforSurveyFetched);
     }
 
     HashMap<String, Class> activityName;
@@ -134,8 +141,11 @@ public class OFSurveyController implements OFMyResponseHandlerOneFlow {
                             OFHelper.makeText(mContext, reserved, 1);
                         }
                     }
-                    //Enabled again on 13/June/22
-                    new OFEventDBRepoKT().fetchEventsBeforeSurvey(mContext, this, OFConstants.ApiHitType.fetchEventsBeforSurveyFetched);
+                    //-------
+                    //remove for check first announcement so i have move this code to OFAnnouncementController.java
+//                    //Enabled again on 13/June/22
+//                    new OFEventDBRepoKT().fetchEventsBeforeSurvey(mContext, this, OFConstants.ApiHitType.fetchEventsBeforSurveyFetched);
+                    //-------
                 }
                 break;
             case fetchEventsBeforSurveyFetched:
