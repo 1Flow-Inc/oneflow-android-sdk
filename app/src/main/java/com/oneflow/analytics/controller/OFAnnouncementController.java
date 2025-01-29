@@ -121,6 +121,15 @@ public class OFAnnouncementController implements OFMyResponseHandlerOneFlow {
 
                     }
 
+                    ArrayList<String> inAppIdListShp = shp.getSeenInAppAnnounceList();
+                    if(inAppIdListShp != null){
+                        inAppIdList.addAll(inAppIdListShp);
+                    }
+                    ArrayList<String> inBoxIdListShp = shp.getSeenInboxAnnounceList();
+                    if(inBoxIdListShp != null){
+                        inBoxIdList.addAll(inBoxIdListShp);
+                    }
+
                     shp.setSeenInAppAnnounceList(inAppIdList);
                     shp.setSeenInboxAnnounceList(inBoxIdList);
 //                    if(!getAnnouncementList.getAnnouncements().getInbox().isEmpty()){
