@@ -959,8 +959,8 @@ public class OneFlow implements OFMyResponseHandlerOneFlow {
 
                     } else {
                         //calling fetch survey api on ADD USER success changed on 17-01-23
-                        OFAnnouncementController.getInstance(mContext).getAnnouncementFromAPI();
                         OFSurveyController.getInstance(mContext).getSurveyFromAPI();
+                        OFAnnouncementController.getInstance(mContext).getAnnouncementFromAPI();
                     }
 
                     if(!pushTokenPending.isEmpty()){

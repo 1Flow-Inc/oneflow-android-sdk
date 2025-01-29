@@ -20,6 +20,7 @@ package com.oneflow.analytics.controller;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 
 import com.google.gson.Gson;
 import com.oneflow.analytics.OFAnnouncementActivityBannerBottom;
@@ -142,8 +143,14 @@ public class OFAnnouncementController implements OFMyResponseHandlerOneFlow {
 //                    }
 //                    checkAnnouncement(getAnnouncementList.getAnnouncements().getInApp());
 
-                    //Enabled again on 13/June/22
-                    new OFEventDBRepoKT().fetchEventsBeforeSurvey(mContext, this, OFConstants.ApiHitType.fetchEventsBeforSurveyFetched);
+                    //use this handler for sometimes fetch survey list after getting announcement list
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            //Enabled again on 13/June/22
+                            new OFEventDBRepoKT().fetchEventsBeforeSurvey(mContext, OFAnnouncementController.this, OFConstants.ApiHitType.fetchEventsBeforSurveyFetched);
+                        }
+                    },500);
                 }
                 break;
             case fetchAnnouncementDetailFromAPI:
